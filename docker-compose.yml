@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14
+    restart: on-failure
+    environment:
+      POSTGRES_DB: rasporedar
+      POSTGRES_USER: rasporedar
+      POSTGRES_PASSWORD: rasporedar
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    restart: on-failure
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: rasporedar
+      POSTGRES_USER: rasporedar
+      POSTGRES_PASSWORD: rasporedar
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
