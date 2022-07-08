@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: rasporedar
       POSTGRES_USER: rasporedar
       POSTGRES_PASSWORD: rasporedar
+    ports:
+      - 3002:5432
 
   backend:
     build: ./backend
