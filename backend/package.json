@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts",
     "lint": "eslint src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.2"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -35,7 +38,9 @@
     "eslint-plugin-vue": "^9.2.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
+    "sequelize-cli": "^6.4.1",
     "ts-node": "^10.8.2",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
   }
 }
