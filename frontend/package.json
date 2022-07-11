@@ -9,7 +9,8 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
