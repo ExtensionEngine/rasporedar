@@ -8,6 +8,7 @@ interface Classroom {
 
 interface Subject {
   name: string;
+  timesPerWeek: number;
   teacher?: Teacher;
   classroom?: Classroom;
 }
