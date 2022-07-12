@@ -36,9 +36,15 @@ Migrate model to TS ([example](./backend/src/models/user.ts)) and remove line `'
 First of all, make sure your local server is up and running.
 Now to create the table in the database run:
 
-```sh
-cd backend
-npx sequelize-cli db:migrate
+```
+$ cd backend
+$ npx sequelize-cli db:migrate
+```
+
+### Run schedule generator from cli
+
+```
+$ ./backend/src/algo/cli.ts
 ```
 
 ### Undoing migrations
