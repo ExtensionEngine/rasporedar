@@ -1,19 +1,19 @@
-interface Teacher {
+export interface Teacher {
   name: string;
 }
 
-interface Classroom {
+export interface Classroom {
   name: string;
 }
 
-interface Subject {
+export interface Subject {
   name: string;
   timesPerWeek: number;
   teacher?: Teacher;
   classroom?: Classroom;
 }
 
-interface Class {
+export interface Class {
   name: string;
   subjects: Subject[];
 }
@@ -23,11 +23,11 @@ export interface GenerateScheduleProps {
   classrooms: Classroom[];
 }
 
-interface ClassResult {
+export interface ClassResult {
   name: string;
 }
 
-interface TeacherResult {
+export interface TeacherResult {
   name: string;
 }
 

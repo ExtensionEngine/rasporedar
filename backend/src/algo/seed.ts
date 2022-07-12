@@ -1,6 +1,6 @@
 import { GenerateScheduleProps } from './types';
 
-const generateScheduleProps: GenerateScheduleProps = {
+export const generateScheduleProps: GenerateScheduleProps = {
   classes: [
     {
       name: '5a',
@@ -234,5 +234,3 @@ const generateScheduleProps: GenerateScheduleProps = {
     { name: '206' },
   ],
 };
-
-export { generateScheduleProps };
