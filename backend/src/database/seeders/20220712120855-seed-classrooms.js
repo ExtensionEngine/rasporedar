@@ -4,14 +4,14 @@ module.exports = {
       {
         name: 'C1',
         capacity: 20,
-        createdAt: new Date(Date.now()),
-        updatedAt: new Date(Date.now()),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: 'C2',
         capacity: 25,
-        createdAt: new Date(Date.now()),
-        updatedAt: new Date(Date.now()),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },

@@ -37,12 +37,12 @@ Classroom.init(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: new Date(Date.now()),
+      defaultValue: new Date(),
       allowNull: false,
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: new Date(Date.now()),
+      defaultValue: new Date(),
       allowNull: false,
     },
   },

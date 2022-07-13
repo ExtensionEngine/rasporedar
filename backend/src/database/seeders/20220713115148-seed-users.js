@@ -4,8 +4,8 @@ module.exports = {
       {
         email: 'admin@rasporedar.com',
         password: 'admin',
-        createdAt: new Date(Date.now()),
-        updatedAt: new Date(Date.now()),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },
