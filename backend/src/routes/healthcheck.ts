@@ -1,25 +1,24 @@
 import { Request, Response, Router } from 'express';
-import { sequelize } from 'models';
+import sequelize from '../database/connection';
 
 const router = Router();
 
 /**
  * @openapi
- * /healthcheck:
+ * /healthchecks:
  *   get:
  *     description: Healthcheck
  *     responses:
  *       200:
  *         description: Returns health check success message.
  */
-router.get('/healthcheck', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     await sequelize.authenticate();
 
-    res.send('success');
+    res.status(200).send('success');
   } catch (error) {
-    res.status(500);
-    res.send('failure');
+    res.status(500).send('failure');
   }
 });
 
