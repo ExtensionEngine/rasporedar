@@ -1,13 +1,16 @@
 import { GenerateScheduleProps, GenerateScheduleResult } from './types';
-import { getExcludedSubjectIndexes } from './utils';
+import { getConflictingSubjectIndexes } from './utils';
 
 export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
-  const subjects = classes.map(c => c.subjects).flat();
+  const subjects = classes.map(c => c.subjects.map(s => ({ ...s, class: c.name }))).flat();
 
-  const subjectIndexesExcludedByTeacher = getExcludedSubjectIndexes(subjects, s => s.teacher?.name);
-  const subjectIndexesExcludedByClassroom = getExcludedSubjectIndexes(subjects, s => s.classroom?.name);
+  const conflictingIds = [
+    ...getConflictingSubjectIndexes(subjects, s => s.class),
+    ...getConflictingSubjectIndexes(subjects, s => s.teacher?.name),
+    ...getConflictingSubjectIndexes(subjects, s => s.classroom?.name),
+  ];
 
-  console.log(subjectIndexesExcludedByTeacher, subjectIndexesExcludedByClassroom);
+  console.log(conflictingIds);
 
   return { classes: [], teachers: [] };
 }

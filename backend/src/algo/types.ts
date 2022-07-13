@@ -11,6 +11,7 @@ export interface Subject {
   timesPerWeek: number;
   teacher?: Teacher;
   classroom?: Classroom;
+  class?: string;
 }
 
 export interface Class {
