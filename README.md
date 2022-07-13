@@ -5,14 +5,14 @@ School schedule generator app
 ## Run project
 
 ```sh
-$ docker-compose up
+$ docker compose up
 ```
 
 ## Run project in development mode
 
 ```sh
 $ yarn && (cd backend && yarn) && (cd frontend && yarn) # install node packages on host machine for eslint, husky...
-$ docker-compose up
+$ docker compose up
 ```
 
 ### Add a model
