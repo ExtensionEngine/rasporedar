@@ -5,7 +5,7 @@ School schedule generator app
 ## Run project
 
 ```
-$ docker-compose up
+$ docker-compose up --build
 ```
 
 ## Run project in development mode
