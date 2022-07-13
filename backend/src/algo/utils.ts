@@ -1,6 +1,6 @@
 import { Subject } from './types';
 
-export function getExcludedSubjectIndexes(subjects: Subject[], propGetFn: (s: Subject) => unknown): number[][] {
+export function getConflictingSubjectIndexes(subjects: Subject[], propGetFn: (s: Subject) => unknown): number[][] {
   const indexes: number[][] = [];
   [...new Set(subjects.map(s => propGetFn(s)))].forEach(prop => {
     const subjectIndexes: number[] = [];
