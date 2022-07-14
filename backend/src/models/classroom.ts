@@ -1,35 +1,25 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from 'database/connection';
 
-interface UserAttributes {
+interface ClassroomAttributes {
   id: number;
-  email: string;
-  password: string;
+  name: string;
+  capacity: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
-type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'>;
+type ClassroomCreationalAttributes = Optional<ClassroomAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
-class User extends Model<UserAttributes, UserCreationalAttributes> implements UserCreationalAttributes {
+class Classroom extends Model<ClassroomAttributes, ClassroomCreationalAttributes> implements ClassroomAttributes {
   declare id: number;
-  declare email: string;
-  declare password: string;
+  declare name: string;
+  declare capacity: number;
   declare createdAt: Date;
   declare updatedAt: Date;
-
-  static scopes() {
-    return {
-      defaultScope: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    };
-  }
 }
 
-User.init(
+Classroom.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -37,13 +27,13 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    email: {
+    name: {
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
     },
-    password: {
-      type: DataTypes.STRING,
+    capacity: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     createdAt: {
@@ -59,10 +49,10 @@ User.init(
   },
   {
     sequelize,
-    modelName: 'User',
-    tableName: 'Users',
+    modelName: 'Classroom',
+    tableName: 'Classrooms',
     timestamps: true,
   },
 );
 
-export default User;
+export default Classroom;

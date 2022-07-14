@@ -1,35 +1,27 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from 'database/connection';
 
-interface UserAttributes {
+interface TeacherAttributes {
   id: number;
-  email: string;
-  password: string;
+  firstName: string;
+  lastName: string;
+  teacherCode: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'>;
+type TeacherCreationalAttributes = Optional<TeacherAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
-class User extends Model<UserAttributes, UserCreationalAttributes> implements UserCreationalAttributes {
+class Teacher extends Model<TeacherAttributes, TeacherCreationalAttributes> implements TeacherAttributes {
   declare id: number;
-  declare email: string;
-  declare password: string;
+  declare firstName: string;
+  declare lastName: string;
+  declare teacherCode: string;
   declare createdAt: Date;
   declare updatedAt: Date;
-
-  static scopes() {
-    return {
-      defaultScope: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    };
-  }
 }
 
-User.init(
+Teacher.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -37,14 +29,18 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    email: {
+    firstName: {
+      type: DataTypes.CITEXT,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.CITEXT,
+      allowNull: false,
+    },
+    teacherCode: {
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -59,10 +55,10 @@ User.init(
   },
   {
     sequelize,
-    modelName: 'User',
-    tableName: 'Users',
+    modelName: 'Teacher',
+    tableName: 'Teachers',
     timestamps: true,
   },
 );
 
-export default User;
+export default Teacher;

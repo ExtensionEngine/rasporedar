@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import Classroom from 'models/classroom';
 
 const router = Router();
 
@@ -11,8 +12,10 @@ const router = Router();
  *       200:
  *         description: Returns all classrooms.
  */
-router.get('/classrooms', (req: Request, res: Response) => {
-  res.send('classrooms');
+router.get('/', async (req: Request, res: Response) => {
+  const classrooms = await Classroom.findAll();
+
+  res.json(classrooms);
 });
 
 export default router;

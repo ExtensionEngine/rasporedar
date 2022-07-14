@@ -1,14 +1,13 @@
 import express, { Application } from 'express';
-import controllers from 'controllers';
+import router from 'routes';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
 const app: Application = express();
-
 const port = 3001;
 
-app.use(controllers.Classroom);
-app.use(controllers.Healthcheck);
+app.use(express.json());
+app.use(router);
 
 app.use(
   '/swagger',
