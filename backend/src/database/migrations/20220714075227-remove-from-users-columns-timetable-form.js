@@ -1,21 +1,35 @@
 module.exports = {
   up(queryInterface) {
-    return Promise.all([
-      queryInterface.removeColumn('Users', 'form'),
-      queryInterface.removeColumn('Users', 'timetable'),
-    ]);
+    return queryInterface.sequelize.transaction(function (t) {
+      return Promise.all([
+        queryInterface.removeColumn('Users', 'form', { transaction: t }),
+        queryInterface.removeColumn('Users', 'timetable', { transaction: t }),
+      ]);
+    });
   },
 
   down(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.addColumn('Users', 'form', {
-        type: Sequelize.JSONB,
-        allowNull: true,
-      }),
-      queryInterface.addColumn('Users', 'timetable', {
-        type: Sequelize.JSONB,
-        allowNull: true,
-      }),
-    ]);
+    return queryInterface.sequelize.transaction(function (t) {
+      return Promise.all([
+        queryInterface.addColumn(
+          'Users',
+          'form',
+          {
+            type: Sequelize.JSONB,
+            allowNull: true,
+          },
+          { transaction: t },
+        ),
+        queryInterface.addColumn(
+          'Users',
+          'timetable',
+          {
+            type: Sequelize.JSONB,
+            allowNull: true,
+          },
+          { transaction: t },
+        ),
+      ]);
+    });
   },
 };

@@ -17,8 +17,8 @@ class Teacher extends Model<TeacherAttributes, TeacherCreationalAttributes> impl
   declare firstName: string;
   declare lastName: string;
   declare teacherCode: string;
-  public createdAt!: Date;
-  public updatedAt!: Date;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 Teacher.init(
