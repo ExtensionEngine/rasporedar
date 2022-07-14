@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd frontend && pnpm lint && cd ../backend && pnpm lint
+cd frontend && yarn lint && cd ../backend && yarn lint
