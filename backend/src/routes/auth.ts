@@ -4,9 +4,8 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.post('/signup', passport.authenticate('signup', { session: false }), async (req, res) => {
+router.post('/register', passport.authenticate('register', { session: false }), (req, res) => {
   res.json({
-    message: 'Signup successful',
     user: req.user,
   });
 });
@@ -15,7 +14,9 @@ router.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user) => {
     try {
       if (err || !user) {
-        const error = new Error('An error occurred.');
+        const error = new Error(
+          'The user name or password are incorrect. This is easily corrected by typing the correct user name and password.',
+        );
 
         return next(error);
       }

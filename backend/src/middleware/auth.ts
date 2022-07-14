@@ -13,7 +13,14 @@ passport.use(
     async (email: string, password: string, done) => {
       try {
         // TODO: check if user exists (use findOrCreate)
-        const user = await User.create({ email, password });
+        const [user, created] = await User.findOrCreate({
+          where: { email },
+          defaults: { email, password },
+        });
+
+        if (!created) {
+          return done(null, { message: 'User already exists.' });
+        }
 
         return done(null, user);
       } catch (error) {

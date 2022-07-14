@@ -8,10 +8,10 @@ import usersRouter from './user';
 
 const router = Router();
 
+router.use('/auth', authRouter);
 router.use('/classrooms', classroomsRouter);
 router.use('/healthchecks', healthchecksRouter);
 router.use('/teachers', teachersRouter);
 router.use('/users', passport.authenticate('jwt', { session: false }), usersRouter);
-router.use('/auth', authRouter);
 
 export default router;
