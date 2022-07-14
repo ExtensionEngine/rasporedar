@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../database/connection';
+import sequelize from 'database/connection';
 
 interface ClassroomAttributes {
   id: number;
@@ -30,6 +30,7 @@ Classroom.init(
     name: {
       type: DataTypes.CITEXT,
       allowNull: false,
+      unique: true,
     },
     capacity: {
       type: DataTypes.INTEGER,

@@ -18,6 +18,7 @@ module.exports = {
       teacherCode: {
         type: Sequelize.CITEXT,
         allowNull: false,
+        unique: true,
       },
       createdAt: {
         type: Sequelize.DATE,

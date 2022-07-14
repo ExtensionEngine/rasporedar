@@ -11,6 +11,7 @@ module.exports = {
       email: {
         type: Sequelize.CITEXT,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,

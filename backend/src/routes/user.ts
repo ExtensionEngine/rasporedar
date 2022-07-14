@@ -15,7 +15,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   const users = await User.findAll();
 
-  res.send(users);
+  res.json(users);
 });
 
 export default router;

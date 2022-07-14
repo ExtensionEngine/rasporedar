@@ -1,24 +1,20 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../database/connection';
+import sequelize from 'database/connection';
 
 interface UserAttributes {
   id: number;
   email: string;
   password: string;
-  form: JSON;
-  timetable: JSON;
   createdAt: Date;
   updatedAt: Date;
 }
 
-type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'form' | 'timetable'>;
+type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
 class User extends Model<UserAttributes, UserCreationalAttributes> implements UserCreationalAttributes {
   declare id: number;
   declare email: string;
   declare password: string;
-  declare form: JSON;
-  declare timetable: JSON;
   declare createdAt: Date;
   declare updatedAt: Date;
 
@@ -44,18 +40,11 @@ User.init(
     email: {
       type: DataTypes.CITEXT,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    form: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-    },
-    timetable: {
-      type: DataTypes.JSONB,
-      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,

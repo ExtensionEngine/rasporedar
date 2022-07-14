@@ -10,6 +10,7 @@ module.exports = {
       name: {
         type: Sequelize.CITEXT,
         allowNull: false,
+        unique: true,
       },
       capacity: {
         type: Sequelize.INTEGER,

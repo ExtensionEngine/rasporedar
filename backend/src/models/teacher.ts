@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../database/connection';
+import sequelize from 'database/connection';
 
 interface TeacherAttributes {
   id: number;
@@ -40,6 +40,7 @@ Teacher.init(
     teacherCode: {
       type: DataTypes.CITEXT,
       allowNull: false,
+      unique: true,
     },
     createdAt: {
       type: DataTypes.DATE,

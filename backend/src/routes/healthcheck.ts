@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import sequelize from '../database/connection';
+import sequelize from 'database/connection';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     await sequelize.authenticate();
 
-    res.status(200).send('success');
+    res.send('success');
   } catch (error) {
     res.status(500).send('failure');
   }

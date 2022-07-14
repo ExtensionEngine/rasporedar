@@ -15,7 +15,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   const classrooms = await Classroom.findAll();
 
-  res.status(200).send(classrooms);
+  res.json(classrooms);
 });
 
 export default router;
