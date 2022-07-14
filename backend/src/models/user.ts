@@ -1,4 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
+import bcrypt from 'bcrypt';
 import sequelize from 'database/connection';
 
 interface UserAttributes {
@@ -26,6 +27,10 @@ class User extends Model<UserAttributes, UserCreationalAttributes> implements Us
         },
       },
     };
+  }
+
+  async isValidPassword(password: string) {
+    return bcrypt.compare(password, this.password);
   }
 }
 
@@ -58,6 +63,12 @@ User.init(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (user: User) => {
+        const hash = await bcrypt.hash(user.password, 10);
+        user.password = hash;
+      },
+    },
     sequelize,
     modelName: 'User',
     tableName: 'Users',
