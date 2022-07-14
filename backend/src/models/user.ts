@@ -6,19 +6,19 @@ interface UserAttributes {
   email: string;
   password: string;
   form: JSON;
-  raspored: JSON;
+  timetable: JSON;
   createdAt: Date;
   updatedAt: Date;
 }
 
-type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'form' | 'raspored'>;
+type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'form' | 'timetable'>;
 
 class User extends Model<UserAttributes, UserCreationalAttributes> implements UserCreationalAttributes {
   declare id: number;
   declare email: string;
   declare password: string;
   declare form: JSON;
-  declare raspored: JSON;
+  declare timetable: JSON;
   declare createdAt: Date;
   declare updatedAt: Date;
 
@@ -53,7 +53,7 @@ User.init(
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    raspored: {
+    timetable: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
