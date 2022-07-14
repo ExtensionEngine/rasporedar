@@ -19,16 +19,6 @@ class User extends Model<UserAttributes, UserCreationalAttributes> implements Us
   declare createdAt: Date;
   declare updatedAt: Date;
 
-  static scopes() {
-    return {
-      defaultScope: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    };
-  }
-
   async isValidPassword(password: string) {
     return bcrypt.compare(password, this.password);
   }
@@ -67,6 +57,11 @@ User.init(
       beforeCreate: async (user: User) => {
         const hash = await bcrypt.hash(user.password, 10);
         user.password = hash;
+      },
+    },
+    defaultScope: {
+      attributes: {
+        exclude: ['password'],
       },
     },
     sequelize,
