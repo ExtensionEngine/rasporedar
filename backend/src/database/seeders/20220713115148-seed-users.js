@@ -3,7 +3,7 @@ module.exports = {
     return queryInterface.bulkInsert('Users', [
       {
         email: 'admin@rasporedar.com',
-        password: 'admin',
+        password: '$2b$10$XHpexLgEJju/16z1CTdryeVZnkkcaOfzDmS0a2jNcTZvENT.eBuSS', // password: admin
         createdAt: new Date(),
         updatedAt: new Date(),
       },

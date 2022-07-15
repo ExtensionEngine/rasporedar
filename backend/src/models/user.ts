@@ -59,11 +59,6 @@ User.init(
         user.password = hash;
       },
     },
-    defaultScope: {
-      attributes: {
-        exclude: ['password'],
-      },
-    },
     sequelize,
     modelName: 'User',
     tableName: 'Users',

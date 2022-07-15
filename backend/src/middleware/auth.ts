@@ -4,7 +4,7 @@ import passport from 'passport';
 import User from 'models/user';
 
 passport.use(
-  'signup',
+  'register',
   new LocalStrategy(
     {
       usernameField: 'email',
@@ -12,7 +12,6 @@ passport.use(
     },
     async (email: string, password: string, done) => {
       try {
-        // TODO: check if user exists (use findOrCreate)
         const [user, created] = await User.findOrCreate({
           where: { email },
           defaults: { email, password },

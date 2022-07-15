@@ -1,6 +1,5 @@
 import 'middleware/auth';
 import express, { Application } from 'express';
-import bodyParser from 'body-parser';
 import router from 'routes';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
@@ -10,8 +9,6 @@ const port = 3001;
 
 app.use(express.json());
 app.use(router);
-
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   '/swagger',
