@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import { passportInitializeStrategies } from 'middleware/passportStrategies';
 import router from 'routes';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -10,6 +10,7 @@ const port = 3001;
 passportInitializeStrategies();
 
 app.use(express.json());
+
 app.use(router);
 
 app.use(
@@ -28,6 +29,16 @@ app.use(
     }),
   ),
 );
+
+type CustomError = { error: Error; status: number };
+
+app.use((err: Error | CustomError, req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof Error) {
+    res.status(500).json({ error: err.message });
+    return;
+  }
+  res.status(err.status).json({ error: err.error.message });
+});
 
 app.listen(port, function () {
   console.log(`App is listening on port ${port} !`);
