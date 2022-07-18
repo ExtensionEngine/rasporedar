@@ -32,6 +32,8 @@ app.use(
 
 type CustomError = { error: Error; status: number };
 
+// Express does not pick up this method if next is not last parameter even if it is unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error | CustomError, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof Error) {
     res.status(500).json({ error: err.message });
