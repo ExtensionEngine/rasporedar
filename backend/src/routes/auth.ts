@@ -1,17 +1,26 @@
+import { NextFunction, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import { Router } from 'express';
+import User from 'models/user';
 
 const router = Router();
 
-router.post('/register', passport.authenticate('register', { session: false }), (req, res) => {
-  res.json({
-    user: req.user,
-  });
-});
+// fix for passport types
+// using any because passport definitely typed uses any
+// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/passport/index.d.ts#L28
 
-router.post('/login', async (req, res, next) => {
-  passport.authenticate('login', async (err, user) => {
+interface Request {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  login(user: User, options: any, done: (err: any) => void): void;
+}
+
+interface Response {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  json(payload: any): void;
+}
+
+const handleAuth = (strategy: string) => async (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate(strategy, async (err, user) => {
     try {
       if (err || !user) {
         const error = new Error(
@@ -33,6 +42,9 @@ router.post('/login', async (req, res, next) => {
       return next(error);
     }
   })(req, res, next);
-});
+};
+
+router.post('/register', handleAuth('register'));
+router.post('/login', handleAuth('login'));
 
 export default router;

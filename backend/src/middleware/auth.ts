@@ -18,10 +18,10 @@ passport.use(
         });
 
         if (!created) {
-          return done(null, { message: 'User already exists.' });
+          return done(null, false, { message: 'User already exists.' });
         }
 
-        return done(null, user);
+        return done(null, user, { message: 'Signed up Successfully' });
       } catch (error) {
         done(error);
       }
