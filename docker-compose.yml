@@ -22,6 +22,7 @@ services:
       POSTGRES_USER: rasporedar
       POSTGRES_PASSWORD: rasporedar
       JWT_SECRET_KEY: "${JWT_SECRET_KEY:?err}"
+      SALT_ROUNDS: "${SALT_ROUNDS:?err}"
     ports:
       - 3001:3001
     depends_on:

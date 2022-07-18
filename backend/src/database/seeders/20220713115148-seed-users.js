@@ -1,9 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bcrypt = require('bcrypt');
+
 module.exports = {
-  up(queryInterface) {
+  async up(queryInterface) {
     return queryInterface.bulkInsert('Users', [
       {
         email: 'admin@rasporedar.com',
-        password: '$2b$10$XHpexLgEJju/16z1CTdryeVZnkkcaOfzDmS0a2jNcTZvENT.eBuSS', // password: admin
+        password: await bcrypt.hash('admin', parseInt(process.env.SALT_ROUNDS)),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

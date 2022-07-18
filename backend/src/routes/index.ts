@@ -7,11 +7,15 @@ import teachersRouter from './teacher';
 import usersRouter from './user';
 
 const router = Router();
+const protectedRouter = Router();
 
 router.use('/auth', authRouter);
-router.use('/classrooms', classroomsRouter);
-router.use('/healthchecks', healthchecksRouter);
-router.use('/teachers', teachersRouter);
-router.use('/users', passport.authenticate('jwt', { session: false }), usersRouter);
+
+protectedRouter.use('/classrooms', classroomsRouter);
+protectedRouter.use('/healthchecks', healthchecksRouter);
+protectedRouter.use('/teachers', teachersRouter);
+protectedRouter.use('/users', usersRouter);
+
+router.use('/', passport.authenticate('jwt', { session: false }), protectedRouter);
 
 export default router;

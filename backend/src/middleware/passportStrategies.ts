@@ -8,20 +8,17 @@ export const registerStrategy = new LocalStrategy(
     usernameField: 'email',
     passwordField: 'password',
   },
-  async (email: string, password: string, done) => {
+  async (email, password, done) => {
     try {
-      const [user, created] = await User.findOrCreate({
-        where: { email },
-        defaults: { email, password },
-      });
-
-      if (!created) {
-        return done(null, false, { message: 'User already exists.' });
+      if (await User.findOne({ where: { email } })) {
+        return done(new Error('User already exists'), null);
       }
+
+      const user = await User.create({ email, password });
 
       return done(null, user, { message: 'Signed up Successfully' });
     } catch (error) {
-      done(error);
+      return done(error);
     }
   },
 );
@@ -36,13 +33,13 @@ export const loginStrategy = new LocalStrategy(
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        return done(null, false, { message: 'User not found' });
+        return done(new Error('User not found'), null);
       }
 
       const validate = await user.isValidPassword(password);
 
       if (!validate) {
-        return done(null, false, { message: 'Wrong Password' });
+        return done(new Error('Wrong Password'), null);
       }
 
       return done(null, user, { message: 'Logged in Successfully' });
@@ -57,11 +54,11 @@ export const jwtStrategy = new JwtStrategy(
     secretOrKey: process.env.JWT_SECRET_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
-  async (token, done) => {
+  (token, done) => {
     try {
       return done(null, token.user);
     } catch (error) {
-      done(error);
+      return done(error);
     }
   },
 );
