@@ -1,6 +1,6 @@
 import authRouter from './auth';
 import classroomsRouter from './classroom';
-import healthchecksRouter from './healthcheck';
+import healthcheckRouter from './healthcheck';
 import passport from 'passport';
 import { Router } from 'express';
 import teachersRouter from './teacher';
@@ -10,9 +10,9 @@ const router = Router();
 const protectedRouter = Router();
 
 router.use('/auth', authRouter);
+router.use('/healthcheck', healthcheckRouter);
 
 protectedRouter.use('/classrooms', classroomsRouter);
-protectedRouter.use('/healthchecks', healthchecksRouter);
 protectedRouter.use('/teachers', teachersRouter);
 protectedRouter.use('/users', usersRouter);
 
