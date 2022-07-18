@@ -1,23 +1,8 @@
-import { NextFunction, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import User from 'models/user';
 
 const router = Router();
-
-// fix for passport types
-// using any because passport definitely typed uses any
-// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/passport/index.d.ts#L28
-
-interface Request {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  login(user: User, options: any, done: (err: any) => void): void;
-}
-
-interface Response {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  json(payload: any): void;
-}
 
 const handleAuth = (strategy: string) => async (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate(strategy, async (err, user) => {
