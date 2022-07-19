@@ -1,24 +1,15 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sequelize from 'database/connection';
 
-interface UserAttributes {
-  id: number;
-  email: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-type UserCreationalAttributes = Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'>;
-
-class User extends Model<UserAttributes, UserCreationalAttributes> implements UserCreationalAttributes {
-  declare id: number;
+// eslint-disable-next-line no-use-before-define
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare id: CreationOptional<number>;
   declare email: string;
   declare password: string;
-  declare createdAt: Date;
-  declare updatedAt: Date;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   isValidPassword(password: string) {
     return bcrypt.compare(password, this.password);

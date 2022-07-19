@@ -1,22 +1,13 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import sequelize from 'database/connection';
 
-interface ClassroomAttributes {
-  id: number;
-  name: string;
-  capacity: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-type ClassroomCreationalAttributes = Optional<ClassroomAttributes, 'id' | 'createdAt' | 'updatedAt'>;
-
-class Classroom extends Model<ClassroomAttributes, ClassroomCreationalAttributes> implements ClassroomAttributes {
-  declare id: number;
+// eslint-disable-next-line no-use-before-define
+class Classroom extends Model<InferAttributes<Classroom>, InferCreationAttributes<Classroom>> {
+  declare id: CreationOptional<number>;
   declare name: string;
   declare capacity: number;
-  declare createdAt: Date;
-  declare updatedAt: Date;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 }
 
 Classroom.init(
