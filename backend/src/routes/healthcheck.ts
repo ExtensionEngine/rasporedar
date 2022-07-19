@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import sequelize from 'database/connection';
+import status from 'http-status';
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.get('/', async (req: Request, res: Response) => {
 
     res.send('success');
   } catch (error) {
-    res.status(500).send('failure');
+    res.status(status.INTERNAL_SERVER_ERROR).send('failure');
   }
 });
 

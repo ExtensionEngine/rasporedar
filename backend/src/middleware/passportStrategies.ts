@@ -1,6 +1,9 @@
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
+import errorMessages from 'consts/errorMessages';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { makeError } from 'helpers/error';
 import passport from 'passport';
+import status from 'http-status';
 import User from 'models/user';
 
 export const registerStrategy = new LocalStrategy(
@@ -11,12 +14,12 @@ export const registerStrategy = new LocalStrategy(
   async (email, password, done) => {
     try {
       if (await User.findOne({ where: { email } })) {
-        return done(new Error('User already exists'), null);
+        return done(makeError(errorMessages.AUTH_USER_EXISTS, status.BAD_REQUEST), null);
       }
 
       const user = await User.create({ email, password });
 
-      return done(null, user, { message: 'Signed up Successfully' });
+      return done(null, user);
     } catch (error) {
       return done(error);
     }
@@ -33,16 +36,16 @@ export const loginStrategy = new LocalStrategy(
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        return done(new Error('User not found'), null);
+        return done(makeError(errorMessages.AUTH_USER_NOT_FOUND, status.NOT_FOUND), null);
       }
 
       const validate = await user.isValidPassword(password);
 
       if (!validate) {
-        return done(new Error('Wrong Password'), null);
+        return done(makeError(errorMessages.AUTH_WRONG_PASSWORD, status.BAD_REQUEST), null);
       }
 
-      return done(null, user, { message: 'Logged in Successfully' });
+      return done(null, user);
     } catch (error) {
       return done(error);
     }
