@@ -1,4 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import sequelize from 'database/connection';
 
 interface UserAttributes {
@@ -18,14 +20,14 @@ class User extends Model<UserAttributes, UserCreationalAttributes> implements Us
   declare createdAt: Date;
   declare updatedAt: Date;
 
-  static scopes() {
-    return {
-      defaultScope: {
-        attributes: {
-          exclude: ['password'],
-        },
-      },
-    };
+  isValidPassword(password: string) {
+    return bcrypt.compare(password, this.password);
+  }
+
+  generateToken() {
+    const body = { _id: this.id, email: this.email };
+    const token = jwt.sign({ user: body }, process.env.JWT_SECRET_KEY || '');
+    return token;
   }
 }
 
@@ -58,6 +60,12 @@ User.init(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (user: User) => {
+        const hash = await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS || '10'));
+        user.password = hash;
+      },
+    },
     sequelize,
     modelName: 'User',
     tableName: 'Users',
