@@ -1,4 +1,5 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import httpStatusCodes from 'consts/httpStatusCodes';
 import { passportInitializeStrategies } from 'middleware/passportStrategies';
 import router from 'routes';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -36,7 +37,7 @@ type CustomError = { error: Error; status: number };
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error | CustomError, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof Error) {
-    res.status(500).json({ error: err.message });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     return;
   }
   res.status(err.status).json({ error: err.error.message });
