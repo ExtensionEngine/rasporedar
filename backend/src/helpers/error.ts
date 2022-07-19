@@ -1,5 +1,5 @@
-import httpStatusCodes from '../consts/httpStatusCodes';
+import status from 'http-status';
 
-export function makeError(message: string, status = httpStatusCodes.INTERNAL_SERVER_ERROR) {
-  return { error: new Error(message), status };
+export function makeError(message: string, statusCode = status.INTERNAL_SERVER_ERROR) {
+  return { error: new Error(message), status: statusCode };
 }

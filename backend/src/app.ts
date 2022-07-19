@@ -1,7 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
-import httpStatusCodes from 'consts/httpStatusCodes';
 import { passportInitializeStrategies } from 'middleware/passportStrategies';
 import router from 'routes';
+import status from 'http-status';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
@@ -35,8 +35,7 @@ app.use(
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error | { error: Error; status: number }, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof Error) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
-    return;
+    return res.status(status.INTERNAL_SERVER_ERROR).json({ error: err.message });
   }
   res.status(err.status).json({ error: err.error.message });
 });
