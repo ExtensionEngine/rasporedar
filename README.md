@@ -36,9 +36,9 @@ Migrate model to TS ([example](./backend/src/models/user.ts)) and remove line `'
 First of all, make sure your local server is up and running.
 Now to create the table in the database run:
 
-```sh
-cd backend
-npx sequelize-cli db:migrate
+```
+$ cd backend
+$ npx sequelize-cli db:migrate
 ```
 
 ### Undoing migrations
@@ -101,3 +101,9 @@ Seeders can be undone if they are using any storage. There are three possible co
   3. If you want to undo all seeds use coomand:
   
       `npx sequelize-cli db:seed:undo:all`
+
+## Run schedule generator from cli
+
+```
+$ ./backend/src/algo/cli.ts
+```
