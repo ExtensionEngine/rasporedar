@@ -41,12 +41,6 @@ $ cd backend
 $ npx sequelize-cli db:migrate
 ```
 
-### Run schedule generator from cli
-
-```
-$ ./backend/src/algo/cli.ts
-```
-
 ### Undoing migrations
 
 If you want to revert to old state by just running a command use:
@@ -107,3 +101,9 @@ Seeders can be undone if they are using any storage. There are three possible co
   3. If you want to undo all seeds use coomand:
   
       `npx sequelize-cli db:seed:undo:all`
+
+## Run schedule generator from cli
+
+```
+$ ./backend/src/algo/cli.ts
+```
