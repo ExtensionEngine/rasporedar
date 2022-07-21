@@ -24,7 +24,7 @@ Teacher.init(
       allowNull: false,
       validate: {
         len: [1, 100],
-        msg: "First name must be between 1 - 100 characters long",
+        msg: 'First name must be between 1 - 100 characters long',
       },
     },
     lastName: {
@@ -32,7 +32,7 @@ Teacher.init(
       allowNull: false,
       validate: {
         len: [1, 100],
-        msg: "Last name must be between 1 - 100 characters long",
+        msg: 'Last name must be between 1 - 100 characters long',
       },
     },
     teacherCode: {
@@ -41,7 +41,7 @@ Teacher.init(
       unique: true,
       validate: {
         notEmpty: true,
-        msg: "Teacher code can not be empty",
+        msg: 'Teacher code can not be empty',
       },
     },
     createdAt: {
@@ -58,7 +58,7 @@ Teacher.init(
   {
     defaultScope: {
       attributes: {
-        exclude: [ 'id', 'updatedAt', ],
+        exclude: ['id', 'updatedAt'],
       },
     },
     sequelize,

@@ -39,14 +39,14 @@ User.init(
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
-      validate: { isEmail: { msg: "Invalid Email format" }},
+      validate: { isEmail: { msg: 'Invalid Email format' } },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Can not be empty'},
-        len: [8,100],
+        notEmpty: { msg: 'Can not be empty' },
+        len: [8, 100],
       },
     },
     createdAt: {
@@ -66,13 +66,12 @@ User.init(
         user.password = await user.encryptPassword(user.password);
       },
       beforeUpdate: async (user: User) => {
-        if(user.changed('password'))
-          user.password = await user.encryptPassword(user.password);
-      }
+        if (user.changed('password')) user.password = await user.encryptPassword(user.password);
+      },
     },
     defaultScope: {
       attributes: {
-        exclude: ['id', 'password', 'updatedAt' ],
+        exclude: ['id', 'password', 'updatedAt'],
       },
     },
     sequelize,

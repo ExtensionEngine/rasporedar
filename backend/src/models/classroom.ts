@@ -29,7 +29,7 @@ Classroom.init(
       allowNull: false,
       validate: {
         min: 1,
-        msg: "Capacity can not be 0 or lower",
+        msg: 'Capacity can not be 0 or lower',
       },
     },
     createdAt: {
@@ -46,7 +46,7 @@ Classroom.init(
   {
     defaultScope: {
       attributes: {
-        exclude: [ 'id', 'updatedAt', ],
+        exclude: ['id', 'updatedAt'],
       },
     },
     sequelize,

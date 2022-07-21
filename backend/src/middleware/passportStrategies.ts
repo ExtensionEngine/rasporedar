@@ -33,7 +33,7 @@ export const loginStrategy = new LocalStrategy(
   },
   async (email, password, done) => {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.unscoped().findOne({ where: { email } });
 
       if (!user) {
         return done(makeError(errorMessages.AUTH_USER_NOT_FOUND, status.NOT_FOUND), null);
