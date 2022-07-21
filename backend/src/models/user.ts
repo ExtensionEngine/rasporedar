@@ -15,8 +15,13 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     return bcrypt.compare(password, this.password);
   }
 
+  async encryptPassword(password: string) {
+    const hash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS || '10'));
+    return hash;
+  }
+
   generateToken() {
-    const body = { _id: this.id, email: this.email };
+    const body = { id: this.id, email: this.email };
     const token = jwt.sign({ user: body }, process.env.JWT_SECRET_KEY || '');
     return token;
   }
@@ -34,10 +39,15 @@ User.init(
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
+      validate: { isEmail: { msg: "Invalid Email format" }},
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Can not be empty'},
+        len: [8,100],
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -53,8 +63,16 @@ User.init(
   {
     hooks: {
       beforeCreate: async (user: User) => {
-        const hash = await bcrypt.hash(user.password, parseInt(process.env.SALT_ROUNDS || '10'));
-        user.password = hash;
+        user.password = await user.encryptPassword(user.password);
+      },
+      beforeUpdate: async (user: User) => {
+        if(user.changed('password'))
+          user.password = await user.encryptPassword(user.password);
+      }
+    },
+    defaultScope: {
+      attributes: {
+        exclude: ['id', 'password', 'updatedAt' ],
       },
     },
     sequelize,

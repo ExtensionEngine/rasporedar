@@ -22,15 +22,27 @@ Teacher.init(
     firstName: {
       type: DataTypes.CITEXT,
       allowNull: false,
+      validate: {
+        len: [1, 100],
+        msg: "First name must be between 1 - 100 characters long",
+      },
     },
     lastName: {
       type: DataTypes.CITEXT,
       allowNull: false,
+      validate: {
+        len: [1, 100],
+        msg: "Last name must be between 1 - 100 characters long",
+      },
     },
     teacherCode: {
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
+      validate: {
+        notEmpty: true,
+        msg: "Teacher code can not be empty",
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -44,6 +56,11 @@ Teacher.init(
     },
   },
   {
+    defaultScope: {
+      attributes: {
+        exclude: [ 'id', 'updatedAt', ],
+      },
+    },
     sequelize,
     modelName: 'Teacher',
     tableName: 'Teachers',

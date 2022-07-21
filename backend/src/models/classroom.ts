@@ -22,10 +22,15 @@ Classroom.init(
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
+      validate: { notEmpty: true },
     },
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+        msg: "Capacity can not be 0 or lower",
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -39,6 +44,11 @@ Classroom.init(
     },
   },
   {
+    defaultScope: {
+      attributes: {
+        exclude: [ 'id', 'updatedAt', ],
+      },
+    },
     sequelize,
     modelName: 'Classroom',
     tableName: 'Classrooms',
