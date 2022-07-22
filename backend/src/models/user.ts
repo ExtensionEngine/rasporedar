@@ -69,7 +69,9 @@ User.init(
         user.password = await user.encryptPassword(user.password);
       },
       beforeUpdate: async (user: User) => {
-        if (user.changed('password')) user.password = await user.encryptPassword(user.password);
+        if (user.changed('password')) {
+          user.password = await user.encryptPassword(user.password);
+        }
       },
     },
     defaultScope: {

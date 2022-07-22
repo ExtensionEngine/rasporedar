@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   await Classroom.findAll()
     .then(classrooms => res.json(classrooms))
-    .catch(next);
+    .catch(error => next(error));
 });
 
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +19,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
       }
       res.json(classroom);
     })
-    .catch(next);
+    .catch(error => next(error));
 });
 
 router.post('/', async (req, res: Response, next: NextFunction) => {
@@ -28,7 +28,7 @@ router.post('/', async (req, res: Response, next: NextFunction) => {
     capacity: req.body.capacity,
   })
     .then(classroom => res.json(classroom))
-    .catch(next);
+    .catch(error => next(error));
 });
 
 router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
