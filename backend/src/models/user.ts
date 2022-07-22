@@ -11,8 +11,8 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  isValidPassword(password: string) {
-    return bcrypt.compare(password, this.password);
+  async isValidPassword(password: string) {
+    return await bcrypt.compare(password, this.password);
   }
 
   async encryptPassword(password: string) {
@@ -39,14 +39,17 @@ User.init(
       type: DataTypes.CITEXT,
       allowNull: false,
       unique: true,
-      validate: { isEmail: { msg: 'Invalid Email format' } },
+      validate: { isEmail: { msg: 'Invalid Email format.' } },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Can not be empty' },
-        len: [8, 100],
+        notEmpty: { msg: 'Password can not be empty. Please enter your password.' },
+        len: {
+          args: [8, 128],
+          msg: 'Password length is either too short or too long. It must be from 8 to 128 characters long.',
+        },
       },
     },
     createdAt: {
