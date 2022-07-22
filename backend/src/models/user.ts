@@ -21,8 +21,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
   generateToken() {
     const body = { id: this.id, email: this.email };
-    const token = jwt.sign({ user: body }, process.env.JWT_SECRET_KEY || '');
-    return token;
+    return jwt.sign({ user: body }, process.env.JWT_SECRET_KEY || '');
   }
 }
 

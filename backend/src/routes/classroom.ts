@@ -5,25 +5,23 @@ import { NOT_FOUND } from 'http-status';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  await Classroom.findAll()
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
+  Classroom.findAll()
     .then(classrooms => res.json(classrooms))
     .catch(error => next(error));
 });
 
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  await Classroom.findByPk(req.params.id)
+router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
+  Classroom.findByPk(req.params.id)
     .then(classroom => {
-      if (!classroom) {
-        return next(makeError('Classroom with that id not found.', NOT_FOUND));
-      }
-      res.json(classroom);
+      if (classroom) return res.json(classroom);
+      return next(makeError('Classroom with that id not found.', NOT_FOUND));
     })
     .catch(error => next(error));
 });
 
-router.post('/', async (req, res: Response, next: NextFunction) => {
-  await Classroom.create({
+router.post('/', (req, res: Response, next: NextFunction) => {
+  Classroom.create({
     name: req.body.name,
     capacity: req.body.capacity,
   })
@@ -31,8 +29,8 @@ router.post('/', async (req, res: Response, next: NextFunction) => {
     .catch(error => next(error));
 });
 
-router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  await Classroom.update(
+router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
+  Classroom.update(
     {
       name: req.body.name,
       capacity: req.body.capacity,
@@ -40,21 +38,17 @@ router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
     { where: { id: req.params.id } },
   )
     .then(async results => {
-      if (!results[0]) {
-        return next(makeError('Classroom with that id not found.', NOT_FOUND));
-      }
-      res.json(await Classroom.findByPk(req.params.id));
+      if (results[0]) return res.json(await Classroom.findByPk(req.params.id));
+      return next(makeError('Classroom with that id not found.', NOT_FOUND));
     })
     .catch(error => next(error));
 });
 
 router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  await Classroom.destroy({ where: { id: req.params.id } })
+  Classroom.destroy({ where: { id: req.params.id } })
     .then(result => {
-      if (!result) {
-        return next(makeError('Classroom with id not found.', NOT_FOUND));
-      }
-      res.json({ message: 'Classroom deleted successfully.' });
+      if (result) return res.json({ message: 'Classroom deleted successfully.' });
+      return next(makeError('Classroom with id not found.', NOT_FOUND));
     })
     .catch(error => next(error));
 });
