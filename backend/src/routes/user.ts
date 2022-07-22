@@ -32,14 +32,19 @@ router.delete('/profile', async (req: Request, res: Response, next: NextFunction
 });
 
 router.put('/profile/password', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.user as User;
   const { currentPassword, newPassword } = req.body;
 
   if (currentPassword === newPassword) {
     return makeError('New password is same as old password. Please, enter different password.', BAD_REQUEST);
   }
 
-  await User.update({ password: newPassword }, { where: { id }, individualHooks: true })
+  await User.update(
+    { password: newPassword },
+    {
+      where: { id: (req.user as User).id },
+      individualHooks: true,
+    },
+  )
     .then(() => res.json({ message: 'Password changed successfully' }))
     .catch(error => next(error));
 });

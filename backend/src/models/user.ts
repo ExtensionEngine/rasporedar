@@ -11,13 +11,12 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
-  async isValidPassword(password: string) {
-    return await bcrypt.compare(password, this.password);
+  isValidPassword(password: string) {
+    return bcrypt.compare(password, this.password);
   }
 
-  async encryptPassword(password: string) {
-    const hash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS || '10'));
-    return hash;
+  encryptPassword(password: string) {
+    return bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS || '10'));
   }
 
   generateToken() {
