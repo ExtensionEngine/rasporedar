@@ -1,64 +1,64 @@
-import { Request, Response, Router } from 'express';
-import httpStatus from 'http-status';
+import { NextFunction, Request, Response, Router } from 'express';
+import { makeError } from 'helpers/error';
+import { NOT_FOUND } from 'http-status';
 import Teacher from 'models/teacher';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
-  const teachers = await Teacher.findAll();
-
-  return res.json(teachers);
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  await Teacher.findAll()
+    .then(teachers => res.json(teachers))
+    .catch(error => next(error));
 });
 
-router.post('/', async (req: Request, res: Response) => {
-  const { firstName, lastName, teacherCode } = req.body as Teacher;
-
-  if (firstName === null || lastName === null || teacherCode === null)
-    return res.status(httpStatus.BAD_REQUEST).json({ message: 'Bad Request' });
-
-  const teacher = await Teacher.create({
-    firstName,
-    lastName,
-    teacherCode,
-  });
-
-  if (teacher === null) return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Internal Server Error' });
-
-  return res.json(teacher);
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  await Teacher.findByPk(req.params.id)
+    .then(teacher => {
+      if (!teacher) {
+        return next(makeError('Teacher with that id not found.', NOT_FOUND));
+      }
+      res.json(teacher);
+    })
+    .catch(error => next(error));
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
-  const { firstName, lastName, teacherCode } = req.body as Teacher;
-  const { id } = req.params;
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  await Teacher.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    teacherCode: req.body.teacherCode,
+  })
+    .then(teacher => res.json(teacher))
+    .catch(error => next(error));
+});
 
-  if (firstName === null || lastName === null || teacherCode === null)
-    return res.status(httpStatus.BAD_REQUEST).json({ message: 'Bad Request' });
-
-  const teacher = await Teacher.update(
+router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  await Teacher.update(
     {
-      firstName,
-      lastName,
-      teacherCode,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      teacherCode: req.body.teacherCode,
     },
-    {
-      where: { id },
-    },
-  );
-
-  if (teacher === null) return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Internal Server Error' });
-
-  return res.json(teacher);
+    { where: { id: req.params.id } },
+  )
+    .then(async results => {
+      if (!results[0]) {
+        return next(makeError('Teacher with that id not found.', NOT_FOUND));
+      }
+      res.json(await Teacher.findByPk(req.params.id));
+    })
+    .catch(error => next(error));
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const teacher = await Teacher.findByPk(id);
-
-  if (teacher === null) return res.status(httpStatus.NOT_FOUND).json({ message: 'Not Found' });
-
-  teacher.destroy();
-
-  return res.json(id);
+router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  await Teacher.destroy({ where: { id: req.params.id } })
+    .then(result => {
+      if (!result) {
+        return next(makeError('Teacher with that id not found.', NOT_FOUND));
+      }
+      res.json({ message: 'Teacher deleted successfully.' });
+    })
+    .catch(error => next(error));
 });
 
 export default router;

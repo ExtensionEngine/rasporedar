@@ -1,74 +1,45 @@
-import { BAD_REQUEST, NO_CONTENT, NOT_FOUND } from 'http-status';
 import { NextFunction, Request, Response, Router } from 'express';
+import { BAD_REQUEST } from 'http-status';
 import { makeError } from 'helpers/error';
 import User from 'models/user';
 
 const router = Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const users = await User.findAll();
-
-    return res.json(users);
-  } catch (error) {
-    next(error);
-  }
+  await User.findAll()
+    .then(users => res.json(users))
+    .catch(error => next(error));
 });
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.user as User;
-    const { email } = req.body;
+  const { id } = req.user as User;
 
-    await User.update({ email }, { where: { id } });
-    const user = await User.findByPk(id);
-
-    return res.json(user);
-  } catch (error) {
-    next(error);
-  }
+  await User.update({ email: req.body.email }, { where: { id } })
+    .then(async () => res.json(await User.findByPk(id)))
+    .catch(error => next(error));
 });
 
 router.get('/profile', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.user as User;
-    const user = await User.findByPk(id);
-
-    if (user === null) return makeError('Not Found', NOT_FOUND);
-
-    return res.json(user);
-  } catch (error) {
-    next(error);
-  }
+  await User.findByPk((req.user as User).id)
+    .then(user => res.json(user))
+    .catch(error => next(error));
 });
 
 router.delete('/profile', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.user as User;
-    const user = await User.findByPk(id);
-
-    if (user === null) return makeError('Not Found', NOT_FOUND);
-
-    await user.destroy();
-
-    return res.status(NO_CONTENT).json();
-  } catch (error) {
-    next(error);
-  }
+  await User.destroy({ where: { id: (req.user as User).id } })
+    .then(() => res.json({ message: 'Deleted successfully' }))
+    .catch(error => next(error));
 });
 
 router.put('/profile/password', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.user as User;
-    const { currentPassword, newPassword } = req.body;
-    const user = await User.update({ password: newPassword }, { where: { id } });
+  const { currentPassword, newPassword } = req.body;
 
-    if (currentPassword === newPassword || user === null) return makeError('Bad Request', BAD_REQUEST);
+  if (currentPassword === newPassword)
+    return makeError('New password is same as old password. Please, enter different password.', BAD_REQUEST);
 
-    return res.json(user);
-  } catch (error) {
-    next(error);
-  }
+  await User.update({ password: newPassword }, { where: { id: (req.user as User).id }, individualHooks: true })
+    .then(() => res.json({ message: 'Password changed successfully' }))
+    .catch(error => next(error));
 });
 
 export default router;
