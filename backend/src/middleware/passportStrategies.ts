@@ -33,7 +33,7 @@ export const loginStrategy = new LocalStrategy(
   },
   async (email, password, done) => {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.unscoped().findOne({ where: { email } });
 
       if (!user) {
         return done(makeError(errorMessages.AUTH_USER_NOT_FOUND, status.NOT_FOUND), null);
@@ -57,9 +57,15 @@ export const jwtStrategy = new JwtStrategy(
     secretOrKey: process.env.JWT_SECRET_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
-  (token, done) => {
+  async (token, done) => {
     try {
-      return done(null, token.user);
+      const user = token.user as User;
+
+      if (!(await User.count({ where: { id: user.id } }))) {
+        return done(makeError('User does not exist', status.UNAUTHORIZED), null);
+      }
+
+      return done(null, user);
     } catch (error) {
       return done(error);
     }
