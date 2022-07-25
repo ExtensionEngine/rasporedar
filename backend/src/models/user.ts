@@ -74,7 +74,7 @@ User.init(
     },
     defaultScope: {
       attributes: {
-        exclude: ['id', 'password', 'updatedAt'],
+        exclude: ['password', 'updatedAt'],
       },
     },
     sequelize,

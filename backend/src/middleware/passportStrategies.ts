@@ -57,9 +57,16 @@ export const jwtStrategy = new JwtStrategy(
     secretOrKey: process.env.JWT_SECRET_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
-  (token, done) => {
+  async (token, done) => {
     try {
-      return done(null, token.user);
+      const { id } = token.user as User;
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        return done(makeError('User does not exist', status.UNAUTHORIZED), null);
+      }
+
+      return done(null, user);
     } catch (error) {
       return done(error);
     }
