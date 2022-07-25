@@ -37,10 +37,15 @@ router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
       lastName: req.body.lastName,
       teacherCode: req.body.teacherCode,
     },
-    { where: { id: req.params.id } },
+    {
+      where: { id: req.params.id },
+      returning: true,
+    },
   )
-    .then(async results => {
-      if (results[0]) return res.json(await Teacher.findByPk(req.params.id));
+    .then(results => {
+      // result = [x] or [x, y] => [x] if you're not using Postgres OR [x, y] if you are using Postgres
+      // The first element x is always the number of affected rows, while the second element y is the actual affected rows
+      if (results[1][0]) return res.json(results[1][0]);
       return next(makeError('Teacher with that id not found.', NOT_FOUND));
     })
     .catch(error => next(error));
