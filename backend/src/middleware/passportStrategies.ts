@@ -59,9 +59,10 @@ export const jwtStrategy = new JwtStrategy(
   },
   async (token, done) => {
     try {
-      const user = token.user as User;
+      const { id } = token.user as User;
+      const user = await User.findByPk(id);
 
-      if (!(await User.count({ where: { id: user.id } }))) {
+      if (!user) {
         return done(makeError('User does not exist', status.UNAUTHORIZED), null);
       }
 
