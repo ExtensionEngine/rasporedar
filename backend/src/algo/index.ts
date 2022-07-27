@@ -1,179 +1,152 @@
-type Subject = {
-  name: string;
-  lectures: number;
-};
+import { GenerateScheduleProps, Subject } from './types';
 
-type Lecture = {
-  className: string;
-  subject: Subject;
-  lectureDistribution: number[];
-};
+const daysPerWeek = 5;
+const maxPeriodsPerDay = 7;
 
-type Teacher = {
-  name: string;
-  assigned: Lecture[];
-};
-
-const getEmpty3DArray = (x: number, y: number, z: number) => {
-  const arr: (string | null)[][][] = [];
+function getMatrix(x: number, y: number): (string | null)[][] {
+  const matrix: (string | null)[][] = [];
   for (let i = 0; i < x; i++) {
-    arr[i] = [];
+    matrix[i] = [];
     for (let j = 0; j < y; j++) {
-      arr[i][j] = [];
-      for (let k = 0; k < z; k++) {
-        arr[i][j][k] = null;
-      }
+      matrix[i][j] = null;
     }
   }
-  return arr;
-};
+  return matrix;
+}
 
-export function generateSchedule(_p: any): any {
-  const daysPerWeek = 5;
-  const periodsPerDay = 4;
+function getMatrixHashmap(keys: string[]) {
+  return Object.fromEntries(keys.map(key => [key, getMatrix(daysPerWeek, maxPeriodsPerDay)]));
+}
 
-  const classes = ['1a', '1b', '1c', '2a', '2b'];
-  const subjects: Subject[] = [
-    { name: 'matematika', lectures: 3 },
-    { name: 'hrvatski', lectures: 3 },
-    { name: 'fizika', lectures: 2 },
-    { name: 'engleski', lectures: 2 },
-    { name: 'glazbeni', lectures: 1 },
-    { name: 'likovni', lectures: 1 },
-  ];
-  const teachers: Teacher[] = [
-    {
-      name: 'Mate Matic',
-      assigned: [
-        { className: classes[0], subject: subjects[0], lectureDistribution: [1, 1, 1] },
-        { className: classes[1], subject: subjects[0], lectureDistribution: [1, 1, 1] },
-        { className: classes[2], subject: subjects[0], lectureDistribution: [1, 1, 1] },
-        { className: classes[3], subject: subjects[0], lectureDistribution: [1, 1, 1] },
-        { className: classes[4], subject: subjects[0], lectureDistribution: [1, 1, 1] },
-      ],
-    },
-    {
-      name: 'Ana Anic',
-      assigned: [
-        { className: classes[0], subject: subjects[1], lectureDistribution: [1, 1, 1] },
-        { className: classes[1], subject: subjects[1], lectureDistribution: [1, 1, 1] },
-        { className: classes[2], subject: subjects[1], lectureDistribution: [1, 1, 1] },
-        { className: classes[3], subject: subjects[1], lectureDistribution: [2, 1] },
-        { className: classes[4], subject: subjects[1], lectureDistribution: [2, 1] },
-      ],
-    },
-    {
-      name: 'Ante Antic',
-      assigned: [
-        { className: classes[3], subject: subjects[2], lectureDistribution: [1, 1] },
-        { className: classes[4], subject: subjects[2], lectureDistribution: [1, 1] },
-      ],
-    },
-    {
-      name: 'Luka Lukic',
-      assigned: [
-        { className: classes[0], subject: subjects[3], lectureDistribution: [1, 1] },
-        { className: classes[1], subject: subjects[3], lectureDistribution: [1, 1] },
-        { className: classes[2], subject: subjects[3], lectureDistribution: [1, 1] },
-        { className: classes[3], subject: subjects[3], lectureDistribution: [1, 1] },
-        { className: classes[4], subject: subjects[3], lectureDistribution: [1, 1] },
-      ],
-    },
-    {
-      name: 'Iva Ivic',
-      assigned: [
-        { className: classes[0], subject: subjects[4], lectureDistribution: [1] },
-        { className: classes[1], subject: subjects[4], lectureDistribution: [1] },
-        { className: classes[2], subject: subjects[4], lectureDistribution: [1] },
-      ],
-    },
-    {
-      name: 'Maja Majic',
-      assigned: [
-        { className: classes[0], subject: subjects[5], lectureDistribution: [1] },
-        { className: classes[1], subject: subjects[5], lectureDistribution: [1] },
-        { className: classes[2], subject: subjects[5], lectureDistribution: [1] },
-      ],
-    },
-  ];
+function getTimesPerWeek({ timesPerWeek }: Subject) {
+  return timesPerWeek instanceof Array ? timesPerWeek.reduce((a, b) => a + b, 0) : timesPerWeek;
+}
 
-  const finalTimetable = getEmpty3DArray(classes.length, daysPerWeek, periodsPerDay);
-  const availableTeachers = getEmpty3DArray(teachers.length, daysPerWeek, periodsPerDay);
-  const availableClasses = getEmpty3DArray(classes.length, daysPerWeek, periodsPerDay);
+function shuffleArray<Type>(value: Type[]): Type[] {
+  const array = [...value];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
-  const remainingLectures = classes.map(className =>
-    teachers.map(teacher => {
-      const index = teacher.assigned.findIndex(e => e.className === className);
-      return index !== -1 ? teacher.assigned[index].subject.lectures : 0;
-    }),
-  );
+export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): any {
+  const teachers = classes
+    .map(c => c.subjects.map(s => s.teacher))
+    .flat()
+    .filter((t, i, arr) => arr.findIndex(ts => ts.name === t.name) === i);
 
-  console.log('var: remainingLectures');
-  console.log('row: classIndex');
-  console.log('col: teacherIndex');
-  console.table(remainingLectures);
-
-  // treba ovdje provjerit jel uopce ima toliko perioda da blok satovi ne mogu izvirit vani
-  const isSchedulePossible = (teacherIndex: number, classIndex: number, dayIndex: number, periodIndex: number) =>
-    !(availableTeachers[teacherIndex][dayIndex][periodIndex] || availableClasses[classIndex][dayIndex][periodIndex]);
+  const timetable = getMatrixHashmap(classes.map(c => c.name));
+  const unavailable = {
+    classes: getMatrixHashmap(classes.map(c => c.name)),
+    teachers: getMatrixHashmap(teachers.map(t => t.name)),
+    classrooms: getMatrixHashmap(classrooms.map(r => r.name)),
+  };
 
   for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
-    for (let periodIndex = 0; periodIndex < periodsPerDay; periodIndex++) {
-      classes.forEach((className: string, classIndex: number) => {
-        if (finalTimetable[classIndex][dayIndex][periodIndex] !== null) {
+    for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; periodIndex++) {
+      shuffleArray(classes).forEach(class_ => {
+        if (timetable[class_.name][dayIndex][periodIndex] !== null) {
           return;
         }
 
-        for (let teacherIndex = 0; teacherIndex < teachers.length; teacherIndex++) {
-          const valid = teachers[teacherIndex].assigned.findIndex(l => l.className === className);
-          if (
-            valid === -1 ||
-            availableTeachers[teacherIndex][dayIndex].some(p => p === className) ||
-            remainingLectures[classIndex][teacherIndex] === 0
-          ) {
-            continue;
-          }
-
-          if (isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex)) {
-            let lectureCount = 1;
-            const longestLecture = teachers[teacherIndex].assigned[valid].lectureDistribution[0];
-            if (
-              remainingLectures[classIndex][teacherIndex] > 1 &&
-              longestLecture > 1 &&
-              isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex + 1)
-            ) {
-              lectureCount = 2;
-            }
-            for (let i = 0; i < lectureCount; i++) {
-              finalTimetable[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
-              availableClasses[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
-              availableTeachers[teacherIndex][dayIndex][periodIndex + i] = className;
-              remainingLectures[classIndex][teacherIndex]--;
-            }
-            break;
-          }
+        const periodsPerWeek = class_.subjects.reduce((sum, s) => sum + getTimesPerWeek(s), 0);
+        const periodsPerDay = Math.trunc(periodsPerWeek / daysPerWeek) + 1;
+        if (!(periodIndex < periodsPerDay)) {
+          return;
         }
+
+        shuffleArray(class_.subjects).forEach(subject => {
+          console.log(subject);
+          // if teacher is available
+          // if classroom is available
+        });
       });
     }
   }
 
-  finalTimetable.forEach((tt, i) => {
-    console.log('Class: ', classes[i]);
+  return;
 
-    console.table(tt);
-  });
+  // const remainingLectures = classes.map(className =>
+  //   teachers.map(teacher => {
+  //     const index = teacher.assigned.findIndex(e => e.className === className);
+  //     return index !== -1 ? teacher.assigned[index].lectureDistribution.reduce((a, b) => a + b, 0) : 0;
+  //   }),
+  // );
 
-  let remaining = 0;
-  remainingLectures.forEach((lecture, i) => {
-    lecture.forEach((value, j) => {
-      if (value > 0) {
-        remaining++;
-      }
-    });
-  });
-  console.log('Remaining Lectures: ' + remaining);
+  // console.log('var: remainingLectures');
+  // console.log('row: classIndex');
+  // console.log('col: teacherIndex');
+  // console.table(remainingLectures);
 
-  console.table(remainingLectures);
+  // // treba ovdje provjerit jel uopce ima toliko perioda da blok satovi ne mogu izvirit vani
+  // const isSchedulePossible = (teacherIndex: number, classIndex: number, dayIndex: number, periodIndex: number) =>
+  //   !(availableTeachers[teacherIndex][dayIndex][periodIndex] || availableClasses[classIndex][dayIndex][periodIndex]);
+
+  //       foreach teacher
+  //       if teacher is available and for that class etc.
+  //         if class is possible
+  //           handle multiple hour lectures
+  //           insert in final timetable and availability arrs
+
+  // for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
+  //   for (let periodIndex = 0; periodIndex < periodsPerDay; periodIndex++) {
+  //     classes.forEach((className: string, classIndex: number) => {
+  //       if (finalTimetable[classIndex][dayIndex][periodIndex] !== null) {
+  //         return;
+  //       }
+
+  //       for (let teacherIndex = 0; teacherIndex < teachers.length; teacherIndex++) {
+  //         const valid = teachers[teacherIndex].assigned.findIndex(l => l.className === className);
+  //         if (
+  //           valid === -1 ||
+  //           availableTeachers[teacherIndex][dayIndex].some(p => p === className) ||
+  //           remainingLectures[classIndex][teacherIndex] === 0
+  //         ) {
+  //           continue;
+  //         }
+
+  //         if (isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex)) {
+  //           let lectureCount = 1;
+  //           const longestLecture = teachers[teacherIndex].assigned[valid].lectureDistribution[0];
+  //           if (
+  //             remainingLectures[classIndex][teacherIndex] > 1 &&
+  //             longestLecture > 1 &&
+  //             isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex + 1)
+  //           ) {
+  //             lectureCount = 2;
+  //           }
+  //           for (let i = 0; i < lectureCount; i++) {
+  //             finalTimetable[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
+  //             availableClasses[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
+  //             availableTeachers[teacherIndex][dayIndex][periodIndex + i] = className;
+  //             remainingLectures[classIndex][teacherIndex]--;
+  //           }
+  //           break;
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
+
+  // // finalTimetable.keys.forEach((tt, i) => {
+  // //   console.log('Class: ', classes[i]);
+
+  // //   console.table(tt);
+  // // });
+
+  // let remaining = 0;
+  // remainingLectures.forEach((lecture, i) => {
+  //   lecture.forEach((value, j) => {
+  //     if (value > 0) {
+  //       remaining++;
+  //     }
+  //   });
+  // });
+  // console.log('Remaining Lectures: ' + remaining);
+
+  // console.table(remainingLectures);
 
   return 'raspored';
 }

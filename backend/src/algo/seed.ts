@@ -6,7 +6,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
       name: '5a',
       subjects: [
         { name: 'Hrvatski jezik', timesPerWeek: 5, teacher: { name: 'Ante Antic' } },
-        { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
+        { name: 'Likovna kultura', timesPerWeek: [2], teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marko Markic' } },
         { name: 'Matematika', timesPerWeek: 4, teacher: { name: 'Mate Matic' } },
@@ -24,7 +24,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
       name: '5b',
       subjects: [
         { name: 'Hrvatski jezik', timesPerWeek: 5, teacher: { name: 'Ana Anic' } },
-        { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
+        { name: 'Likovna kultura', timesPerWeek: [2], teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marko Markic' } },
         { name: 'Matematika', timesPerWeek: 4, teacher: { name: 'Mate Matic' } },
@@ -42,7 +42,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
       name: '5c',
       subjects: [
         { name: 'Hrvatski jezik', timesPerWeek: 5, teacher: { name: 'Ante Antic' } },
-        { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
+        { name: 'Likovna kultura', timesPerWeek: [2], teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marko Markic' } },
         { name: 'Matematika', timesPerWeek: 4, teacher: { name: 'Tomislav Tomic' } },
@@ -154,7 +154,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
     {
       name: '8a',
       subjects: [
-        { name: 'Hrvatski jezik', timesPerWeek: 4, teacher: { name: 'Ana Anic' } },
+        { name: 'Hrvatski jezik', timesPerWeek: [2, 1, 1], teacher: { name: 'Ana Anic' } },
         { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marta Martic' } },
@@ -174,7 +174,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
     {
       name: '8b',
       subjects: [
-        { name: 'Hrvatski jezik', timesPerWeek: 4, teacher: { name: 'Ante Antic' } },
+        { name: 'Hrvatski jezik', timesPerWeek: [2, 1, 1], teacher: { name: 'Ante Antic' } },
         { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marta Martic' } },
@@ -194,7 +194,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
     {
       name: '8c',
       subjects: [
-        { name: 'Hrvatski jezik', timesPerWeek: 4, teacher: { name: 'Ana Anic' } },
+        { name: 'Hrvatski jezik', timesPerWeek: [2, 1, 1], teacher: { name: 'Ana Anic' } },
         { name: 'Likovna kultura', timesPerWeek: 1, teacher: { name: 'Iva Ivic' }, classroom: { name: '203' } },
         { name: 'Glazbena kultura', timesPerWeek: 1, teacher: { name: 'Maja Majic' }, classroom: { name: '204' } },
         { name: 'Engleski jezik', timesPerWeek: 3, teacher: { name: 'Marta Martic' } },

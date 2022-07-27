@@ -8,8 +8,8 @@ export interface Classroom {
 
 export interface Subject {
   name: string;
-  timesPerWeek: number;
-  teacher?: Teacher;
+  timesPerWeek: number | number[];
+  teacher: Teacher;
   classroom?: Classroom;
   class?: string;
 }
