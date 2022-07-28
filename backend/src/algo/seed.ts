@@ -15,7 +15,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Ante Antic' } },
       ],
@@ -33,7 +33,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Iva Ivic' } },
       ],
@@ -51,7 +51,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Maja Majic' } },
       ],
@@ -70,7 +70,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Marko Markic' } },
       ],
@@ -88,7 +88,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Mate Matic' } },
       ],
@@ -106,7 +106,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '205' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Nikola Nikolic' } },
       ],
@@ -125,7 +125,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Povijest', timesPerWeek: 2, teacher: { name: 'Mislav Mislavic' } },
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '206' } },
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Nikolina Nikolinic' } },
@@ -145,7 +145,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Povijest', timesPerWeek: 2, teacher: { name: 'Mislav Mislavic' } },
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '206' } },
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Marica Maric' } },
@@ -165,7 +165,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Povijest', timesPerWeek: 2, teacher: { name: 'Mislav Mislavic' } },
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '206' } },
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
@@ -185,7 +185,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Povijest', timesPerWeek: 2, teacher: { name: 'Mislav Mislavic' } },
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '206' } },
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Roko Rokic' } },
@@ -205,7 +205,7 @@ export const generateScheduleProps: GenerateScheduleProps = {
         { name: 'Povijest', timesPerWeek: 2, teacher: { name: 'Mislav Mislavic' } },
         { name: 'Geografija', timesPerWeek: 2, teacher: { name: 'Luka Lukic' } },
         { name: 'Tehnička kultura', timesPerWeek: 1, teacher: { name: 'Kreso Kresic' } },
-        { name: 'Tjelesna i zdravstvena kultura', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
+        { name: 'Tjelesni', timesPerWeek: 2, teacher: { name: 'Mario Maric' }, classroom: { name: '001' } }, // prettier-ignore
         { name: 'Informatika', timesPerWeek: 2, teacher: { name: 'Roko Rokic' }, classroom: { name: '206' } },
         { name: 'Vjeronauk', timesPerWeek: 2, teacher: { name: 'Ankica Ankic' } },
         { name: 'Sat razrednika', timesPerWeek: 1, teacher: { name: 'Mislav Mislavic' } },
