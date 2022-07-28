@@ -61,10 +61,6 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; periodIndex++) {
       shuffleArray(classes).forEach(class_ => {
-        if (timetable[hash(class_)][dayIndex][periodIndex] !== null) {
-          return;
-        }
-
         const periodsPerWeek = class_.subjects.reduce((sum, s) => sum + getTimesPerWeek(s), 0);
         const periodsPerDay = Math.trunc(periodsPerWeek / daysPerWeek) + 1;
         if (!(periodIndex < periodsPerDay)) {
@@ -72,19 +68,12 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
         }
 
         shuffleArray(class_.subjects).forEach(subject => {
-          if (timetable[hash(class_)][dayIndex][periodIndex]) {
-            return;
-          }
-
-          if (unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex]) {
-            return;
-          }
-
-          if (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) {
-            return;
-          }
-
-          if (remainingLectures[class_.name][subject.name] === 0) {
+          if (
+            timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
+            unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
+            (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
+            remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
+          ) {
             return;
           }
 
@@ -113,28 +102,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   );
   console.table(remainingLectures);
 
-  // // treba ovdje provjerit jel uopce ima toliko perioda da blok satovi ne mogu izvirit vani
-  // const isSchedulePossible = (teacherIndex: number, classIndex: number, dayIndex: number, periodIndex: number) =>
-  //   !(availableTeachers[teacherIndex][dayIndex][periodIndex] || availableClasses[classIndex][dayIndex][periodIndex]);
-
   //           handle multiple hour lectures
-
-  // for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
-  //   for (let periodIndex = 0; periodIndex < periodsPerDay; periodIndex++) {
-  //     classes.forEach((className: string, classIndex: number) => {
-  //       if (finalTimetable[classIndex][dayIndex][periodIndex] !== null) {
-  //         return;
-  //       }
-
-  //       for (let teacherIndex = 0; teacherIndex < teachers.length; teacherIndex++) {
-  //         const valid = teachers[teacherIndex].assigned.findIndex(l => l.className === className);
-  //         if (
-  //           valid === -1 ||
-  //           availableTeachers[teacherIndex][dayIndex].some(p => p === className) ||
-  //           remainingLectures[classIndex][teacherIndex] === 0
-  //         ) {
-  //           continue;
-  //         }
 
   //         if (isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex)) {
   //           let lectureCount = 1;
@@ -153,29 +121,6 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   //             remainingLectures[classIndex][teacherIndex]--;
   //           }
   //           break;
-  //         }
-  //       }
-  //     });
-  //   }
-  // }
-
-  // // finalTimetable.keys.forEach((tt, i) => {
-  // //   console.log('Class: ', classes[i]);
-
-  // //   console.table(tt);
-  // // });
-
-  // let remaining = 0;
-  // remainingLectures.forEach((lecture, i) => {
-  //   lecture.forEach((value, j) => {
-  //     if (value > 0) {
-  //       remaining++;
-  //     }
-  //   });
-  // });
-  // console.log('Remaining Lectures: ' + remaining);
-
-  // console.table(remainingLectures);
 
   return 'raspored';
 }
