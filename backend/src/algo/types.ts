@@ -11,7 +11,6 @@ export type Subject = {
   timesPerWeek: number | number[];
   teacher: Teacher;
   classroom?: Classroom;
-  class?: string;
 };
 
 export type Class = {

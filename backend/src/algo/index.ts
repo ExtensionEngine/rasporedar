@@ -1,30 +1,6 @@
-import {
-  Class,
-  GenerateScheduleProps,
-  GenerateScheduleResult,
-  MatrixHashmap,
-  RemainingLectures,
-  Subject,
-} from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
+import { GenerateScheduleProps, GenerateScheduleResult, RemainingLectures } from './types';
 import { getMatrixHashmap, getPeriodsPerDay, getTimesPerWeek, hash, shuffleArray } from './utils';
-
-function isPeriodAvailable(
-  timetable: MatrixHashmap,
-  unavailable: { teachers: MatrixHashmap; classrooms: MatrixHashmap },
-  remainingLectures: RemainingLectures,
-  class_: Class,
-  subject: Subject,
-  dayIndex: number,
-  periodIndex: number,
-) {
-  return (
-    timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
-    unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
-    (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
-    remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
-  );
-}
 
 export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
   const teachers = classes
@@ -53,7 +29,12 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
         }
 
         shuffleArray(class_.subjects).forEach(subject => {
-          if (isPeriodAvailable(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
+          if (
+            timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
+            unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
+            (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
+            remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
+          ) {
             return;
           }
 
@@ -73,7 +54,6 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
 
   //           handle multiple hour lectures
 
-  //         if (isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex)) {
   //           let lectureCount = 1;
   //           const longestLecture = teachers[teacherIndex].assigned[valid].lectureDistribution[0];
   //           if (
@@ -89,7 +69,6 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   //             availableTeachers[teacherIndex][dayIndex][periodIndex + i] = className;
   //             remainingLectures[classIndex][teacherIndex]--;
   //           }
-  //           break;
 
   return { timetable, remainingLectures };
 }
