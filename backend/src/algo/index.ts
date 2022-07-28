@@ -1,43 +1,6 @@
 import { Class, GenerateScheduleProps, Subject } from './types';
-
-const daysPerWeek = 5;
-const maxPeriodsPerDay = 8;
-
-function getMatrix(x: number, y: number): (string | null)[][] {
-  const matrix: (string | null)[][] = [];
-  for (let i = 0; i < x; i++) {
-    matrix[i] = [];
-    for (let j = 0; j < y; j++) {
-      matrix[i][j] = null;
-    }
-  }
-  return matrix;
-}
-
-function getMatrixHashmap(keys: unknown[]) {
-  return Object.fromEntries(keys.map(key => [hash(key), getMatrix(daysPerWeek, maxPeriodsPerDay)]));
-}
-
-function getTimesPerWeek({ timesPerWeek }: Subject) {
-  return timesPerWeek instanceof Array ? timesPerWeek.reduce((a, b) => a + b, 0) : timesPerWeek;
-}
-
-function shuffleArray<Type>(value: Type[]): Type[] {
-  const array = [...value];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function hash(key: unknown): string {
-  return JSON.stringify(key);
-}
-
-function unhash<Type>(value: string): Type {
-  return JSON.parse(value);
-}
+import { daysPerWeek, maxPeriodsPerDay } from './consts';
+import { getMatrixHashmap, getTimesPerWeek, hash, shuffleArray, unhash } from './utils';
 
 export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): any {
   const teachers = classes
@@ -91,6 +54,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     }
   }
 
+  // TODO: move this in cli.ts
   Object.keys(timetable).forEach(class_ => {
     console.log('Class: ', unhash<Class>(class_).name);
     console.table(timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null))));
