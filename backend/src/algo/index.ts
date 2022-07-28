@@ -73,21 +73,6 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     }
   }
 
-  // TODO: move this in cli.ts
-  Object.keys(timetable).forEach(class_ => {
-    console.log('Class: ', unhash<Class>(class_).name);
-    console.table(
-      timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null)).filter(d => d)),
-      //                                                                                             ^^^^^^^^^^^^^^ hide empty slots in output
-    );
-  });
-
-  console.log(
-    'Remaining lectures',
-    Object.values(remainingLectures).reduce((sum, ls) => sum + Object.values(ls).reduce((sum, l) => sum + l, 0), 0),
-  );
-  console.table(remainingLectures);
-
   //           handle multiple hour lectures
 
   //         if (isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex)) {
