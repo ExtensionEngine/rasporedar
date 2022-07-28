@@ -1,6 +1,30 @@
-import { Class, GenerateScheduleProps, GenerateScheduleResult, Subject } from './types';
+import {
+  Class,
+  GenerateScheduleProps,
+  GenerateScheduleResult,
+  MatrixHashmap,
+  RemainingLectures,
+  Subject,
+} from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { getMatrixHashmap, getTimesPerWeek, hash, shuffleArray, unhash } from './utils';
+
+function isPeriodAvailable(
+  timetable: MatrixHashmap,
+  unavailable: { teachers: MatrixHashmap; classrooms: MatrixHashmap },
+  remainingLectures: RemainingLectures,
+  class_: Class,
+  subject: Subject,
+  dayIndex: number,
+  periodIndex: number,
+) {
+  return (
+    timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
+    unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
+    (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
+    remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
+  );
+}
 
 export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
   const teachers = classes
@@ -14,7 +38,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     classrooms: getMatrixHashmap(classrooms),
   };
 
-  const remainingLectures = Object.fromEntries(
+  const remainingLectures: RemainingLectures = Object.fromEntries(
     classes.map(class_ => [
       class_.name,
       Object.fromEntries(class_.subjects.map(subject => [subject.name, getTimesPerWeek(subject)])),
@@ -31,12 +55,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
         }
 
         shuffleArray(class_.subjects).forEach(subject => {
-          if (
-            timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
-            unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
-            (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
-            remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
-          ) {
+          if (isPeriodAvailable(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
             return;
           }
 

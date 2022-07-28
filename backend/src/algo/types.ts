@@ -30,11 +30,13 @@ export type MatrixHashmap = {
   [key: string]: Matrix;
 };
 
+export type RemainingLectures = {
+  [className: string]: {
+    [subjectName: string]: number;
+  };
+};
+
 export type GenerateScheduleResult = {
   timetable: MatrixHashmap;
-  remainingLectures: {
-    [className: string]: {
-      [subjectName: string]: number;
-    };
-  };
+  remainingLectures: RemainingLectures;
 };
