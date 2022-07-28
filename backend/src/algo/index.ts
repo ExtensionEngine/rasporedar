@@ -51,6 +51,13 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     classrooms: getMatrixHashmap(classrooms),
   };
 
+  const remainingLectures = Object.fromEntries(
+    classes.map(class_ => [
+      class_.name,
+      Object.fromEntries(class_.subjects.map(subject => [subject.name, getTimesPerWeek(subject)])),
+    ]),
+  );
+
   for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; periodIndex++) {
       shuffleArray(classes).forEach(class_ => {
@@ -65,6 +72,10 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
         }
 
         shuffleArray(class_.subjects).forEach(subject => {
+          if (timetable[hash(class_)][dayIndex][periodIndex]) {
+            return;
+          }
+
           if (unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex]) {
             return;
           }
@@ -73,16 +84,19 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
             return;
           }
 
-          // get random classroom if not exists
-          // if (!subject.classroom) {
-          // const available = Object.keys(unavailable.classrooms).filter(
-          //   r => !unavailable.classrooms[r][dayIndex][periodIndex],
-          // );
-          // subject.classroom = unhash(shuffleArray(available)[0]) as Classroom;
-          // }
+          if (remainingLectures[class_.name][subject.name] === 0) {
+            return;
+          }
 
-          // console.log(subject);
+          // used if classroom constraint is not present
+          const fallbackClassroom = shuffleArray(
+            Object.keys(unavailable.classrooms).filter(r => !unavailable.classrooms[r][dayIndex][periodIndex]),
+          )[0];
+
           timetable[hash(class_)][dayIndex][periodIndex] = hash(subject);
+          unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
+          unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
+          remainingLectures[class_.name][subject.name]--;
         });
       });
     }
@@ -90,28 +104,20 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
 
   Object.keys(timetable).forEach(class_ => {
     console.log('Class: ', unhash<Class>(class_).name);
-
     console.table(timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null))));
   });
 
-  return;
-
-  // const remainingLectures = classes.map(className =>
-  //   teachers.map(teacher => {
-  //     const index = teacher.assigned.findIndex(e => e.className === className);
-  //     return index !== -1 ? teacher.assigned[index].lectureDistribution.reduce((a, b) => a + b, 0) : 0;
-  //   }),
-  // );
+  console.log(
+    'Remaining lectures',
+    Object.values(remainingLectures).reduce((sum, ls) => sum + Object.values(ls).reduce((sum, l) => sum + l, 0), 0),
+  );
+  console.table(remainingLectures);
 
   // // treba ovdje provjerit jel uopce ima toliko perioda da blok satovi ne mogu izvirit vani
   // const isSchedulePossible = (teacherIndex: number, classIndex: number, dayIndex: number, periodIndex: number) =>
   //   !(availableTeachers[teacherIndex][dayIndex][periodIndex] || availableClasses[classIndex][dayIndex][periodIndex]);
 
-  //       foreach teacher
-  //       if teacher is available and for that class etc.
-  //         if class is possible
   //           handle multiple hour lectures
-  //           insert in final timetable and availability arrs
 
   // for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
   //   for (let periodIndex = 0; periodIndex < periodsPerDay; periodIndex++) {
