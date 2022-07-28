@@ -8,7 +8,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     .flat()
     .filter((t, i, arr) => arr.findIndex(ts => ts.name === t.name) === i);
 
-  const timetable = getMatrixHashmap(classes);
+  const timetable = getMatrixHashmap(classes.map(c => c.name));
   const unavailable = {
     teachers: getMatrixHashmap(teachers),
     classrooms: getMatrixHashmap(classrooms),
@@ -30,7 +30,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
 
         shuffleArray(class_.subjects).forEach(subject => {
           if (
-            timetable[hash(class_)][dayIndex][periodIndex] || // class in not available
+            timetable[hash(class_.name)][dayIndex][periodIndex] || // class in not available
             unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
             (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
             remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
@@ -43,7 +43,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
             Object.keys(unavailable.classrooms).filter(r => !unavailable.classrooms[r][dayIndex][periodIndex]),
           )[0];
 
-          timetable[hash(class_)][dayIndex][periodIndex] = hash(subject);
+          timetable[hash(class_.name)][dayIndex][periodIndex] = hash(subject);
           unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
           unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
           remainingLectures[class_.name][subject.name]--;

@@ -24,3 +24,6 @@ console.log(
   Object.values(remainingLectures).reduce((sum, ls) => sum + Object.values(ls).reduce((sum, l) => sum + l, 0), 0),
 );
 console.table(remainingLectures);
+
+console.log(timetable);
+console.log(remainingLectures);
