@@ -1,5 +1,5 @@
+import { Class, Matrix, Subject } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
-import { Matrix, Subject } from './types';
 
 export function getMatrix(x: number, y: number) {
   const matrix: Matrix = [];
@@ -18,6 +18,11 @@ export function getMatrixHashmap(keys: unknown[]) {
 
 export function getTimesPerWeek({ timesPerWeek }: Subject) {
   return timesPerWeek instanceof Array ? timesPerWeek.reduce((a, b) => a + b, 0) : timesPerWeek;
+}
+
+export function getPeriodsPerDay(class_: Class) {
+  const periodsPerWeek = class_.subjects.reduce((sum, s) => sum + getTimesPerWeek(s), 0);
+  return Math.trunc(periodsPerWeek / daysPerWeek) + 1;
 }
 
 export function shuffleArray<Type>(value: Type[]): Type[] {

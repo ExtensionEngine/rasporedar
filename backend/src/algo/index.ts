@@ -7,7 +7,7 @@ import {
   Subject,
 } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
-import { getMatrixHashmap, getTimesPerWeek, hash, shuffleArray, unhash } from './utils';
+import { getMatrixHashmap, getPeriodsPerDay, getTimesPerWeek, hash, shuffleArray } from './utils';
 
 function isPeriodAvailable(
   timetable: MatrixHashmap,
@@ -48,9 +48,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; periodIndex++) {
       shuffleArray(classes).forEach(class_ => {
-        const periodsPerWeek = class_.subjects.reduce((sum, s) => sum + getTimesPerWeek(s), 0);
-        const periodsPerDay = Math.trunc(periodsPerWeek / daysPerWeek) + 1;
-        if (!(periodIndex < periodsPerDay)) {
+        if (!(periodIndex < getPeriodsPerDay(class_))) {
           return;
         }
 
