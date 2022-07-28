@@ -1,4 +1,4 @@
-import { Class, Classroom, GenerateScheduleProps, Subject } from './types';
+import { Class, GenerateScheduleProps, Subject } from './types';
 
 const daysPerWeek = 5;
 const maxPeriodsPerDay = 8;
