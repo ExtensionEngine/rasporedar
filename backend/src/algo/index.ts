@@ -1,8 +1,8 @@
-import { Class, GenerateScheduleProps, Subject } from './types';
+import { Class, GenerateScheduleProps, GenerateScheduleResult, Subject } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { getMatrixHashmap, getTimesPerWeek, hash, shuffleArray, unhash } from './utils';
 
-export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): any {
+export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
   const teachers = classes
     .map(c => c.subjects.map(s => s.teacher))
     .flat()
@@ -57,7 +57,10 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   // TODO: move this in cli.ts
   Object.keys(timetable).forEach(class_ => {
     console.log('Class: ', unhash<Class>(class_).name);
-    console.table(timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null))));
+    console.table(
+      timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null)).filter(d => d)),
+      //                                                                                             ^^^^^^^^^^^^^^ hide empty slots in output
+    );
   });
 
   console.log(
@@ -86,5 +89,5 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
   //           }
   //           break;
 
-  return 'raspored';
+  return { timetable, remainingLectures };
 }

@@ -1,8 +1,8 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
-import { Subject } from './types';
+import { Matrix, Subject } from './types';
 
-export function getMatrix(x: number, y: number): (string | null)[][] {
-  const matrix: (string | null)[][] = [];
+export function getMatrix(x: number, y: number) {
+  const matrix: Matrix = [];
   for (let i = 0; i < x; i++) {
     matrix[i] = [];
     for (let j = 0; j < y; j++) {

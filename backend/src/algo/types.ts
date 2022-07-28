@@ -1,38 +1,40 @@
-export interface Teacher {
+export type Teacher = {
   name: string;
-}
+};
 
-export interface Classroom {
+export type Classroom = {
   name: string;
-}
+};
 
-export interface Subject {
+export type Subject = {
   name: string;
   timesPerWeek: number | number[];
   teacher: Teacher;
   classroom?: Classroom;
   class?: string;
-}
+};
 
-export interface Class {
+export type Class = {
   name: string;
   subjects: Subject[];
-}
+};
 
-export interface GenerateScheduleProps {
+export type GenerateScheduleProps = {
   classes: Class[];
   classrooms: Classroom[];
-}
+};
 
-export interface ClassResult {
-  name: string;
-}
+export type Matrix = (string | null)[][];
 
-export interface TeacherResult {
-  name: string;
-}
+export type MatrixHashmap = {
+  [key: string]: Matrix;
+};
 
-export interface GenerateScheduleResult {
-  classes: ClassResult[];
-  teachers: TeacherResult[];
-}
+export type GenerateScheduleResult = {
+  timetable: MatrixHashmap;
+  remainingLectures: {
+    [className: string]: {
+      [subjectName: string]: number;
+    };
+  };
+};
