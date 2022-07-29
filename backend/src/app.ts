@@ -1,3 +1,4 @@
+import cors, { CorsOptions } from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { passportInitializeStrategies } from 'middleware/passportStrategies';
 import router from 'routes';
@@ -9,6 +10,17 @@ const port = 3001;
 
 passportInitializeStrategies();
 
+const whitelist = ['http://localhost:3000'];
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (origin && whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(router);
