@@ -1,26 +1,17 @@
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { useStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref(null);
+  const user = ref(useStorage('user', {}));
 
-  function isLoggedIn() {
-    return getUser() !== null;
-  }
+  const getUser = computed(() => {
+    return user.value;
+  });
 
-  function getUser() {
-    if (user.value) {
-      return user.value;
-    }
-
-    const token = localStorage.getItem('token');
-    if (token) {
-      setUser(token);
-      return user.value;
-    }
-
-    return null;
-  }
+  const isLoggedIn = computed(() => {
+    return !!user.value.id;
+  });
 
   async function setUser(token) {
     const response = await fetch('http://localhost:3001/users/profile', {
@@ -31,9 +22,7 @@ export const useUserStore = defineStore('user', () => {
 
     const json = await response.json();
     user.value = json;
-
-    localStorage.setItem('token', token);
   }
 
-  return { getUser, setUser, isLoggedIn };
+  return { user, getUser, setUser, isLoggedIn };
 });

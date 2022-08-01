@@ -91,7 +91,7 @@ export default {
 
 <template>
   <div>
-    <pre>{{ JSON.stringify(store.getUser(), null, 2) }}</pre>
+    <pre>{{ JSON.stringify(store.user, null, 2) }}</pre>
     <h1>LOGIN</h1>
     <form @submit.prevent="login">
       <input v-model="loginForm.email" type="email" placeholder="email" required />
