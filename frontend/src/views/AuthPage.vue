@@ -1,27 +1,32 @@
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
 export default {
   name: 'auth-page',
   data: () => {
-    return {
-      loginForm: {
-        email: '',
-        password: '',
-        error: null,
-      },
-      registerForm: {
-        email: '',
-        password: '',
-        repeatedPassword: '',
-        error: null,
-      },
-    };
+    return {};
   },
-  methods: {
-    async login(e) {
+  setup() {
+    const router = useRouter();
+    const store = useUserStore();
+
+    const loginForm = ref({
+      email: '',
+      password: '',
+      error: null,
+    });
+    const registerForm = ref({
+      email: '',
+      password: '',
+      repeatedPassword: '',
+      error: null,
+    });
+
+    const login = async e => {
       e.preventDefault();
-      this.loginForm.error = null;
+      loginForm.value.error = null;
 
       const response = await fetch('http://localhost:3001/auth/login', {
         method: 'POST',
@@ -29,29 +34,31 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: this.loginForm.email,
-          password: this.loginForm.password,
+          email: loginForm.value.email,
+          password: loginForm.value.password,
         }),
       });
       const json = await response.json();
 
       if ('error' in json) {
-        this.loginForm.error = json.error;
+        loginForm.value.error = json.error;
         return;
       }
 
-      this.loginForm.email = '';
-      this.loginForm.password = '';
+      loginForm.value.email = '';
+      loginForm.value.password = '';
 
-      const { setUser } = useUserStore();
-      setUser(json.token);
-    },
-    async register(e) {
+      await store.logInUser(json.token);
+
+      router.push({ name: 'home' });
+    };
+
+    const register = async e => {
       e.preventDefault();
-      this.registerForm.error = null;
+      registerForm.value.error = null;
 
-      if (this.registerForm.password !== this.registerForm.repeatedPassword) {
-        this.registerForm.error = 'Password and repeated password are not matching';
+      if (registerForm.value.password !== registerForm.value.repeatedPassword) {
+        registerForm.value.error = 'Password and repeated password are not matching';
         return;
       }
 
@@ -61,37 +68,34 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: this.registerForm.email,
-          password: this.registerForm.password,
+          email: registerForm.value.email,
+          password: registerForm.value.password,
         }),
       });
       const json = await response.json();
       if ('error' in json) {
-        this.registerForm.error = json.error;
+        registerForm.value.error = json.error;
         return;
       }
 
-      this.registerForm.email = '';
-      this.registerForm.password = '';
-      this.registerForm.repeatedPassword = '';
+      registerForm.value.email = '';
+      registerForm.value.password = '';
+      registerForm.value.repeatedPassword = '';
 
-      const { setUser } = useUserStore();
-      setUser(json.token);
-    },
+      await store.logInUser(json.token);
+
+      router.push({ name: 'home' });
+    };
+    return { store, login, loginForm, register, registerForm };
   },
   components: {},
-  setup() {
-    const store = useUserStore();
-    return {
-      store,
-    };
-  },
 };
 </script>
 
 <template>
   <div>
     <pre>{{ JSON.stringify(store.user, null, 2) }}</pre>
+
     <h1>LOGIN</h1>
     <form @submit.prevent="login">
       <input v-model="loginForm.email" type="email" placeholder="email" required />
