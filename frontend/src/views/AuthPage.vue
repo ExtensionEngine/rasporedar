@@ -10,7 +10,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const store = useUserStore();
+    const userStore = useUserStore();
 
     const loginForm = ref({
       email: '',
@@ -48,8 +48,7 @@ export default {
       loginForm.value.email = '';
       loginForm.value.password = '';
 
-      await store.logInUser(json.token);
-
+      await userStore.logInUser(json.token);
       router.push({ name: 'home' });
     };
 
@@ -82,11 +81,10 @@ export default {
       registerForm.value.password = '';
       registerForm.value.repeatedPassword = '';
 
-      await store.logInUser(json.token);
-
+      await userStore.logInUser(json.token);
       router.push({ name: 'home' });
     };
-    return { store, login, loginForm, register, registerForm };
+    return { store: userStore, login, loginForm, register, registerForm };
   },
   components: {},
 };

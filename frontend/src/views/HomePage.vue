@@ -1,22 +1,24 @@
 <script>
-import PageGreeting from '../components/PageGreeting.vue';
+import PageGreeting from '@/components/PageGreeting.vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../stores/user';
+import { useUserStore } from '@/stores/user';
 
 export default {
   name: 'home-page',
   setup() {
+    const userStore = useUserStore();
+    const router = useRouter();
+
+    const handleLogOut = () => {
+      userStore.logOutUser();
+      router.push({ name: 'auth' });
+    };
+
     return {
-      store: useUserStore(),
-      router: useRouter(),
+      handleLogOut,
     };
   },
-  methods: {
-    handleLogOut() {
-      this.store.logOutUser();
-      this.router.push({ name: 'auth' });
-    },
-  },
+  methods: {},
   components: {
     PageGreeting,
   },
