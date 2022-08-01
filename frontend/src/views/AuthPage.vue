@@ -1,4 +1,6 @@
 <script>
+import { useUserStore } from '@/stores/user';
+
 export default {
   name: 'auth-page',
   data: () => {
@@ -40,7 +42,9 @@ export default {
 
       this.loginForm.email = '';
       this.loginForm.password = '';
-      console.log('great success', json);
+
+      const { setUser } = useUserStore();
+      setUser(json.token);
     },
     async register(e) {
       e.preventDefault();
@@ -70,15 +74,24 @@ export default {
       this.registerForm.email = '';
       this.registerForm.password = '';
       this.registerForm.repeatedPassword = '';
-      console.log('great success', json);
+
+      const { setUser } = useUserStore();
+      setUser(json.token);
     },
   },
   components: {},
+  setup() {
+    const store = useUserStore();
+    return {
+      store,
+    };
+  },
 };
 </script>
 
 <template>
   <div>
+    <pre>{{ JSON.stringify(store.getUser(), null, 2) }}</pre>
     <h1>LOGIN</h1>
     <form @submit.prevent="login">
       <input v-model="loginForm.email" type="email" placeholder="email" required />
