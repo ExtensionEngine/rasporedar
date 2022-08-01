@@ -6,7 +6,7 @@ export default {
 
 <template>
   <header>
-    <img src="../assets/img/ee_logo.png" />
+    <img src="../assets/img/rasporedar_logo.svg" />
   </header>
 </template>
 
