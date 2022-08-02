@@ -18,7 +18,6 @@ export default {
       handleLogOut,
     };
   },
-  methods: {},
   components: {
     PageGreeting,
   },
