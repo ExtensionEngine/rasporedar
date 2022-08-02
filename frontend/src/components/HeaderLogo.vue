@@ -12,12 +12,10 @@ export default {
 
 <style scoped>
 img {
-  width: 200px;
+  width: 75px;
 }
-@media (max-width: 700px) {
-  img {
-    display: block;
-    margin: auto;
-  }
+
+header {
+  margin: 16px 0;
 }
 </style>

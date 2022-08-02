@@ -143,6 +143,8 @@ input[type='password'] {
   border-bottom: 2px solid var(--color-muted);
   padding: 16px 8px;
   margin-bottom: 16px;
+  width: 275px;
+  transition: border 200ms ease-out;
 }
 
 input[type='email']:focus,
