@@ -10,7 +10,7 @@ export default {
     const router = useRouter();
 
     const handleLogOut = () => {
-      userStore.logOutUser();
+      userStore.logoutUser();
       router.push({ name: 'auth' });
     };
 

@@ -1,4 +1,5 @@
 <script>
+import authService from '../api/auth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
@@ -28,27 +29,20 @@ export default {
       e.preventDefault();
       loginForm.value.error = null;
 
-      const response = await fetch('http://localhost:3001/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: loginForm.value.email,
-          password: loginForm.value.password,
-        }),
+      const user = await authService.loginUser({
+        email: loginForm.value.email,
+        password: loginForm.value.password,
       });
-      const json = await response.json();
 
-      if ('error' in json) {
-        loginForm.value.error = json.error;
+      if ('error' in user) {
+        loginForm.value.error = user.error;
         return;
       }
 
       loginForm.value.email = '';
       loginForm.value.password = '';
 
-      await userStore.logInUser(json.token);
+      await userStore.loginUser(user.token);
       router.push({ name: 'home' });
     };
 
@@ -61,19 +55,13 @@ export default {
         return;
       }
 
-      const response = await fetch('http://localhost:3001/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: registerForm.value.email,
-          password: registerForm.value.password,
-        }),
+      const user = await authService.registerUser({
+        email: registerForm.value.email,
+        password: registerForm.value.password,
       });
-      const json = await response.json();
-      if ('error' in json) {
-        registerForm.value.error = json.error;
+
+      if ('error' in user) {
+        registerForm.value.error = user.error;
         return;
       }
 
@@ -81,7 +69,7 @@ export default {
       registerForm.value.password = '';
       registerForm.value.repeatedPassword = '';
 
-      await userStore.logInUser(json.token);
+      await userStore.loginUser(user.token);
       router.push({ name: 'home' });
     };
     return { store: userStore, login, loginForm, register, registerForm };

@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
+import userService from '@/api/users';
 import { useStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('user', () => {
@@ -10,22 +11,15 @@ export const useUserStore = defineStore('user', () => {
     return !!user.value.id;
   });
 
-  async function logInUser(jwtToken) {
-    const response = await fetch('http://localhost:3001/users/profile', {
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    });
-
-    const json = await response.json();
-    user.value = json;
+  async function loginUser(jwtToken) {
+    user.value = await userService.getUserProfile(jwtToken);
     token.value = jwtToken;
   }
 
-  function logOutUser() {
+  function logoutUser() {
     user.value = {};
     token.value = '';
   }
 
-  return { token, user, isLoggedIn, logInUser, logOutUser };
+  return { token, user, isLoggedIn, loginUser, logoutUser };
 });
