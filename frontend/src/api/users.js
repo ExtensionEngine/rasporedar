@@ -1,7 +1,7 @@
-const root = 'http://localhost:3001/users';
+const baseUrl = '/api/users';
 
 const getUserProfile = token =>
-  fetch(`${root}/profile`, {
+  fetch(`${baseUrl}/profile`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

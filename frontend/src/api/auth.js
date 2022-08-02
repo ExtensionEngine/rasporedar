@@ -1,7 +1,7 @@
-const root = 'http://localhost:3001/auth';
+const baseUrl = '/api/auth';
 
 const loginUser = ({ email, password }) =>
-  fetch(`${root}/login`, {
+  fetch(`${baseUrl}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ const loginUser = ({ email, password }) =>
   }).then(r => r.json());
 
 const registerUser = ({ email, password }) =>
-  fetch(`${root}/register`, {
+  fetch(`${baseUrl}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
