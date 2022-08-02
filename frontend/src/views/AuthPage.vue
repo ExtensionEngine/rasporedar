@@ -18,12 +18,6 @@ export default {
       password: '',
       error: null,
     });
-    const registerForm = ref({
-      email: '',
-      password: '',
-      repeatedPassword: '',
-      error: null,
-    });
 
     const login = async e => {
       e.preventDefault();
@@ -45,6 +39,13 @@ export default {
       await userStore.loginUser(user.token);
       router.push({ name: 'home' });
     };
+
+    const registerForm = ref({
+      email: '',
+      password: '',
+      repeatedPassword: '',
+      error: null,
+    });
 
     const register = async e => {
       e.preventDefault();
@@ -72,6 +73,7 @@ export default {
       await userStore.loginUser(user.token);
       router.push({ name: 'home' });
     };
+
     return { store: userStore, login, loginForm, register, registerForm };
   },
   components: {},
