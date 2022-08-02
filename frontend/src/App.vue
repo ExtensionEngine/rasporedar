@@ -29,5 +29,15 @@ export default {
 
 body {
   font-family: 'Montserrat', sans-serif;
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 16px;
+}
+
+:root {
+  --color-danger: #f00;
+  --color-muted: #bbb;
+  --color-main: #5ce2a7;
+  --color-text: #000;
 }
 </style>

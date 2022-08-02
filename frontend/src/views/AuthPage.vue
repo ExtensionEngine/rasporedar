@@ -81,44 +81,101 @@ export default {
 </script>
 
 <template>
-  <div>
-    <pre>{{ JSON.stringify(store.user, null, 2) }}</pre>
-
-    <h1>LOGIN</h1>
-    <form @submit.prevent="login">
-      <input v-model="loginForm.email" type="email" placeholder="email" required />
-      <br />
-      <br />
-      <input v-model="loginForm.password" placeholder="password" type="password" required />
-      <br />
-      <br />
-      <div v-if="loginForm.error" class="error">
-        {{ loginForm.error }}
+  <div class="form-screen">
+    <img src="../assets/img/timetable_illustration.png" />
+    <div class="form-wrapper">
+      <div class="login-form">
+        <h2>Login</h2>
+        <form @submit.prevent="login">
+          <input v-model="loginForm.email" type="email" placeholder="Email" required />
+          <br />
+          <br />
+          <input v-model="loginForm.password" placeholder="Password" type="password" required />
+          <br />
+          <br />
+          <div v-if="loginForm.error" class="error">
+            {{ loginForm.error }}
+          </div>
+          <button type="submit">Login</button>
+        </form>
       </div>
-      <button type="submit">Login</button>
-    </form>
 
-    <h1>REGISTER</h1>
-    <form @submit.prevent="register">
-      <input v-model="registerForm.email" type="email" placeholder="email" required />
-      <br />
-      <br />
-      <input v-model="registerForm.password" placeholder="password" type="password" required />
-      <br />
-      <br />
-      <input v-model="registerForm.repeatedPassword" placeholder="repeat password" type="password" required />
-      <br />
-      <br />
-      <div v-if="registerForm.error" class="error">
-        {{ registerForm.error }}
+      <div class="registration-form">
+        <h2>Register</h2>
+        <form @submit.prevent="register">
+          <input v-model="registerForm.email" type="email" placeholder="Email" required />
+          <br />
+          <br />
+          <input v-model="registerForm.password" placeholder="Password" type="password" required />
+          <br />
+          <br />
+          <input v-model="registerForm.repeatedPassword" placeholder="Repeat password" type="password" required />
+          <br />
+          <br />
+          <div v-if="registerForm.error" class="error">
+            {{ registerForm.error }}
+          </div>
+          <button type="submit">Register</button>
+        </form>
       </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.form-screen {
+  display: flex;
+}
+
+.form-screen img,
+.form-screen .form-wrapper {
+  width: 50%;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10%;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+input[type='email'],
+input[type='password'] {
+  border: 0;
+  border-bottom: 2px solid var(--color-muted);
+  padding: 16px 8px;
+  margin-bottom: 16px;
+}
+input[type='email']:focus,
+input[type='password']:focus {
+  outline: none;
+  border-bottom-color: var(--color-main);
+}
+
 .error {
   color: red;
+}
+
+button[type='submit'] {
+  padding: 14px 56px;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-muted);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 200ms ease-out;
+}
+button[type='submit']:hover,
+button[type='submit']:focus {
+  border-color: var(--color-text);
+}
+
+.registration-form {
+  /* temp */
+  display: none;
 }
 </style>
