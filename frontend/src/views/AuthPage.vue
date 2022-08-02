@@ -33,9 +33,6 @@ export default {
         return;
       }
 
-      loginForm.value.email = '';
-      loginForm.value.password = '';
-
       await userStore.loginUser(user.token);
       router.push({ name: 'home' });
     };
@@ -65,10 +62,6 @@ export default {
         registerForm.value.error = user.error;
         return;
       }
-
-      registerForm.value.email = '';
-      registerForm.value.password = '';
-      registerForm.value.repeatedPassword = '';
 
       await userStore.loginUser(user.token);
       router.push({ name: 'home' });
@@ -151,6 +144,7 @@ input[type='password'] {
   padding: 16px 8px;
   margin-bottom: 16px;
 }
+
 input[type='email']:focus,
 input[type='password']:focus {
   outline: none;
