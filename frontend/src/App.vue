@@ -30,7 +30,7 @@ export default {
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0 auto;
-  max-width: 1400px;
+  max-width: 1200px;
   padding: 0 16px;
 }
 

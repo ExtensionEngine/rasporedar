@@ -7,7 +7,7 @@ import { useUserStore } from '@/stores/user';
 export default {
   name: 'auth-page',
   data: () => {
-    return {};
+    return { isToggled: false };
   },
   setup() {
     const router = useRouter();
@@ -76,7 +76,7 @@ export default {
 <template>
   <div class="form-screen">
     <img src="../assets/img/timetable_illustration.png" />
-    <div class="form-wrapper">
+    <div class="form-wrapper" :class="{ toggled: isToggled }">
       <div class="login-form">
         <h2>Login</h2>
         <form @submit.prevent="login">
@@ -90,6 +90,8 @@ export default {
             {{ loginForm.error }}
           </div>
           <button type="submit">Login</button>
+          <a @click="isToggled = !isToggled" class="link">Want to register?</a>
+          <a class="link">Forgot your password?</a>
         </form>
       </div>
 
@@ -109,6 +111,8 @@ export default {
             {{ registerForm.error }}
           </div>
           <button type="submit">Register</button>
+          <a @click="isToggled = !isToggled" class="link">Want to login?</a>
+          <a class="link">Forgot your password?</a>
         </form>
       </div>
     </div>
@@ -118,6 +122,8 @@ export default {
 <style scoped>
 .form-screen {
   display: flex;
+  align-items: center;
+  /* overflow: hidden; */
 }
 
 .form-screen img,
@@ -127,10 +133,14 @@ export default {
 
 .form-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 10%;
+  height: 450px;
+  transition: translate 200ms ease-out;
+}
+
+.form-wrapper.toggled {
+  translate: 0 -1400px;
 }
 
 h2 {
@@ -164,14 +174,20 @@ button[type='submit'] {
   border-radius: 5px;
   cursor: pointer;
   transition: border 200ms ease-out;
+  margin-bottom: 24px;
 }
 button[type='submit']:hover,
 button[type='submit']:focus {
   border-color: var(--color-text);
 }
 
-.registration-form {
-  /* temp */
-  display: none;
+.link {
+  display: block;
+  margin-bottom: 8px;
+  text-decoration: underline;
+}
+
+.login-form {
+  margin-bottom: 1000px;
 }
 </style>
