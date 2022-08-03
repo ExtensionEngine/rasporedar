@@ -69,7 +69,6 @@ export default {
 
     return { store: userStore, login, loginForm, register, registerForm };
   },
-  components: {},
 };
 </script>
 
@@ -128,11 +127,11 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 450px;
-  transition: translate 200ms ease-out;
+  transition: translate 300ms ease-out;
 }
 
 .form-wrapper.toggled {
-  translate: 0 -1450px;
+  translate: 0 calc(-100vh - 450px);
 }
 
 h2 {
@@ -177,11 +176,9 @@ button[type='submit']:focus {
 .link {
   display: block;
   margin-bottom: 12px;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 .login-form {
-  margin-bottom: 1000px;
+  margin-bottom: 100vh;
 }
 </style>

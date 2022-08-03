@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', () => {
   });
 
   async function loginUser(jwtToken) {
-    user.value = await userService.getUserProfile(jwtToken);
+    user.value = await userService.getUserProfileFromToken(jwtToken);
     token.value = jwtToken;
   }
 

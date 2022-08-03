@@ -1,7 +1,9 @@
+import fetcher from './helpers';
+
 const baseUrl = '/api/auth';
 
 const loginUser = ({ email, password }) =>
-  fetch(`${baseUrl}/login`, {
+  fetcher(`${baseUrl}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -10,10 +12,10 @@ const loginUser = ({ email, password }) =>
       email,
       password,
     }),
-  }).then(r => r.json());
+  });
 
 const registerUser = ({ email, password }) =>
-  fetch(`${baseUrl}/register`, {
+  fetcher(`${baseUrl}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -22,6 +24,6 @@ const registerUser = ({ email, password }) =>
       email,
       password,
     }),
-  }).then(r => r.json());
+  });
 
 export default { loginUser, registerUser };

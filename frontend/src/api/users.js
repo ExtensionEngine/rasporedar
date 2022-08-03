@@ -1,10 +1,10 @@
+import fetcher from './helpers';
+
 const baseUrl = '/api/users';
 
-const getUserProfile = token =>
-  fetch(`${baseUrl}/profile`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(r => r.json());
+const getUserProfile = () => fetcher(`${baseUrl}/profile`);
 
-export default { getUserProfile };
+const getUserProfileFromToken = token =>
+  fetcher(`${baseUrl}/profile`, { headers: { Authorization: `Bearer ${token}` } });
+
+export default { getUserProfile, getUserProfileFromToken };
