@@ -81,12 +81,8 @@ export default {
         <h2>Login</h2>
         <form @submit.prevent="login">
           <input v-model="loginForm.email" type="email" placeholder="Email" required />
-          <br />
-          <br />
           <input v-model="loginForm.password" placeholder="Password" type="password" required />
-          <br />
-          <br />
-          <div v-if="loginForm.error" class="error">
+          <div v-if="loginForm.error" class="form-error">
             {{ loginForm.error }}
           </div>
           <button type="submit">Login</button>
@@ -99,15 +95,9 @@ export default {
         <h2>Register</h2>
         <form @submit.prevent="register">
           <input v-model="registerForm.email" type="email" placeholder="Email" required />
-          <br />
-          <br />
           <input v-model="registerForm.password" placeholder="Password" type="password" required />
-          <br />
-          <br />
           <input v-model="registerForm.repeatedPassword" placeholder="Repeat password" type="password" required />
-          <br />
-          <br />
-          <div v-if="registerForm.error" class="error">
+          <div v-if="registerForm.error" class="form-error">
             {{ registerForm.error }}
           </div>
           <button type="submit">Register</button>
@@ -151,10 +141,11 @@ h2 {
 
 input[type='email'],
 input[type='password'] {
+  display: block;
   border: 0;
   border-bottom: 2px solid var(--color-muted);
   padding: 16px 8px;
-  margin-bottom: 16px;
+  margin-bottom: 28px;
   width: 275px;
   transition: border 200ms ease-out;
 }
@@ -165,7 +156,7 @@ input[type='password']:focus {
   border-bottom-color: var(--color-main);
 }
 
-.error {
+.form-error {
   color: red;
 }
 
@@ -176,7 +167,7 @@ button[type='submit'] {
   border-radius: 5px;
   cursor: pointer;
   transition: border 200ms ease-out;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 button[type='submit']:hover,
 button[type='submit']:focus {
@@ -185,8 +176,9 @@ button[type='submit']:focus {
 
 .link {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .login-form {
