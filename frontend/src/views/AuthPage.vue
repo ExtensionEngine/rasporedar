@@ -123,7 +123,9 @@ export default {
 .form-screen {
   display: flex;
   align-items: center;
-  /* overflow: hidden; */
+  justify-content: center;
+  height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
 .form-screen img,
@@ -140,7 +142,7 @@ export default {
 }
 
 .form-wrapper.toggled {
-  translate: 0 -1400px;
+  translate: 0 -1450px;
 }
 
 h2 {

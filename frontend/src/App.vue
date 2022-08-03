@@ -11,17 +11,17 @@ export default {
 </script>
 
 <template>
-  <nav>
-    <HeaderLogo />
-    <!-- 
+  <div>
+    <nav>
+      <HeaderLogo />
+      <!-- 
     <router-link class="link" to="/">Home</router-link>
     <router-link class="link" to="/about">About</router-link>
     <router-link class="link" to="/login">Login</router-link>
     <router-link class="link" to="/register">Register</router-link>
-    -->
-
+    --></nav>
     <router-view></router-view>
-  </nav>
+  </div>
 </template>
 
 <style>
