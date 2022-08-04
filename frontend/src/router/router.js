@@ -5,18 +5,18 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('../views/HomePage.vue'),
+    component: () => import('@/views/HomePage.vue'),
     meta: { requiresAuth: true },
   },
   {
     path: '/about',
     name: 'about',
-    component: () => import('../views/AboutPage.vue'),
+    component: () => import('@/views/AboutPage.vue'),
   },
   {
     path: '/auth',
     name: 'auth',
-    component: () => import('../views/AuthPage.vue'),
+    component: () => import('@/views/AuthPage.vue'),
   },
 ];
 

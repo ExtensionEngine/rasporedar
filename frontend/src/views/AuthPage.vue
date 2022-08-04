@@ -1,14 +1,11 @@
 <script>
-import authService from '../api/auth';
+import authService from '@/api/auth';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
 export default {
   name: 'auth-page',
-  data: () => {
-    return { isToggled: false };
-  },
   setup() {
     const router = useRouter();
     const userStore = useUserStore();
@@ -19,8 +16,7 @@ export default {
       error: null,
     });
 
-    const login = async e => {
-      e.preventDefault();
+    const login = async () => {
       loginForm.value.error = null;
 
       const user = await authService.loginUser({
@@ -44,8 +40,7 @@ export default {
       error: null,
     });
 
-    const register = async e => {
-      e.preventDefault();
+    const register = async () => {
       registerForm.value.error = null;
 
       if (registerForm.value.password !== registerForm.value.repeatedPassword) {
@@ -67,14 +62,16 @@ export default {
       router.push({ name: 'home' });
     };
 
-    return { store: userStore, login, loginForm, register, registerForm };
+    const isToggled = ref(false);
+
+    return { store: userStore, login, loginForm, register, registerForm, isToggled };
   },
 };
 </script>
 
 <template>
   <div class="form-screen">
-    <img src="../assets/img/timetable_illustration.png" />
+    <img src="@/assets/img/timetable_illustration.png" />
     <div class="form-wrapper" :class="{ toggled: isToggled }">
       <div class="login-form">
         <h2>Login</h2>
