@@ -1,10 +1,14 @@
 function updateOptions(options) {
-  const update = { ...options };
-  if (localStorage.getItem('token')) {
-    update.headers = {
-      ...update.headers,
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    };
+  const update = {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  };
+  const token = localStorage.getItem('token');
+  if (token) {
+    update.headers.Authorization = `Bearer ${token}`;
   }
   return update;
 }
