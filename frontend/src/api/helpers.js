@@ -1,4 +1,7 @@
-function updateOptions(options) {
+import { useUserStore } from '@/stores/user';
+
+function updateOptions(options = {}) {
+  const store = useUserStore();
   const update = {
     headers: {
       'Content-Type': 'application/json',
@@ -6,9 +9,8 @@ function updateOptions(options) {
     },
     ...options,
   };
-  const token = localStorage.getItem('token');
-  if (token) {
-    update.headers.Authorization = `Bearer ${token}`;
+  if (store.token) {
+    update.headers.Authorization = `Bearer ${store.token}`;
   }
   return update;
 }

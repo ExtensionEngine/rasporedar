@@ -4,16 +4,16 @@ import userService from '@/api/users';
 import { useStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('user', () => {
-  const user = useStorage('user', {});
   const token = useStorage('token', '');
+  const user = useStorage('user', {});
 
   const isLoggedIn = computed(() => {
     return !!user.value.id;
   });
 
   async function loginUser(jwtToken) {
-    user.value = await userService.getUserProfileFromToken(jwtToken);
     token.value = jwtToken;
+    user.value = await userService.getUserProfile();
   }
 
   function logoutUser() {
