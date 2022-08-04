@@ -8,6 +8,7 @@ function updateOptions(options = {}) {
       ...options.headers,
     },
     ...options,
+    body: options.body && JSON.stringify(options.body),
   };
   if (store.token) {
     update.headers.Authorization = `Bearer ${store.token}`;
