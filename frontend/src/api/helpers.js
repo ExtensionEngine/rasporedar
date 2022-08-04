@@ -3,11 +3,11 @@ import { useUserStore } from '@/stores/user';
 function updateOptions(options = {}) {
   const store = useUserStore();
   const update = {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
     },
-    ...options,
     body: options.body && JSON.stringify(options.body),
   };
   if (store.token) {
