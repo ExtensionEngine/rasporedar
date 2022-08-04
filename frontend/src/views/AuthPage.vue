@@ -124,11 +124,11 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 450px;
-  transition: translate 300ms ease-out;
+  transition: transform 300ms ease-out;
 }
 
 .form-wrapper.toggled {
-  translate: 0 calc(-100vh - 450px);
+  transform: translateY(calc(-100vh - 450px));
 }
 
 h2 {
