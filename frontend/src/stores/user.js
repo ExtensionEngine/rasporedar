@@ -1,11 +1,11 @@
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
 import userService from '@/api/users';
 import { useStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref(useStorage('user', {}));
-  const token = ref(useStorage('token', ''));
+  const user = useStorage('user', {});
+  const token = useStorage('token', '');
 
   const isLoggedIn = computed(() => {
     return !!user.value.id;

@@ -1,6 +1,6 @@
 <script>
+import { reactive, ref } from 'vue';
 import authService from '@/api/auth';
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
@@ -10,22 +10,22 @@ export default {
     const router = useRouter();
     const userStore = useUserStore();
 
-    const loginForm = ref({
+    const loginForm = reactive({
       email: '',
       password: '',
       error: null,
     });
 
     const login = async () => {
-      loginForm.value.error = null;
+      loginForm.error = null;
 
       const user = await authService.loginUser({
-        email: loginForm.value.email,
-        password: loginForm.value.password,
+        email: loginForm.email,
+        password: loginForm.password,
       });
 
       if ('error' in user) {
-        loginForm.value.error = user.error;
+        loginForm.error = user.error;
         return;
       }
 
@@ -33,7 +33,7 @@ export default {
       router.push({ name: 'home' });
     };
 
-    const registerForm = ref({
+    const registerForm = reactive({
       email: '',
       password: '',
       repeatedPassword: '',
@@ -41,20 +41,20 @@ export default {
     });
 
     const register = async () => {
-      registerForm.value.error = null;
+      registerForm.error = null;
 
-      if (registerForm.value.password !== registerForm.value.repeatedPassword) {
-        registerForm.value.error = 'Password and repeated password are not matching';
+      if (registerForm.password !== registerForm.repeatedPassword) {
+        registerForm.error = 'Password and repeated password are not matching';
         return;
       }
 
       const user = await authService.registerUser({
-        email: registerForm.value.email,
-        password: registerForm.value.password,
+        email: registerForm.email,
+        password: registerForm.password,
       });
 
       if ('error' in user) {
-        registerForm.value.error = user.error;
+        registerForm.error = user.error;
         return;
       }
 

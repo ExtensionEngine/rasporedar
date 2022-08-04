@@ -30,6 +30,6 @@ nav {
   align-items: center;
 }
 
-.link:not(:last-child) {
+.rsprd-link:not(:last-child) {
   margin-right: 16px;
 }
