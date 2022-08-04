@@ -74,31 +74,37 @@ export default {
     <img src="@/assets/img/timetable_illustration.png" />
     <div class="form-wrapper" :class="{ toggled: isToggled }">
       <div class="login-form">
-        <h2>Login</h2>
+        <h2 class="form-title">Login</h2>
         <form @submit.prevent="login">
-          <input v-model="loginForm.email" type="email" placeholder="Email" required />
-          <input v-model="loginForm.password" placeholder="Password" type="password" required />
+          <input v-model="loginForm.email" type="email" placeholder="Email" class="input" required />
+          <input v-model="loginForm.password" type="password" placeholder="Password" class="input" required />
           <div v-if="loginForm.error" class="form-error">
             {{ loginForm.error }}
           </div>
-          <button type="submit">Login</button>
-          <a @click="isToggled = !isToggled" class="link">Want to register?</a>
-          <a class="link">Forgot your password?</a>
+          <button type="submit" class="form-button">Login</button>
+          <a @click="isToggled = !isToggled" class="form-link">Want to register?</a>
+          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
 
       <div class="registration-form">
-        <h2>Register</h2>
+        <h2 class="form-title">Register</h2>
         <form @submit.prevent="register">
-          <input v-model="registerForm.email" type="email" placeholder="Email" required />
-          <input v-model="registerForm.password" placeholder="Password" type="password" required />
-          <input v-model="registerForm.repeatedPassword" placeholder="Repeat password" type="password" required />
+          <input v-model="registerForm.email" type="email" placeholder="Email" class="input" required />
+          <input v-model="registerForm.password" type="password" placeholder="Password" class="input" required />
+          <input
+            v-model="registerForm.repeatedPassword"
+            type="password"
+            placeholder="Repeat password"
+            class="input"
+            required
+          />
           <div v-if="registerForm.error" class="form-error">
             {{ registerForm.error }}
           </div>
-          <button type="submit">Register</button>
-          <a @click="isToggled = !isToggled" class="link">Want to login?</a>
-          <a class="link">Forgot your password?</a>
+          <button type="submit" class="form-button">Register</button>
+          <a @click="isToggled = !isToggled" class="form-link">Want to login?</a>
+          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
     </div>
@@ -131,12 +137,11 @@ export default {
   transform: translateY(calc(-100vh - 450px));
 }
 
-h2 {
+.form-title {
   font-size: 36px;
 }
 
-input[type='email'],
-input[type='password'] {
+.input {
   display: block;
   border: 0;
   border-bottom: 2px solid var(--color-muted);
@@ -146,17 +151,17 @@ input[type='password'] {
   transition: border 200ms ease-out;
 }
 
-input[type='email']:focus,
-input[type='password']:focus {
+.input:focus {
   outline: none;
   border-bottom-color: var(--color-main);
 }
 
 .form-error {
   color: red;
+  margin-bottom: 28px;
 }
 
-button[type='submit'] {
+.form-button {
   padding: 14px 56px;
   background-color: var(--color-main);
   border: 1px solid var(--color-muted);
@@ -165,12 +170,12 @@ button[type='submit'] {
   transition: border 200ms ease-out;
   margin-bottom: 28px;
 }
-button[type='submit']:hover,
-button[type='submit']:focus {
+.form-button:hover,
+.form-button:focus {
   border-color: var(--color-text);
 }
 
-.link {
+.form-link {
   display: block;
   margin-bottom: 12px;
 }

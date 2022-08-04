@@ -5,17 +5,15 @@ export default {
 </script>
 
 <template>
-  <header>
-    <img src="@/assets/img/rasporedar_logo.svg" />
-  </header>
+  <img src="@/assets/img/rasporedar_logo.svg" class="logo" />
 </template>
 
 <style scoped>
-img {
+.logo {
   width: 75px;
 }
 
-header {
+.header {
   margin: 16px 0;
 }
 </style>
