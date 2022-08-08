@@ -22,7 +22,7 @@ export function getTimesPerWeek({ timesPerWeek }: Subject) {
 }
 
 export function getClassPeriodsPerDay(class_: Class) {
-  const workingDays = [5, 4, 3, 2, 1];
+  const workingDays = range(daysPerWeek, 1, -1);
   let totalPeriodsPerWeek = class_.subjects.reduce((sum, s) => sum + getTimesPerWeek(s), 0);
 
   const periodsPerDay: number[] = workingDays.map(day => {
@@ -32,6 +32,10 @@ export function getClassPeriodsPerDay(class_: Class) {
   });
 
   return shuffleArray(periodsPerDay);
+}
+
+export function range(from: number, to: number, step = 1) {
+  return [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
 }
 
 export function shuffleArray<Type>(value: Type[]): Type[] {
