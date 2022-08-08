@@ -13,7 +13,8 @@
     "normalize.css": "^8.0.1",
     "pinia": "^2.0.17",
     "vue": "^3.2.25",
-    "vue-router": "^4.1.1"
+    "vue-router": "^4.1.1",
+    "vue3-rich-accordion": "^0.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
