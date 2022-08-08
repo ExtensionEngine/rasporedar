@@ -35,6 +35,12 @@ export type RemainingLectures = {
   };
 };
 
+export type Periods = {
+  [className: string]: {
+    [periods: string]: number[];
+  };
+};
+
 export type GenerateScheduleResult = {
   timetable: MatrixHashmap;
   remainingLectures: RemainingLectures;

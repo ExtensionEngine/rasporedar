@@ -1,6 +1,6 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateScheduleProps, GenerateScheduleResult, RemainingLectures } from './types';
-import { getMatrixHashmap, getPeriodsPerDay, getTimesPerWeek, hash, shuffleArray } from './utils';
+import { getClassPeriodsPerDay, getMatrixHashmap, getTimesPerWeek, hash, shuffleArray } from './utils';
 
 export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
   const teachers = classes
@@ -21,10 +21,12 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
     ]),
   );
 
+  const periods = Object.fromEntries(classes.map(class_ => [class_.name, getClassPeriodsPerDay(class_)]));
+
   for (let dayIndex = 0; dayIndex < daysPerWeek; dayIndex++) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; periodIndex++) {
       shuffleArray(classes).forEach(class_ => {
-        if (!(periodIndex < getPeriodsPerDay(class_))) {
+        if (!(periodIndex < periods[class_.name][dayIndex])) {
           return;
         }
 
