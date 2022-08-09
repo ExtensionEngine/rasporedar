@@ -2,12 +2,10 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
 const defaultSubjectFormState = {
-  accordionOpened: true,
   name: '',
 };
 
 const defaultClassFormState = {
-  accordionOpened: true,
   name: '',
   subjects: [defaultSubjectFormState],
 };
@@ -18,6 +16,7 @@ const defaultFormState = {
 
 export const useFormStore = defineStore('form', () => {
   const form = useStorage('form', { ...defaultFormState });
+  const accordionState = useStorage('accordionState', {});
 
   function addClass() {
     form.value.classes.push({ ...defaultClassFormState });
@@ -27,5 +26,5 @@ export const useFormStore = defineStore('form', () => {
     form.value.classes[index].subjects.push({ ...defaultSubjectFormState });
   }
 
-  return { form, addClass, addSubject };
+  return { form, accordionState, addClass, addSubject };
 });

@@ -21,10 +21,15 @@ export default {
       <h2>Classes</h2>
       <button @click="formStore.addClass()">Add class</button>
     </div>
-    <AccordionList :open-multiple-items="true">
+    <AccordionList
+      @update:state="newState => (formStore.accordionState = newState)"
+      open-multiple-items
+      :state="formStore.accordionState"
+    >
       <ClassAccordionItem v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
     </AccordionList>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
+    <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
   </div>
 </template>
 

@@ -20,10 +20,7 @@ export default {
 </script>
 
 <template>
-  <AccordionItem
-    @click="formStore.form.classes[index].accordionOpened = !formStore.form.classes[index].accordionOpened"
-    :default-opened="formStore.form.classes[index].accordionOpened"
-  >
+  <AccordionItem :id="`${index}`" :default-opened="formStore.accordionState[`${index}`]">
     <template #summary>
       <input v-model="formStore.form.classes[index].name" @click.stop type="text" />
     </template>
@@ -31,7 +28,11 @@ export default {
       <h3>Subjects</h3>
       <button @click="formStore.addSubject(index)">Add subject</button>
     </div>
-    <AccordionList :open-multiple-items="true">
+    <AccordionList
+      @update:state="newState => (formStore.accordionState = newState)"
+      open-multiple-items
+      :state="formStore.accordionState"
+    >
       <SubjectAccordionItem
         v-for="(_, subjectIndex) in formStore.form.classes[index].subjects"
         :key="subjectIndex"
