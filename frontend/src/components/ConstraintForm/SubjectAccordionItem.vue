@@ -1,7 +1,16 @@
 <script>
 import { AccordionItem } from 'vue3-rich-accordion';
+import { useFormStore } from '@/stores/form';
 
 export default {
+  props: {
+    index: { type: Number, default: -1 },
+    classIndex: { type: Number, default: -1 },
+  },
+  setup() {
+    const formStore = useFormStore();
+    return { formStore };
+  },
   components: {
     AccordionItem,
   },
@@ -11,7 +20,7 @@ export default {
 <template>
   <AccordionItem :default-opened="true">
     <template #summary>
-      <input @click.stop type="text" />
+      <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
     </template>
     <h3>constrains</h3>
   </AccordionItem>

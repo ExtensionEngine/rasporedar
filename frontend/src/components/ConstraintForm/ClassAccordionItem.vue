@@ -32,6 +32,7 @@ export default {
       <SubjectAccordionItem
         v-for="(_, subjectIndex) in formStore.form.classes[index].subjects"
         :key="subjectIndex"
+        :class-index="index"
         :index="subjectIndex"
       />
     </AccordionList>
