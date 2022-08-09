@@ -1,5 +1,5 @@
 <script>
-import PageGreeting from '../components/PageGreeting.vue';
+import PageGreeting from '@/components/PageGreeting.vue';
 
 export default {
   name: 'home-page',

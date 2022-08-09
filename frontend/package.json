@@ -9,6 +9,9 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@vueuse/core": "^9.0.2",
+    "normalize.css": "^8.0.1",
+    "pinia": "^2.0.17",
     "vue": "^3.2.25",
     "vue-router": "^4.1.1"
   },

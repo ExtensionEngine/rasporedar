@@ -1,4 +1,5 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 import { passportInitializeStrategies } from 'middleware/passportStrategies';
 import router from 'routes';
 import status from 'http-status';
@@ -9,6 +10,11 @@ const port = 3001;
 
 passportInitializeStrategies();
 
+app.use(
+  cors({
+    origin: true,
+  }),
+);
 app.use(express.json());
 
 app.use(router);
