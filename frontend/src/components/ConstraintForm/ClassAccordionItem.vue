@@ -37,11 +37,3 @@ export default {
     </AccordionList>
   </AccordionItem>
 </template>
-
-<style>
-.bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-</style>

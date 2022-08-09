@@ -30,4 +30,10 @@ export default {
 
 <style>
 @import 'vue3-rich-accordion/accordion-library-styles.css';
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 </style>
