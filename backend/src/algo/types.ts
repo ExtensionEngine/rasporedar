@@ -30,10 +30,13 @@ export type RemainingLectures = {
   };
 };
 
+export type Unavailable = {
+  teachers: MatrixHashmap;
+  classrooms: MatrixHashmap;
+};
+
 export type Periods = {
-  [className: string]: {
-    [periods: string]: number[];
-  };
+  [class_: string]: number[];
 };
 
 export type GenerateTimetableProps = {
