@@ -103,11 +103,11 @@ export function swapSlot(
 ) {
   let found = false;
 
-  for (let i = 0; i <= dayIndex && !found; ++i) {
-    const periodLength = i === dayIndex ? periodIndex : periods[class_.name][i];
+  for (let oldDayIndex = 0; oldDayIndex <= dayIndex && !found; ++oldDayIndex) {
+    const periodLength = oldDayIndex === dayIndex ? periodIndex : periods[class_.name][oldDayIndex];
 
-    for (let j = 0; j < periodLength; ++j) {
-      const oldSubject = unhash<Subject>(timetable[hash(class_.name)][i][j] as string);
+    for (let oldPeriodIndex = 0; oldPeriodIndex < periodLength && !found; ++oldPeriodIndex) {
+      const oldSubject = unhash<Subject>(timetable[hash(class_.name)][oldDayIndex][oldPeriodIndex] as string);
 
       if (
         !(
@@ -116,32 +116,39 @@ export function swapSlot(
           checkIfClassroomUnavailable(unavailable, oldSubject, dayIndex, periodIndex)
         ) &&
         !(
-          checkIfTeacherUnavailable(unavailable, newSubject, i, j) ||
+          checkIfTeacherUnavailable(unavailable, newSubject, oldDayIndex, oldPeriodIndex) ||
           checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)
         )
       ) {
         // set new subject to old slot
-        let fallbackClassroom = shuffleArray(
-          Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
-        )[0];
-
-        timetable[hash(class_.name)][i][j] = hash(newSubject);
-        unavailable.teachers[hash(newSubject.teacher)][i][j] = hash(newSubject);
-        unavailable.classrooms[hash(newSubject.classroom) || fallbackClassroom][i][j] = hash(newSubject);
-        remainingLectures[class_.name][newSubject.name]--;
-
+        setSlot(timetable, unavailable, remainingLectures, true, class_, newSubject, oldDayIndex, oldPeriodIndex);
         // set old subject to new spot
-        fallbackClassroom = shuffleArray(
-          Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
-        )[0];
-        timetable[hash(class_.name)][dayIndex][periodIndex] = hash(oldSubject);
-        unavailable.teachers[hash(oldSubject.teacher)][dayIndex][periodIndex] = hash(oldSubject);
-        unavailable.classrooms[hash(oldSubject.classroom) || fallbackClassroom][dayIndex][periodIndex] =
-          hash(oldSubject);
+        setSlot(timetable, unavailable, remainingLectures, false, class_, oldSubject, dayIndex, periodIndex);
 
         found = true;
-        break;
       }
     }
   }
+}
+
+export function setSlot(
+  timetable: MatrixHashmap,
+  unavailable: Unavailable,
+  remainingLectures: RemainingLectures,
+  decrementQuantity: boolean,
+  class_: Class,
+  subject: Subject,
+  dayIndex: number,
+  periodIndex: number,
+) {
+  // used if classroom constraint is not present
+  const fallbackClassroom = shuffleArray(
+    Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
+  )[0];
+
+  timetable[hash(class_.name)][dayIndex][periodIndex] = hash(subject);
+  unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
+  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
+
+  if (decrementQuantity) remainingLectures[class_.name][subject.name]--;
 }

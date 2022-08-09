@@ -4,6 +4,7 @@ import {
   getMatrixHashmap,
   getTimesPerWeek,
   hash,
+  setSlot,
   shuffleArray,
   swapSlot,
 } from './utils';
@@ -42,15 +43,7 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
               return;
             }
 
-            // used if classroom constraint is not present
-            const fallbackClassroom = shuffleArray(
-              Object.keys(unavailable.classrooms).filter(r => !unavailable.classrooms[r][dayIndex][periodIndex]),
-            )[0];
-
-            timetable[hash(class_.name)][dayIndex][periodIndex] = hash(subject);
-            unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
-            unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
-            remainingLectures[class_.name][subject.name]--;
+            setSlot(timetable, unavailable, remainingLectures, true, class_, subject, dayIndex, periodIndex);
           });
         }
       });
