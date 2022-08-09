@@ -27,13 +27,13 @@ export default {
       <h2>Classes</h2>
       <button @click="formStore.addClass()">Add class</button>
     </div>
-    <AccordionList
+    <accordion-list
       @update:state="newState => (formStore.accordionState = newState)"
       open-multiple-items
       :state="formStore.accordionState"
     >
-      <ClassAccordionItem v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
-    </AccordionList>
+      <class-accordion-item v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
+    </accordion-list>
     <button type="submit">Generate timetable</button>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
     <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
@@ -54,5 +54,4 @@ export default {
 TODO:
 - constraints (timesPerWeek, teacher and classroom)
 - styles
-- input validation (?)
 -->

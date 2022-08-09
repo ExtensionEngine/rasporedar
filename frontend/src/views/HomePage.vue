@@ -30,6 +30,6 @@ export default {
   <div class="home">
     <PageGreeting msg="This is the Home Page" />
     <button @click="handleLogOut">Logout</button>
-    <ConstraintForm />
+    <constraint-form />
   </div>
 </template>

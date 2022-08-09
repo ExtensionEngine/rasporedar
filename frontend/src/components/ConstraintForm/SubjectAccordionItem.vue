@@ -18,10 +18,10 @@ export default {
 </script>
 
 <template>
-  <AccordionItem :id="`${classIndex}_${index}`" :default-opened="formStore.accordionState[`${classIndex}_${index}`]">
+  <accordion-item :id="`${classIndex}_${index}`" :default-opened="formStore.accordionState[`${classIndex}_${index}`]">
     <template #summary>
       <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
     </template>
     <h3>constrains</h3>
-  </AccordionItem>
+  </accordion-item>
 </template>
