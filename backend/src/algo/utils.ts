@@ -1,4 +1,4 @@
-import { Class, MatrixHashmap, RemainingLectures, Subject, Unavailable } from './types';
+import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 
 export function getMatrix(x: number, y: number) {
@@ -89,4 +89,59 @@ export function checkConstraints(
     checkIfClassroomUnavailable(unavailable, subject, dayIndex, periodIndex) || // classroom is not available
     checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) // all lectures for subject are in schedule
   );
+}
+
+export function swapSlot(
+  timetable: MatrixHashmap,
+  unavailable: Unavailable,
+  remainingLectures: RemainingLectures,
+  class_: Class,
+  newSubject: Subject,
+  dayIndex: number,
+  periodIndex: number,
+  periods: Periods,
+) {
+  let found = false;
+
+  for (let i = 0; i <= dayIndex && !found; ++i) {
+    const periodLength = i === dayIndex ? periodIndex : periods[class_.name][i];
+
+    for (let j = 0; j < periodLength; ++j) {
+      const oldSubject = unhash<Subject>(timetable[hash(class_.name)][i][j] as string);
+
+      if (
+        !(
+          checkIfClassUnavailable(timetable, class_, dayIndex, periodIndex) ||
+          checkIfTeacherUnavailable(unavailable, oldSubject, dayIndex, periodIndex) ||
+          checkIfClassroomUnavailable(unavailable, oldSubject, dayIndex, periodIndex)
+        ) &&
+        !(
+          checkIfTeacherUnavailable(unavailable, newSubject, i, j) ||
+          checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)
+        )
+      ) {
+        // set new subject to old slot
+        let fallbackClassroom = shuffleArray(
+          Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
+        )[0];
+
+        timetable[hash(class_.name)][i][j] = hash(newSubject);
+        unavailable.teachers[hash(newSubject.teacher)][i][j] = hash(newSubject);
+        unavailable.classrooms[hash(newSubject.classroom) || fallbackClassroom][i][j] = hash(newSubject);
+        remainingLectures[class_.name][newSubject.name]--;
+
+        // set old subject to new spot
+        fallbackClassroom = shuffleArray(
+          Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
+        )[0];
+        timetable[hash(class_.name)][dayIndex][periodIndex] = hash(oldSubject);
+        unavailable.teachers[hash(oldSubject.teacher)][dayIndex][periodIndex] = hash(oldSubject);
+        unavailable.classrooms[hash(oldSubject.classroom) || fallbackClassroom][dayIndex][periodIndex] =
+          hash(oldSubject);
+
+        found = true;
+        break;
+      }
+    }
+  }
 }
