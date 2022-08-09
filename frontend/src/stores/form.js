@@ -2,10 +2,12 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
 const defaultSubjectFormState = {
+  accordionOpened: true,
   name: '',
 };
 
 const defaultClassFormState = {
+  accordionOpened: true,
   name: '',
   subjects: [defaultSubjectFormState],
 };

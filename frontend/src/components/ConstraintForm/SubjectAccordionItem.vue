@@ -18,7 +18,13 @@ export default {
 </script>
 
 <template>
-  <AccordionItem :default-opened="true">
+  <AccordionItem
+    @click="
+      formStore.form.classes[classIndex].subjects[index].accordionOpened =
+        !formStore.form.classes[classIndex].subjects[index].accordionOpened
+    "
+    :default-opened="formStore.form.classes[classIndex].subjects[index].accordionOpened"
+  >
     <template #summary>
       <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
     </template>
