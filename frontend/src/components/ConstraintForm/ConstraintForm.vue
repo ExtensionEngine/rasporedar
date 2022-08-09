@@ -37,3 +37,11 @@ export default {
   align-items: baseline;
 }
 </style>
+
+<!--
+TODO:
+- constraints (timesPerWeek, teacher and classroom)
+- styles
+- input validation (?)
+- form submit
+-->

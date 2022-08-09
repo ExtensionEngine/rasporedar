@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <AccordionItem>
+  <AccordionItem :default-opened="true">
     <template #summary>
       <input @click.stop type="text" />
     </template>
