@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <form @submit.prevent="generateTimetable">
     <div class="bar">
       <h2>Classes</h2>
       <button @click="formStore.addClass()">Add class</button>
@@ -34,10 +34,10 @@ export default {
     >
       <ClassAccordionItem v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
     </AccordionList>
-    <button @click="generateTimetable">Generate timetable</button>
+    <button type="submit">Generate timetable</button>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
     <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
-  </div>
+  </form>
 </template>
 
 <style>
