@@ -28,8 +28,8 @@ export default {
       <input v-model="formStore.form.classes[index].name" @click.stop type="text" />
     </template>
     <div class="bar">
-      <h3>Predmeti</h3>
-      <button @click="formStore.addSubject(index)">Dodaj predmet</button>
+      <h3>Subjects</h3>
+      <button @click="formStore.addSubject(index)">Add subject</button>
     </div>
     <AccordionList :open-multiple-items="true">
       <SubjectAccordionItem

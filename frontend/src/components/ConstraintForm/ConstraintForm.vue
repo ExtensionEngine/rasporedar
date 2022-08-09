@@ -18,8 +18,8 @@ export default {
 <template>
   <div>
     <div class="bar">
-      <h2>Razredi</h2>
-      <button @click="formStore.addClass()">Dodaj razred</button>
+      <h2>Classes</h2>
+      <button @click="formStore.addClass()">Add class</button>
     </div>
     <AccordionList :open-multiple-items="true">
       <ClassAccordionItem v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
