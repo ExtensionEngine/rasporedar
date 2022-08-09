@@ -22,7 +22,7 @@ export default {
 <template>
   <AccordionItem :default-opened="true">
     <template #summary>
-      <input @click.stop type="text" />
+      <input v-model="formStore.form.classes[index].name" @click.stop type="text" />
     </template>
     <div class="bar">
       <h3>Predmeti</h3>

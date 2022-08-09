@@ -15,14 +15,14 @@ const defaultFormState = {
 };
 
 export const useFormStore = defineStore('form', () => {
-  const form = useStorage('form', defaultFormState);
+  const form = useStorage('form', { ...defaultFormState });
 
   function addClass() {
-    form.value.classes.push(defaultClassFormState);
+    form.value.classes.push({ ...defaultClassFormState });
   }
 
   function addSubject(index) {
-    form.value.classes[index].subjects.push(defaultSubjectFormState);
+    form.value.classes[index].subjects.push({ ...defaultSubjectFormState });
   }
 
   return { form, addClass, addSubject };
