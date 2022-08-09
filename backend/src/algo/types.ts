@@ -18,11 +18,6 @@ export type Class = {
   subjects: Subject[];
 };
 
-export type GenerateScheduleProps = {
-  classes: Class[];
-  classrooms: Classroom[];
-};
-
 export type Matrix = (string | null)[][];
 
 export type MatrixHashmap = {
@@ -41,7 +36,12 @@ export type Periods = {
   };
 };
 
-export type GenerateScheduleResult = {
+export type GenerateTimetableProps = {
+  classes: Class[];
+  classrooms: Classroom[];
+};
+
+export type GenerateTimetableResult = {
   timetable: MatrixHashmap;
   remainingLectures: RemainingLectures;
 };
