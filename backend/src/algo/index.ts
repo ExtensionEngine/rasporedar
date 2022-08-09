@@ -1,8 +1,8 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
-import { GenerateScheduleProps, GenerateScheduleResult, RemainingLectures } from './types';
+import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
 import { getClassPeriodsPerDay, getMatrixHashmap, getTimesPerWeek, hash, shuffleArray } from './utils';
 
-export function generateSchedule({ classes, classrooms }: GenerateScheduleProps): GenerateScheduleResult {
+export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
   const teachers = classes
     .map(c => c.subjects.map(s => s.teacher))
     .flat()
@@ -35,7 +35,7 @@ export function generateSchedule({ classes, classrooms }: GenerateScheduleProps)
             timetable[hash(class_.name)][dayIndex][periodIndex] || // class in not available
             unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] || // teacher is not available
             (subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex]) || // classroom is not available
-            remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in schedule
+            remainingLectures[class_.name][subject.name] === 0 // all lectures for subject are in timetable
           ) {
             return;
           }

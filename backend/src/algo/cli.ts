@@ -1,11 +1,11 @@
 #!npx ts-node
 
-import { generateSchedule } from './index';
-import { generateScheduleProps } from './seed';
+import { generateTimetable } from './index';
+import { generateTimetableProps } from './seed';
 import { Subject } from './types';
 import { unhash } from './utils';
 
-const { timetable, remainingLectures } = generateSchedule(generateScheduleProps);
+const { timetable, remainingLectures } = generateTimetable(generateTimetableProps);
 
 Object.keys(timetable).forEach(class_ => {
   console.log('Class: ', class_);
