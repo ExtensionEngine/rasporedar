@@ -1,5 +1,6 @@
 <script>
 import { useUserStore } from '@/stores/user';
+
 export default {
   name: 'navigation-bar',
   setup() {
