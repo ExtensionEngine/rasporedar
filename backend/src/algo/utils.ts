@@ -1,15 +1,13 @@
-import { Class, Matrix, Subject } from './types';
+import { Class, Subject } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 
 export function getMatrix(x: number, y: number) {
-  const matrix: Matrix = [];
+  const matrix = new Array(x);
 
-  for (let i = 0; i < x; i++) {
-    matrix[i] = [];
-    for (let j = 0; j < y; j++) {
-      matrix[i][j] = null;
-    }
+  for (let i = 0; i < x; ++i) {
+    matrix[i] = new Array(y).fill(null);
   }
+
   return matrix;
 }
 
