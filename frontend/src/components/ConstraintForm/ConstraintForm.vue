@@ -6,7 +6,13 @@ import { useFormStore } from '@/stores/form';
 export default {
   setup() {
     const formStore = useFormStore();
-    return { formStore };
+
+    const generateTimetable = () => {
+      // TODO: submit handler will be implemented when algorithm backend is merged
+      console.log(formStore.form);
+    };
+
+    return { formStore, generateTimetable };
   },
   components: {
     AccordionList,
@@ -28,6 +34,7 @@ export default {
     >
       <ClassAccordionItem v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
     </AccordionList>
+    <button @click="generateTimetable">Generate timetable</button>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
     <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
   </div>
@@ -48,5 +55,4 @@ TODO:
 - constraints (timesPerWeek, teacher and classroom)
 - styles
 - input validation (?)
-- form submit
 -->
