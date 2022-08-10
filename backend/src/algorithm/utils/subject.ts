@@ -14,6 +14,5 @@ export function getTotalRemainingLectures(remainingLectures: RemainingLectures) 
 
 export function getLectionCountForDay(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
   const subjectLecturesOnDay = timetable[hash(class_.name)][dayIndex].filter(period => period === hash(subject));
-
   return subjectLecturesOnDay.length;
 }
