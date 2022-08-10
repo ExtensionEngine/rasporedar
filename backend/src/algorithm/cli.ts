@@ -3,7 +3,7 @@
 import { generateTimetable } from './index';
 import { generateTimetableProps } from './seed';
 import { Subject } from './types';
-import { unhash } from './utils';
+import { unhash } from './utils/hash';
 
 const { timetable, remainingLectures } = generateTimetable(generateTimetableProps);
 

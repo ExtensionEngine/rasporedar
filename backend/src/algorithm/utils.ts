@@ -1,5 +1,6 @@
 import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from './types';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
+import { hash, unhash } from './utils/hash';
 
 export function getMatrix(x: number, y: number) {
   const matrix = new Array(x);
@@ -43,14 +44,6 @@ export function shuffleArray<Type>(value: Type[]): Type[] {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
-
-export function hash(key: unknown): string {
-  return JSON.stringify(key);
-}
-
-export function unhash<Type>(value: string): Type {
-  return JSON.parse(value);
 }
 
 function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, dayIndex: number, periodIndex: number) {
