@@ -29,7 +29,13 @@ export default {
     class="class-accordion"
   >
     <template #summary>
-      <input v-model="formStore.form.classes[index].name" @click.stop type="text" />
+      <input
+        v-model="formStore.form.classes[index].name"
+        @click.stop
+        type="text"
+        placeholder="3a"
+        class="rsprd-input rsprd-input--shorter"
+      />
     </template>
     <h3>Subjects</h3>
     <accordion-list

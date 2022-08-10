@@ -31,7 +31,7 @@ export default {
     >
       <class-accordion-item v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
     </accordion-list>
-    <button @click.prevent="formStore.addClass()" class="rsprd-button">&plus; Add class</button>
+    <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--darker">&plus; Add class</button>
     <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
   </form>
@@ -54,8 +54,7 @@ export default {
   background-color: var(--color-dark);
 }
 
-.class-accordion:not(.accordion-item--open) > .accordion-item__summary,
-.subject-accordion:not(.accordion-item--open) > .accordion-item__summary {
+.class-accordion:not(.accordion-item--open) > .accordion-item__summary {
   color: var(--color-lighter);
 }
 

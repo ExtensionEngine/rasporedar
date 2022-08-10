@@ -30,22 +30,32 @@ export default {
     class="subject-accordion"
   >
     <template #summary>
-      <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
+      <input
+        v-model="formStore.form.classes[classIndex].subjects[index].name"
+        @click.stop
+        type="text"
+        class="rsprd-input rsprd-input--lighter"
+        placeholder="Math"
+      />
     </template>
     <div class="row">
       <span>Times per week</span>
-      <input v-model="formStore.form.classes[classIndex].subjects[index].timesPerWeek" type="number" />
+      <input
+        v-model="formStore.form.classes[classIndex].subjects[index].timesPerWeek"
+        type="number"
+        class="rsprd-input rsprd-input--lighter"
+      />
     </div>
     <div class="row">
       <span>Teacher</span>
-      <select v-model="formStore.form.classes[classIndex].subjects[index].teacher.name" class="select">
+      <select v-model="formStore.form.classes[classIndex].subjects[index].teacher.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">{{ teacher }}</option>
       </select>
     </div>
     <div class="row">
       <span>Classroom</span>
-      <select v-model="formStore.form.classes[classIndex].subjects[index].classroom.name" class="select">
+      <select v-model="formStore.form.classes[classIndex].subjects[index].classroom.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="classroom in classrooms" :key="classroom">{{ classroom }}</option>
       </select>
@@ -59,14 +69,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  max-width: 500px;
+  max-width: 450px;
 }
 
 .row:not(:last-child) {
   margin-bottom: 12px;
-}
-
-.select {
-  width: 230px;
 }
 </style>
