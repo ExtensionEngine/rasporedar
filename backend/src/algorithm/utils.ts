@@ -2,20 +2,6 @@ import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable 
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { hash, unhash } from './utils/hash';
 
-export function getMatrix(x: number, y: number) {
-  const matrix = new Array(x);
-
-  for (let i = 0; i < x; ++i) {
-    matrix[i] = new Array(y).fill(null);
-  }
-
-  return matrix;
-}
-
-export function getMatrixHashmap(keys: unknown[]) {
-  return Object.fromEntries(keys.map(key => [hash(key), getMatrix(daysPerWeek, maxPeriodsPerDay)]));
-}
-
 export function getTimesPerWeek({ timesPerWeek }: Subject) {
   return timesPerWeek instanceof Array ? timesPerWeek.reduce((a, b) => a + b, 0) : timesPerWeek;
 }
