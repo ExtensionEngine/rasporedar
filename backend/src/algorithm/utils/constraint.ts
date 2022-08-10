@@ -1,5 +1,7 @@
-import { Class, MatrixHashmap, RemainingLectures, Subject, Unavailable } from 'algorithm/types';
+import { Class, MatrixHashmap, RemainingLectures, Subject, Unavailable } from '../types';
+import { getLectionCountForDay } from './subject';
 import { hash } from './hash';
+import { maxSubjectLecturesPerDay } from '../consts';
 
 function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, dayIndex: number, periodIndex: number) {
   return timetable[hash(class_.name)][dayIndex][periodIndex];
@@ -25,6 +27,11 @@ function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, c
   return remainingLectures[class_.name][subject.name] === 0;
 }
 
+function checkIfDailyLimitExceeded(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
+  const lectureCount = getLectionCountForDay(timetable, class_, subject, dayIndex) as number;
+  return lectureCount > maxSubjectLecturesPerDay;
+}
+
 export function checkConstraints(
   timetable: MatrixHashmap,
   unavailable: Unavailable,
@@ -38,7 +45,8 @@ export function checkConstraints(
     checkIfClassUnavailable(timetable, class_, dayIndex, periodIndex) || // class in not available
     checkIfTeacherUnavailable(unavailable, subject, dayIndex, periodIndex) || // teacher is not available
     checkIfClassroomUnavailable(unavailable, subject, dayIndex, periodIndex) || // classroom is not available
-    checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) // all lectures for subject are in schedule
+    checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) || // all lectures for subject are in schedule
+    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex)
   );
 }
 
