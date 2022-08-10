@@ -7,13 +7,15 @@ export default {
     index: { type: Number, default: -1 },
     classIndex: { type: Number, default: -1 },
   },
-  setup() {
+  setup(props) {
     const formStore = useFormStore();
 
     const teachers = ['Ante', 'Ana', 'Mate']; // TODO: replace with real data when teacher crud frontend is finished
     const classrooms = ['001', '002', '003']; // TODO: replace with real data when classroom crud frontend is finished
 
-    return { formStore, teachers, classrooms };
+    const accordionId = `${props.classIndex}_${props.index}`;
+
+    return { formStore, teachers, classrooms, accordionId };
   },
   components: {
     AccordionItem,
@@ -22,7 +24,10 @@ export default {
 </script>
 
 <template>
-  <accordion-item :id="`${classIndex}_${index}`" :default-opened="formStore.accordionState[`${classIndex}_${index}`]">
+  <accordion-item
+    :id="accordionId"
+    :default-opened="accordionId in formStore.accordionState ? formStore.accordionState[accordionId] : true"
+  >
     <template #summary>
       <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
     </template>

@@ -25,7 +25,7 @@ export default {
   <form @submit.prevent="generateTimetable">
     <div class="bar">
       <h2>Classes</h2>
-      <button @click="formStore.addClass()">Add class</button>
+      <button @click.prevent="formStore.addClass()">Add class</button>
     </div>
     <accordion-list
       @update:state="newState => (formStore.accordionState = newState)"
