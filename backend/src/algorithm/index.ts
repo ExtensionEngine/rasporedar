@@ -46,23 +46,5 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
     }
   }
 
-  //           handle multiple hour lectures
-
-  //           let lectureCount = 1;
-  //           const longestLecture = teachers[teacherIndex].assigned[valid].lectureDistribution[0];
-  //           if (
-  //             remainingLectures[classIndex][teacherIndex] > 1 &&
-  //             longestLecture > 1 &&
-  //             isSchedulePossible(teacherIndex, classIndex, dayIndex, periodIndex + 1)
-  //           ) {
-  //             lectureCount = 2;
-  //           }
-  //           for (let i = 0; i < lectureCount; i++) {
-  //             finalTimetable[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
-  //             availableClasses[classIndex][dayIndex][periodIndex + i] = teachers[teacherIndex].name;
-  //             availableTeachers[teacherIndex][dayIndex][periodIndex + i] = className;
-  //             remainingLectures[classIndex][teacherIndex]--;
-  //           }
-
   return { timetable, remainingLectures };
 }
