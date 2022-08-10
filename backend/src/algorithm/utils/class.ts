@@ -1,6 +1,6 @@
 import { range, shuffleArray } from './array';
-import { Class } from 'algorithm/types';
-import { daysPerWeek } from 'algorithm/consts';
+import { Class } from '../types';
+import { daysPerWeek } from '../consts';
 import { getTotalTimesPerWeek } from './subject';
 
 export function getClassPeriodsPerDay(class_: Class) {

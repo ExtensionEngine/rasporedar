@@ -6,6 +6,7 @@ function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, dayInd
 }
 
 function checkIfTeacherUnavailable(unavailable: Unavailable, subject: Subject, dayIndex: number, periodIndex: number) {
+  if (subject === null) return;
   return unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex];
 }
 
@@ -15,10 +16,12 @@ function checkIfClassroomUnavailable(
   dayIndex: number,
   periodIndex: number,
 ) {
+  if (subject === null) return;
   return subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex];
 }
 
 function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, class_: Class, subject: Subject) {
+  if (subject === null) return;
   return remainingLectures[class_.name][subject.name] === 0;
 }
 

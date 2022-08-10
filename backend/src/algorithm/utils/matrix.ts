@@ -1,4 +1,4 @@
-import { daysPerWeek, maxPeriodsPerDay } from 'algorithm/consts';
+import { daysPerWeek, maxPeriodsPerDay } from '../consts';
 import { hash } from './hash';
 
 export function getMatrix(x: number, y: number) {

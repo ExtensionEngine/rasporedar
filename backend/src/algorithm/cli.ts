@@ -1,7 +1,6 @@
-#!npx ts-node
-
 import { generateTimetable } from './index';
 import { generateTimetableProps } from './seed';
+import { getTotalRemainingLectures } from './utils/subject';
 import { Subject } from './types';
 import { unhash } from './utils/hash';
 
@@ -15,8 +14,5 @@ Object.keys(timetable).forEach(class_ => {
   );
 });
 
-console.log(
-  'Remaining lectures',
-  Object.values(remainingLectures).reduce((sum, ls) => sum + Object.values(ls).reduce((sum, l) => sum + l, 0), 0),
-);
+console.log('Remaining lectures', getTotalRemainingLectures(remainingLectures));
 console.table(remainingLectures);

@@ -1,4 +1,4 @@
-import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from 'algorithm/types';
+import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
 import { hash, unhash } from './hash';
 import { shuffleArray } from './array';
 import { validateSwap } from './constraint';
