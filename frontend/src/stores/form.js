@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { objectDeepCopy } from '../helpers/object';
 import { useStorage } from '@vueuse/core';
 
 const defaultSubjectFormState = {
@@ -18,15 +19,15 @@ const defaultFormState = {
 };
 
 export const useFormStore = defineStore('form', () => {
-  const form = useStorage('form', { ...defaultFormState });
+  const form = useStorage('form', objectDeepCopy(defaultFormState));
   const accordionState = useStorage('accordionState', {});
 
   function addClass() {
-    form.value.classes.push({ ...defaultClassFormState });
+    form.value.classes.push(objectDeepCopy(defaultClassFormState));
   }
 
   function addSubject(index) {
-    form.value.classes[index].subjects.push({ ...defaultSubjectFormState });
+    form.value.classes[index].subjects.push(objectDeepCopy(defaultSubjectFormState));
   }
 
   return { form, accordionState, addClass, addSubject };
