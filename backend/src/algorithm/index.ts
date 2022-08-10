@@ -1,9 +1,10 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
-import { getClassPeriodsPerDay, getTimesPerWeek } from './utils';
 import { setSlot, swapSlots } from './utils/slot';
 import { checkConstraints } from './utils/constraint';
+import { getClassPeriodsPerDay } from './utils/class';
 import { getMatrixHashmap } from './utils/matrix';
+import { getTotalTimesPerWeek } from './utils/subject';
 import { shuffleArray } from './utils/array';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
@@ -21,7 +22,7 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
   const remainingLectures: RemainingLectures = Object.fromEntries(
     classes.map(class_ => [
       class_.name,
-      Object.fromEntries(class_.subjects.map(subject => [subject.name, getTimesPerWeek(subject)])),
+      Object.fromEntries(class_.subjects.map(subject => [subject.name, getTotalTimesPerWeek(subject)])),
     ]),
   );
 
