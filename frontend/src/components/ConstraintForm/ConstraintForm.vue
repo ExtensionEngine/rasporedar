@@ -33,7 +33,6 @@ export default {
     </accordion-list>
     <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--darker">&plus; Add class</button>
     <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
-    <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
   </form>
 </template>
 
