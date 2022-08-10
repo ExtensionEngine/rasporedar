@@ -9,7 +9,11 @@ export default {
   },
   setup() {
     const formStore = useFormStore();
-    return { formStore };
+
+    const teachers = ['Ante', 'Ana', 'Mate']; // TODO: replace with real data when teacher crud frontend is finished
+    const classrooms = ['001', '002', '003']; // TODO: replace with real data when classroom crud frontend is finished
+
+    return { formStore, teachers, classrooms };
   },
   components: {
     AccordionItem,
@@ -22,6 +26,41 @@ export default {
     <template #summary>
       <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />
     </template>
-    <h3>constrains</h3>
+    <div class="row">
+      <span>Times per week</span>
+      <input type="number" />
+    </div>
+    <div class="row">
+      <span>Teacher</span>
+      <select class="select">
+        <option value="">-</option>
+        <option v-for="teacher in teachers" :key="teacher">{{ teacher }}</option>
+      </select>
+    </div>
+    <div class="row">
+      <span>Classroom</span>
+      <select class="select">
+        <option value="">-</option>
+        <option v-for="classroom in classrooms" :key="classroom">{{ classroom }}</option>
+      </select>
+    </div>
   </accordion-item>
 </template>
+
+<style scoped>
+.row {
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 500px;
+}
+
+.row:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.select {
+  width: 230px;
+}
+</style>

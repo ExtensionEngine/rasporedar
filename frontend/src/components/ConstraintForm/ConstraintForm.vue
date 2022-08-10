@@ -53,5 +53,6 @@ export default {
 <!--
 TODO:
 - constraints (timesPerWeek, teacher and classroom)
+- autoexpand on add
 - styles
 -->
