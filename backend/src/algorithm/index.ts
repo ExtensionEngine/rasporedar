@@ -1,6 +1,7 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
-import { getClassPeriodsPerDay, getTimesPerWeek, setSlot, swapSlots } from './utils';
+import { getClassPeriodsPerDay, getTimesPerWeek } from './utils';
+import { setSlot, swapSlots } from './utils/slot';
 import { checkConstraints } from './utils/constraint';
 import { getMatrixHashmap } from './utils/matrix';
 import { shuffleArray } from './utils/array';
