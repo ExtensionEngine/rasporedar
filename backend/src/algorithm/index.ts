@@ -1,7 +1,8 @@
-import { checkConstraints, getClassPeriodsPerDay, getTimesPerWeek, setSlot, shuffleArray, swapSlots } from './utils';
+import { checkConstraints, getClassPeriodsPerDay, getTimesPerWeek, setSlot, swapSlots } from './utils';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
 import { getMatrixHashmap } from './utils/matrix';
+import { shuffleArray } from './utils/array';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
   const teachers = classes

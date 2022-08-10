@@ -1,6 +1,7 @@
 import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from './types';
-import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { hash, unhash } from './utils/hash';
+import { range, shuffleArray } from './utils/array';
+import { daysPerWeek } from './consts';
 
 export function getTimesPerWeek({ timesPerWeek }: Subject) {
   return timesPerWeek instanceof Array ? timesPerWeek.reduce((a, b) => a + b, 0) : timesPerWeek;
@@ -17,19 +18,6 @@ export function getClassPeriodsPerDay(class_: Class) {
   });
 
   return shuffleArray(periodsPerDay);
-}
-
-export function range(from: number, to: number, step = 1) {
-  return [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
-}
-
-export function shuffleArray<Type>(value: Type[]): Type[] {
-  const array = [...value];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
 
 function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, dayIndex: number, periodIndex: number) {
