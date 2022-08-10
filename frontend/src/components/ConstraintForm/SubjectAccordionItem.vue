@@ -27,6 +27,7 @@ export default {
   <accordion-item
     :id="accordionId"
     :default-opened="accordionId in formStore.accordionState ? formStore.accordionState[accordionId] : true"
+    class="subject-accordion"
   >
     <template #summary>
       <input v-model="formStore.form.classes[classIndex].subjects[index].name" @click.stop type="text" />

@@ -5,6 +5,10 @@
   --color-muted: #bbb;
   --color-main: #5ce2a7;
   --color-text: #000;
+  --color-dark: #555564bb;
+  --color-darker: #555564;
+  --color-light: #eee;
+  --color-lighter: #fff;
 }
 
 body {
@@ -32,4 +36,26 @@ nav {
 
 .rsprd-link:not(:last-child) {
   margin-right: 16px;
+}
+
+.rsprd-button {
+  padding: 6px 18px;
+  background-color: var(--color-dark);
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 200ms ease-out;
+  color: var(--color-light);
+  margin-top: 12px;
+}
+
+.rsprd-button:hover,
+.rsprd-button:focus {
+  border-color: var(--color-text);
+}
+
+.rsprd-button--cta {
+  padding: 14px 56px;
+  background-color: var(--color-main);
+  color: var(--color-text);
 }

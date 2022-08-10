@@ -26,14 +26,12 @@ export default {
   <accordion-item
     :id="accordionId"
     :default-opened="accordionId in formStore.accordionState ? formStore.accordionState[accordionId] : true"
+    class="class-accordion"
   >
     <template #summary>
       <input v-model="formStore.form.classes[index].name" @click.stop type="text" />
     </template>
-    <div class="bar">
-      <h3>Subjects</h3>
-      <button @click="formStore.addSubject(index)" type="button">Add subject</button>
-    </div>
+    <h3>Subjects</h3>
     <accordion-list
       @update:state="newState => (formStore.accordionState = newState)"
       open-multiple-items
@@ -46,5 +44,6 @@ export default {
         :index="subjectIndex"
       />
     </accordion-list>
+    <button @click="formStore.addSubject(index)" type="button" class="rsprd-button">&plus; Add subject</button>
   </accordion-item>
 </template>
