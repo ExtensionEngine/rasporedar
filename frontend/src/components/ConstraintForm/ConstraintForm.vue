@@ -36,7 +36,6 @@ export default {
     </accordion-list>
     <button type="submit">Generate timetable</button>
     <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
-    <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
   </form>
 </template>
 
@@ -52,7 +51,5 @@ export default {
 
 <!--
 TODO:
-- constraints (timesPerWeek, teacher and classroom)
-- autoexpand on add
 - styles
 -->

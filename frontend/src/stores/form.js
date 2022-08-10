@@ -3,6 +3,9 @@ import { useStorage } from '@vueuse/core';
 
 const defaultSubjectFormState = {
   name: '',
+  timesPerWeek: 0,
+  teacher: { name: '' },
+  classroom: { name: '' },
 };
 
 const defaultClassFormState = {

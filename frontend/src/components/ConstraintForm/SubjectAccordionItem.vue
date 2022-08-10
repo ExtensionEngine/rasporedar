@@ -33,18 +33,18 @@ export default {
     </template>
     <div class="row">
       <span>Times per week</span>
-      <input type="number" />
+      <input v-model="formStore.form.classes[classIndex].subjects[index].timesPerWeek" type="number" />
     </div>
     <div class="row">
       <span>Teacher</span>
-      <select class="select">
+      <select v-model="formStore.form.classes[classIndex].subjects[index].teacher.name" class="select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">{{ teacher }}</option>
       </select>
     </div>
     <div class="row">
       <span>Classroom</span>
-      <select class="select">
+      <select v-model="formStore.form.classes[classIndex].subjects[index].classroom.name" class="select">
         <option value="">-</option>
         <option v-for="classroom in classrooms" :key="classroom">{{ classroom }}</option>
       </select>
