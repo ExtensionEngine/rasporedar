@@ -1,6 +1,6 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
-import { getTotalRemainingLectures, getTotalTimesPerWeek } from './utils/subject';
+import { getLectureCountForDay, getTotalRemainingLectures, getTotalTimesPerWeek } from './utils/subject';
 import { setSlot, swapSlots } from './utils/slot';
 import { checkConstraints } from './utils/constraint';
 import { generateTimetableProps } from './seed';

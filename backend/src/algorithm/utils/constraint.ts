@@ -46,7 +46,7 @@ export function checkConstraints(
     checkIfTeacherUnavailable(unavailable, subject, dayIndex, periodIndex) || // teacher is not available
     checkIfClassroomUnavailable(unavailable, subject, dayIndex, periodIndex) || // classroom is not available
     checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) || // all lectures for subject are in schedule
-    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex)
+    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex) // max lecture daily quantity is not exceeded
   );
 }
 
