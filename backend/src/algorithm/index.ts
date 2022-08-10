@@ -3,10 +3,9 @@ import {
   getClassPeriodsPerDay,
   getMatrixHashmap,
   getTimesPerWeek,
-  hash,
   setSlot,
   shuffleArray,
-  swapSlot,
+  swapSlots,
 } from './utils';
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
 import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
@@ -39,7 +38,7 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
         if (periodIndex < periods[class_.name][dayIndex]) {
           shuffleArray(class_.subjects).forEach(subject => {
             if (checkConstraints(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
-              swapSlot(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex, periods);
+              swapSlots(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex, periods);
               return;
             }
 

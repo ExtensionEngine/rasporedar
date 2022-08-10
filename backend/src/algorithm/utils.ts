@@ -91,7 +91,7 @@ export function checkConstraints(
   );
 }
 
-export function swapSlot(
+export function swapSlots(
   timetable: MatrixHashmap,
   unavailable: Unavailable,
   remainingLectures: RemainingLectures,
@@ -110,11 +110,13 @@ export function swapSlot(
       const oldSubject = unhash<Subject>(timetable[hash(class_.name)][oldDayIndex][oldPeriodIndex] as string);
 
       if (
+        // validate old subject to new period
         !(
           checkIfClassUnavailable(timetable, class_, dayIndex, periodIndex) ||
           checkIfTeacherUnavailable(unavailable, oldSubject, dayIndex, periodIndex) ||
           checkIfClassroomUnavailable(unavailable, oldSubject, dayIndex, periodIndex)
         ) &&
+        // validate new subject to old period
         !(
           checkIfTeacherUnavailable(unavailable, newSubject, oldDayIndex, oldPeriodIndex) ||
           checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)
@@ -135,7 +137,7 @@ export function setSlot(
   timetable: MatrixHashmap,
   unavailable: Unavailable,
   remainingLectures: RemainingLectures,
-  decrementQuantity: boolean,
+  shouldDecrementQuantity: boolean,
   class_: Class,
   subject: Subject,
   dayIndex: number,
@@ -150,5 +152,5 @@ export function setSlot(
   unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
   unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
 
-  if (decrementQuantity) remainingLectures[class_.name][subject.name]--;
+  if (shouldDecrementQuantity) remainingLectures[class_.name][subject.name]--;
 }
