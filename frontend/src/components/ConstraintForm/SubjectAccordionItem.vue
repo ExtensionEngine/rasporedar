@@ -73,6 +73,6 @@ export default {
 }
 
 .row:not(:last-child) {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 </style>

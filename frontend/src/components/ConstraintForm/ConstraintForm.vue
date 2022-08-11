@@ -31,7 +31,7 @@ export default {
     >
       <class-accordion-item v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
     </accordion-list>
-    <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--darker">&plus; Add class</button>
+    <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--lighter">&plus; Add class</button>
     <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
   </form>
 </template>
@@ -43,18 +43,22 @@ export default {
   --acco-active: var(--color-main);
 }
 
+.accordion-item {
+  margin-bottom: 12px;
+}
+
+.accordion-list {
+  background-color: var(--color-light);
+}
+
 .class-accordion:not(.accordion-item--open),
 .class-accordion.accordion-item--open > .accordion-item__summary {
-  background-color: var(--color-darker);
+  background-color: var(--color-ligher);
 }
 
 .subject-accordion:not(.accordion-item--open),
 .subject-accordion.accordion-item--open > .accordion-item__summary {
-  background-color: var(--color-dark);
-}
-
-.class-accordion:not(.accordion-item--open) > .accordion-item__summary {
-  color: var(--color-lighter);
+  background-color: var(--color-light);
 }
 
 .accordion-list .accordion-item {
@@ -65,5 +69,6 @@ export default {
 <style scoped>
 .submit-button {
   display: block;
+  margin-bottom: 24px;
 }
 </style>

@@ -34,7 +34,7 @@ export default {
         @click.stop
         type="text"
         placeholder="3a"
-        class="rsprd-input rsprd-input--shorter"
+        class="rsprd-input rsprd-input--shorter rsprd-input--lighter"
       />
     </template>
     <h3>Subjects</h3>
