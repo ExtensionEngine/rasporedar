@@ -33,10 +33,10 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
 
   for (let dayIndex = 0; dayIndex < daysPerWeek; ++dayIndex) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; ++periodIndex) {
-      // shuffle classes for
+      // shuffle classes for for more equal classroom distribution
       shuffleArray(classes).forEach(class_ => {
         if (periodIndex < periods[class_.name][dayIndex]) {
-          // shuffle subjects for better
+          // shuffle subjects for more equal subject distribution
           shuffleArray(class_.subjects).forEach(subject => {
             // check if subject breaks any of the constraints
             if (checkConstraints(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
