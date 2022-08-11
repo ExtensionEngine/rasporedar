@@ -1,5 +1,5 @@
 import { Class, MatrixHashmap, RemainingLectures, Subject, Unavailable } from '../types';
-import { getLectionCountForDay } from './subject';
+import { getLectureCountForDay } from './subject';
 import { hash } from './hash';
 import { maxSubjectLecturesPerDay } from '../consts';
 
@@ -28,7 +28,7 @@ function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, c
 }
 
 function checkIfDailyLimitExceeded(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
-  const lectureCount = getLectionCountForDay(timetable, class_, subject, dayIndex) as number;
+  const lectureCount = getLectureCountForDay(timetable, class_, subject, dayIndex) as number;
   return lectureCount > maxSubjectLecturesPerDay;
 }
 
