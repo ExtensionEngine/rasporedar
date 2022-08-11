@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { objectDeepCopy } from '../helpers/object';
+import { objectDeepCopy } from '@/helpers/object';
 import { useStorage } from '@vueuse/core';
 
 const defaultSubjectFormState = {
