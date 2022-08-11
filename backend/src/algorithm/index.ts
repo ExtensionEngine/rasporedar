@@ -14,38 +14,44 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
     .flat()
     .filter((teacher, i, arr) => arr.findIndex(ts => ts.name === teacher.name) === i);
 
-  const timetable = getMatrixHashmap(classes.map(c => c.name));
+  const timetable = getMatrixHashmap(classes.map(class_ => class_.name));
+  // holds current state for every teacher and classroom occupancy at certain time slot
   const unavailable = {
     teachers: getMatrixHashmap(teachers),
     classrooms: getMatrixHashmap(classrooms),
   };
 
+  // holds current state for every subject lecture count
   const remainingLectures: RemainingLectures = Object.fromEntries(
     classes.map(class_ => [
       class_.name,
       Object.fromEntries(class_.subjects.map(subject => [subject.name, getTotalTimesPerWeek(subject)])),
     ]),
   );
-
+  // holds daily total period quantity for every class
   const periods = Object.fromEntries(classes.map(class_ => [class_.name, getClassPeriodsPerDay(class_)]));
 
   for (let dayIndex = 0; dayIndex < daysPerWeek; ++dayIndex) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; ++periodIndex) {
+      // shuffle classes for
       shuffleArray(classes).forEach(class_ => {
         if (periodIndex < periods[class_.name][dayIndex]) {
+          // shuffle subjects for better
           shuffleArray(class_.subjects).forEach(subject => {
+            // check if subject breaks any of the constraints
             if (checkConstraints(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
+              // constraints are not met, try to swap with any of the previously allocated time slots
               swapSlots(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex, periods);
               return;
             }
-
+            // constraints are met, set subject to current time slot
             setSlot(timetable, unavailable, remainingLectures, true, class_, subject, dayIndex, periodIndex);
           });
         }
       });
     }
   }
-
+  // recursively generates timetables until it finds one with no remaining lectures
   if (getTotalRemainingLectures(remainingLectures) === 0) {
     return { timetable, remainingLectures };
   }

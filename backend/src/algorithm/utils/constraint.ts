@@ -47,7 +47,7 @@ export function checkConstraints(
     checkIfTeacherUnavailable(unavailable, subject, dayIndex, periodIndex) || // teacher is not available
     checkIfClassroomUnavailable(unavailable, subject, dayIndex, periodIndex) || // classroom is not available
     checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) || // all lectures for subject are in schedule
-    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex) // max lecture daily quantity is not exceeded
+    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex) // max lecture daily quantity is exceeded
   );
 }
 
@@ -64,13 +64,13 @@ export function validateSwap(
   oldPeriodIndex: number,
 ) {
   return (
-    // validate old subject to new period
+    // validate if old subject can be set to new time slot
     !(
       checkIfClassUnavailable(timetable, class_, newDayIndex, newPeriodIndex) ||
       checkIfTeacherUnavailable(unavailable, oldSubject, newDayIndex, newPeriodIndex) ||
       checkIfClassroomUnavailable(unavailable, oldSubject, newDayIndex, newPeriodIndex)
     ) &&
-    // validate new subject to old period
+    // validate if new subject can be set to previously set time slot
     !(
       checkIfTeacherUnavailable(unavailable, newSubject, oldDayIndex, oldPeriodIndex) ||
       checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)

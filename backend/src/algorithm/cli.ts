@@ -5,7 +5,8 @@ import { Subject } from './types';
 import { unhash } from './utils/hash';
 
 const { timetable, remainingLectures } = generateTimetable(generateTimetableProps);
-
+// this is for debugging purposes only
+// display generated timetable for every class individually
 Object.keys(timetable).forEach(class_ => {
   console.log('Class: ', class_);
   console.table(
@@ -13,6 +14,6 @@ Object.keys(timetable).forEach(class_ => {
     //                                                                                             ^^^^^^^^^^^^^^ hide empty slots in output
   );
 });
-
+// display total remaing lecture count from all timetables and a table that displays remaing lecture count for every subject related to every class
 console.log('Remaining lectures', getTotalRemainingLectures(remainingLectures));
 console.table(remainingLectures);
