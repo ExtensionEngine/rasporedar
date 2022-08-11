@@ -10,7 +10,7 @@ import { shuffleArray } from './utils/array';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
   const teachers = classes
-    .map(c => c.subjects.map(s => s.teacher))
+    .map(class_ => class_.subjects.map(subject => subject.teacher))
     .flat()
     .filter((t, i, arr) => arr.findIndex(ts => ts.name === t.name) === i);
 
