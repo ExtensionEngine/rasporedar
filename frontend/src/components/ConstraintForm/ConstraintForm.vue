@@ -53,7 +53,7 @@ export default {
 
 .class-accordion:not(.accordion-item--open),
 .class-accordion.accordion-item--open > .accordion-item__summary {
-  background-color: var(--color-ligher);
+  background-color: var(--color-lighter);
 }
 
 .subject-accordion:not(.accordion-item--open),
