@@ -28,8 +28,9 @@ function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, c
 }
 
 function checkIfDailyLimitExceeded(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
+  if (subject === null) return;
   const lectureCount = getLectureCountForDay(timetable, class_, subject, dayIndex) as number;
-  return lectureCount > maxSubjectLecturesPerDay;
+  return lectureCount >= maxSubjectLecturesPerDay;
 }
 
 export function checkConstraints(
