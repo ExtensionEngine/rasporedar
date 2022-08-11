@@ -12,7 +12,7 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
   const teachers = classes
     .map(class_ => class_.subjects.map(subject => subject.teacher))
     .flat()
-    .filter((t, i, arr) => arr.findIndex(ts => ts.name === t.name) === i);
+    .filter((teacher, i, arr) => arr.findIndex(ts => ts.name === teacher.name) === i);
 
   const timetable = getMatrixHashmap(classes.map(c => c.name));
   const unavailable = {
