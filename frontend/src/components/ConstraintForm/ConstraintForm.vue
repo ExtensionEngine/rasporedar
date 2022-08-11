@@ -47,10 +47,6 @@ export default {
   margin-bottom: 12px;
 }
 
-.accordion-list {
-  background-color: var(--color-light);
-}
-
 .class-accordion:not(.accordion-item--open),
 .class-accordion.accordion-item--open > .accordion-item__summary {
   background-color: var(--color-lighter);
