@@ -10,9 +10,7 @@ export default {
   setup(props) {
     const formStore = useFormStore();
 
-    const accordionId = `${props.index}`;
-
-    return { formStore, accordionId };
+    return { formStore };
   },
   components: {
     AccordionList,
@@ -23,11 +21,7 @@ export default {
 </script>
 
 <template>
-  <accordion-item
-    :id="accordionId"
-    :default-opened="accordionId in formStore.accordionState ? formStore.accordionState[accordionId] : true"
-    class="class-accordion"
-  >
+  <accordion-item :id="index" :default-opened="formStore?.accordionState?.[index] ?? true" class="class-accordion">
     <template #summary>
       <input
         v-model="formStore.form.classes[index].name"

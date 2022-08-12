@@ -13,9 +13,7 @@ export default {
     const teachers = ['Ante', 'Ana', 'Mate']; // TODO: replace with real data when teacher crud frontend is finished
     const classrooms = ['001', '002', '003']; // TODO: replace with real data when classroom crud frontend is finished
 
-    const accordionId = `${props.classIndex}_${props.index}`;
-
-    return { formStore, teachers, classrooms, accordionId };
+    return { formStore, teachers, classrooms };
   },
   components: {
     AccordionItem,
@@ -25,8 +23,8 @@ export default {
 
 <template>
   <accordion-item
-    :id="accordionId"
-    :default-opened="accordionId in formStore.accordionState ? formStore.accordionState[accordionId] : true"
+    :id="`${classIndex}_${index}`"
+    :default-opened="formStore?.accordionState?.[`${classIndex}_${index}`] ?? true"
     class="subject-accordion"
   >
     <template #summary>
