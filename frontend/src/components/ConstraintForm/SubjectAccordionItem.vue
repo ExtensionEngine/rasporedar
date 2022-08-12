@@ -13,7 +13,9 @@ export default {
     const teachers = ['Ante', 'Ana', 'Mate']; // TODO: replace with real data when teacher crud frontend is finished
     const classrooms = ['001', '002', '003']; // TODO: replace with real data when classroom crud frontend is finished
 
-    return { formStore, teachers, classrooms };
+    const subject = formStore.form.classes[props.classIndex].subjects[props.index];
+
+    return { formStore, teachers, classrooms, subject };
   },
   components: {
     AccordionItem,
@@ -29,7 +31,7 @@ export default {
   >
     <template #summary>
       <input
-        v-model="formStore.form.classes[classIndex].subjects[index].name"
+        v-model="subject.name"
         @click.stop
         type="text"
         class="rsprd-input rsprd-input--lighter"
@@ -38,22 +40,18 @@ export default {
     </template>
     <div class="row">
       <span>Times per week</span>
-      <input
-        v-model="formStore.form.classes[classIndex].subjects[index].timesPerWeek"
-        type="number"
-        class="rsprd-input rsprd-input--lighter"
-      />
+      <input v-model="subject.timesPerWeek" type="number" class="rsprd-input rsprd-input--lighter" />
     </div>
     <div class="row">
       <span>Teacher</span>
-      <select v-model="formStore.form.classes[classIndex].subjects[index].teacher.name" class="rsprd-select">
+      <select v-model="subject.teacher.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">{{ teacher }}</option>
       </select>
     </div>
     <div class="row">
       <span>Classroom</span>
-      <select v-model="formStore.form.classes[classIndex].subjects[index].classroom.name" class="rsprd-select">
+      <select v-model="subject.classroom.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="classroom in classrooms" :key="classroom">{{ classroom }}</option>
       </select>
