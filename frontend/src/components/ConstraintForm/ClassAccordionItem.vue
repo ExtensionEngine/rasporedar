@@ -40,10 +40,10 @@ export default {
       :state="formStore.accordionState"
     >
       <subject-accordion-item
-        v-for="(_, subjectIndex) in class_.subjects"
+        v-for="subjectIndex in class_.subjects.length"
         :key="subjectIndex"
         :class-index="index"
-        :index="subjectIndex"
+        :index="subjectIndex - 1"
       />
     </accordion-list>
     <button @click="formStore.addSubject(index)" type="button" class="rsprd-button">&plus; Add subject</button>

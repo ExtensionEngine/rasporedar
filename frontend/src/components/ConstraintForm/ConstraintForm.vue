@@ -29,7 +29,11 @@ export default {
       open-multiple-items
       :state="formStore.accordionState"
     >
-      <class-accordion-item v-for="(_, classIndex) in formStore.form.classes" :key="classIndex" :index="classIndex" />
+      <class-accordion-item
+        v-for="classIndex in formStore.form.classes.length"
+        :key="classIndex"
+        :index="classIndex - 1"
+      />
     </accordion-list>
     <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--lighter">&plus; Add class</button>
     <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
