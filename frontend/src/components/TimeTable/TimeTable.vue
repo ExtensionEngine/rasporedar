@@ -4,6 +4,8 @@ import { maxHoursPerDay } from '@/helpers/count';
 
 defineProps({
   timetable: { type: Object, default: () => ({}) },
+  getSubjectPrimaryText: { type: Function, default: () => '' },
+  getSubjectSecondaryText: { type: Function, default: () => '' },
 });
 
 const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -11,9 +13,9 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 <template>
   <div>
-    <div v-for="(classTimetable, className) in timetable" :key="className" class="timetable">
-      <div class="bar">
-        <h2 class="timetable__title">{{ className }}</h2>
+    <div v-for="(timetableData, timetableTitle) in timetable" :key="timetableTitle" class="timetable">
+      <div class="rsprd-bar">
+        <h2 class="timetable__title">{{ timetableTitle }}</h2>
         <button type="button" class="rsprd-button">&darr; Download</button>
       </div>
       <div class="table">
@@ -21,12 +23,16 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
           <div class="col col--small">#</div>
           <div v-for="day in daysInWeek" :key="day" class="col">{{ day }}</div>
         </div>
-        <div v-for="hour in maxHoursPerDay(classTimetable)" :key="hour" class="row">
+        <div v-for="hour in maxHoursPerDay(timetableData)" :key="hour" class="row">
           <div class="col col--small col--vertical-center">{{ hour }}</div>
-          <div v-for="subject in classTimetable.map(day => JSON.parse(day[hour - 1]))" :key="subject" class="col">
-            <div v-if="subject" :style="{ backgroundColor: generateColor(subject.name) }" class="card">
-              <div class="card__title">{{ subject.name }}</div>
-              <div class="card__footer">{{ subject.teacher.name }} - {{ subject.classroom?.name }}</div>
+          <div v-for="subject in timetableData.map(day => JSON.parse(day[hour - 1]))" :key="subject" class="col">
+            <div
+              v-if="subject"
+              :style="{ backgroundColor: generateColor(getSubjectPrimaryText(subject)) }"
+              class="card"
+            >
+              <div class="card__title">{{ getSubjectPrimaryText(subject) }}</div>
+              <div class="card__footer">{{ getSubjectSecondaryText(subject) }}</div>
             </div>
           </div>
         </div>
@@ -42,12 +48,6 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 .timetable__title {
   font-size: 32px;
-}
-
-.bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .row {

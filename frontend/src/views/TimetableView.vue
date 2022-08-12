@@ -25,8 +25,30 @@ onMounted(() => {
     <div v-else>
       <div v-if="timetable.loading">Loading...</div>
       <div v-else>
-        <TimeTable :timetable="timetable.data.timetable" />
+        <header class="rsprd-bar">
+          <div>
+            <span>By class</span>
+            <span>By teacher</span>
+            <span>By classroom</span>
+          </div>
+          <div>
+            <button type="button" class="rsprd-button">Monochrome mode</button>
+            <button type="button" class="rsprd-button">&darr; Download all</button>
+          </div>
+        </header>
+
+        <TimeTable
+          :timetable="timetable.data.timetable"
+          :get-subject-primary-text="subject => subject.name"
+          :get-subject-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
+        />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+header.rsprd-bar {
+  margin-bottom: 32px;
+}
+</style>

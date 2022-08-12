@@ -111,3 +111,9 @@ nav {
   padding: 3px 9px;
   width: 220px;
 }
+
+.rsprd-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
