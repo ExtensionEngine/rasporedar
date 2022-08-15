@@ -1,6 +1,6 @@
 import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
 import { hash, unhash } from './hash';
-import { shuffleArray } from './array';
+import { shuffle } from 'lodash';
 import { validateSwap } from './constraint';
 
 export function swapSlots(
@@ -57,7 +57,7 @@ export function setSlot(
   periodIndex: number,
 ) {
   // used if classroom constraint is not present
-  const fallbackClassroom = shuffleArray(
+  const fallbackClassroom = shuffle(
     Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
   )[0];
 

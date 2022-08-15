@@ -6,7 +6,7 @@ import { checkConstraints } from './utils/constraint';
 import { generateTimetableProps } from './seed';
 import { getClassPeriodsPerDay } from './utils/class';
 import { getMatrixHashmap } from './utils/matrix';
-import { shuffleArray } from './utils/array';
+import { shuffle } from 'lodash';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
   const teachers = classes
@@ -34,10 +34,10 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
   for (let dayIndex = 0; dayIndex < daysPerWeek; ++dayIndex) {
     for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; ++periodIndex) {
       // shuffle classes for for more equal classroom distribution
-      shuffleArray(classes).forEach(class_ => {
+      shuffle(classes).forEach(class_ => {
         if (periodIndex < periods[class_.name][dayIndex]) {
           // shuffle subjects for more equal subject distribution
-          shuffleArray(class_.subjects).forEach(subject => {
+          shuffle(class_.subjects).forEach(subject => {
             // check if subject breaks any of the constraints
             if (checkConstraints(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
               // constraints are not met, try to swap with any of the previously allocated time slots
