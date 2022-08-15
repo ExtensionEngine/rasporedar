@@ -6,14 +6,11 @@ import { checkConstraints } from './utils/constraint';
 import { generateTimetableProps } from './seed';
 import { getClassPeriodsPerDay } from './utils/class';
 import { getMatrixHashmap } from './utils/matrix';
+import { getTeachers } from './utils/teachers';
 import { shuffle } from 'lodash';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
-  const teachers = classes
-    .map(class_ => class_.subjects.map(subject => subject.teacher))
-    .flat()
-    .filter((teacher, i, arr) => arr.findIndex(ts => ts.name === teacher.name) === i);
-
+  const teachers = getTeachers(classes);
   const timetable = getMatrixHashmap(classes.map(class_ => class_.name));
   // holds current state for every teacher and classroom occupancy at certain time slot
   const unavailable = {
