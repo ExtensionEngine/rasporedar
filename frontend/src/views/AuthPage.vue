@@ -118,6 +118,7 @@ export default {
   justify-content: center;
   height: calc(100vh - 100px);
   overflow: hidden;
+  background-color: var(--color-lighter);
 }
 
 .form-screen img,

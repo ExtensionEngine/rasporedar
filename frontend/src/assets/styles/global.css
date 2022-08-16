@@ -5,6 +5,9 @@
   --color-muted: #bbb;
   --color-main: #5ce2a7;
   --color-text: #000;
+  --color-darker: #39393a;
+  --color-light: #f9f9f9;
+  --color-lighter: #fff;
 }
 
 body {
@@ -32,4 +35,79 @@ nav {
 
 .rsprd-link:not(:last-child) {
   margin-right: 16px;
+}
+
+.rsprd-button {
+  padding: 6px 18px;
+  background-color: var(--color-light);
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 200ms ease-out;
+  color: var(--color-text);
+  margin-top: 12px;
+}
+
+.rsprd-button:hover,
+.rsprd-button:focus {
+  border-color: var(--color-text);
+}
+
+.rsprd-button--darker {
+  background-color: var(--color-darker);
+  color: var(--color-lighter);
+}
+
+.rsprd-button--lighter {
+  background-color: var(--color-lighter);
+}
+
+.rsprd-button--cta {
+  padding: 14px 56px;
+  background-color: var(--color-main);
+  color: var(--color-text);
+}
+
+.rsprd-input {
+  background-color: transparent;
+  color: var(--color-lighter);
+  border: 1px solid var(--color-text);
+  border-radius: 4px;
+  padding: 3px 9px;
+  width: 200px;
+}
+
+.rsprd-input:focus-visible {
+  outline: none;
+}
+
+.rsprd-input::placeholder {
+  color: var(--color-muted);
+  opacity: 0.6;
+}
+
+.rsprd-input--lighter {
+  color: var(--color-text);
+}
+
+.rsprd-input--lighter::placeholder {
+  color: var(--color-darker);
+}
+
+.rsprd-input--shorter {
+  width: 100px;
+}
+
+.rsprd-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: 4px;
+  padding: 3px 9px;
+  width: 220px;
 }

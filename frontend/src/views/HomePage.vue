@@ -1,4 +1,5 @@
 <script>
+import ConstraintForm from '@/components/ConstraintForm';
 import PageGreeting from '@/components/PageGreeting.vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
@@ -20,6 +21,7 @@ export default {
   },
   components: {
     PageGreeting,
+    ConstraintForm,
   },
 };
 </script>
@@ -28,5 +30,7 @@ export default {
   <div class="home">
     <PageGreeting msg="This is the Home Page" />
     <button @click="handleLogOut">Logout</button>
+    <hr />
+    <constraint-form />
   </div>
 </template>
