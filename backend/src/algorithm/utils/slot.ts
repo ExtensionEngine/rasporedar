@@ -53,6 +53,7 @@ export function setSlot(
   day: number,
   period: number,
 ) {
+  if (subject === null) return;
   // used if classroom constraint is not present
   const fallbackClassroom = getFallbackClassroom(unavailable.classrooms, day, period);
   const subjectHashed = hash(subject);

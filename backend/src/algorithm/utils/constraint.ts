@@ -61,8 +61,10 @@ export function validateSwap(
   if (checkIfClassUnavailable(timetable, class_, currentDay, currentPeriod)) return false;
   if (checkIfTeacherUnavailable(unavailable, oldSubject, currentDay, currentPeriod)) return false;
   if (checkIfClassroomUnavailable(unavailable, oldSubject, currentDay, currentPeriod)) return false;
+  if (checkIfDailyLimitExceeded(timetable, class_, oldSubject, currentDay)) return false;
   // validate if new subject can be set to previously set time slot
   if (checkIfTeacherUnavailable(unavailable, newSubject, previousDay, previousPeriod)) return false;
   if (checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)) return false;
+  if (checkIfDailyLimitExceeded(timetable, class_, newSubject, previousDay)) return false;
   return true;
 }
