@@ -3,23 +3,18 @@ import { getLectureCountForDay } from './subject';
 import { hash } from './hash';
 import { maxSubjectLecturesPerDay } from '../consts';
 
-function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, dayIndex: number, periodIndex: number) {
-  return timetable[hash(class_.name)][dayIndex][periodIndex];
+function checkIfClassUnavailable(timetable: MatrixHashmap, class_: Class, day: number, period: number) {
+  return timetable[hash(class_.name)][day][period];
 }
 
-function checkIfTeacherUnavailable(unavailable: Unavailable, subject: Subject, dayIndex: number, periodIndex: number) {
+function checkIfTeacherUnavailable(unavailable: Unavailable, subject: Subject, day: number, period: number) {
   if (subject === null) return;
-  return unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex];
+  return unavailable.teachers[hash(subject.teacher)][day][period];
 }
 
-function checkIfClassroomUnavailable(
-  unavailable: Unavailable,
-  subject: Subject,
-  dayIndex: number,
-  periodIndex: number,
-) {
+function checkIfClassroomUnavailable(unavailable: Unavailable, subject: Subject, day: number, period: number) {
   if (subject === null) return;
-  return subject.classroom && unavailable.classrooms[hash(subject.classroom)][dayIndex][periodIndex];
+  return subject.classroom && unavailable.classrooms[hash(subject.classroom)][day][period];
 }
 
 function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, class_: Class, subject: Subject) {
@@ -27,28 +22,27 @@ function checkIfLectureQuantityFulfilled(remainingLectures: RemainingLectures, c
   return remainingLectures[class_.name][subject.name] === 0;
 }
 
-function checkIfDailyLimitExceeded(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
+function checkIfDailyLimitExceeded(timetable: MatrixHashmap, class_: Class, subject: Subject, day: number) {
   if (subject === null) return;
-  const lectureCount = getLectureCountForDay(timetable, class_, subject, dayIndex) as number;
+  const lectureCount = getLectureCountForDay(timetable, class_, subject, day) as number;
   return lectureCount >= maxSubjectLecturesPerDay;
 }
 
-export function checkConstraints(
+export function checkIfAnyConstraintBroken(
   timetable: MatrixHashmap,
   unavailable: Unavailable,
   remainingLectures: RemainingLectures,
   class_: Class,
   subject: Subject,
-  dayIndex: number,
-  periodIndex: number,
+  day: number,
+  period: number,
 ) {
-  return (
-    checkIfClassUnavailable(timetable, class_, dayIndex, periodIndex) || // class in not available
-    checkIfTeacherUnavailable(unavailable, subject, dayIndex, periodIndex) || // teacher is not available
-    checkIfClassroomUnavailable(unavailable, subject, dayIndex, periodIndex) || // classroom is not available
-    checkIfLectureQuantityFulfilled(remainingLectures, class_, subject) || // all lectures for subject are in schedule
-    checkIfDailyLimitExceeded(timetable, class_, subject, dayIndex) // max lecture daily quantity is exceeded
-  );
+  if (checkIfClassUnavailable(timetable, class_, day, period)) return true; // class in not available
+  if (checkIfTeacherUnavailable(unavailable, subject, day, period)) return true; // teacher is not available
+  if (checkIfClassroomUnavailable(unavailable, subject, day, period)) return true; // classroom is not available
+  if (checkIfLectureQuantityFulfilled(remainingLectures, class_, subject)) return true; // all lectures for subject are in schedule
+  if (checkIfDailyLimitExceeded(timetable, class_, subject, day)) return true; // max lecture daily quantity is exceeded
+  return false;
 }
 
 export function validateSwap(
@@ -57,23 +51,18 @@ export function validateSwap(
   remainingLectures: RemainingLectures,
   class_: Class,
   newSubject: Subject,
-  newDayIndex: number,
-  newPeriodIndex: number,
+  currentDay: number,
+  currentPeriod: number,
   oldSubject: Subject,
-  oldDayIndex: number,
-  oldPeriodIndex: number,
+  previousDay: number,
+  previousPeriod: number,
 ) {
-  return (
-    // validate if old subject can be set to new time slot
-    !(
-      checkIfClassUnavailable(timetable, class_, newDayIndex, newPeriodIndex) ||
-      checkIfTeacherUnavailable(unavailable, oldSubject, newDayIndex, newPeriodIndex) ||
-      checkIfClassroomUnavailable(unavailable, oldSubject, newDayIndex, newPeriodIndex)
-    ) &&
-    // validate if new subject can be set to previously set time slot
-    !(
-      checkIfTeacherUnavailable(unavailable, newSubject, oldDayIndex, oldPeriodIndex) ||
-      checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)
-    )
-  );
+  // validate if old subject can be set to new time slot
+  if (checkIfClassUnavailable(timetable, class_, currentDay, currentPeriod)) return false;
+  if (checkIfTeacherUnavailable(unavailable, oldSubject, currentDay, currentPeriod)) return false;
+  if (checkIfClassroomUnavailable(unavailable, oldSubject, currentDay, currentPeriod)) return false;
+  // validate if new subject can be set to previously set time slot
+  if (checkIfTeacherUnavailable(unavailable, newSubject, previousDay, previousPeriod)) return false;
+  if (checkIfLectureQuantityFulfilled(remainingLectures, class_, newSubject)) return false;
+  return true;
 }

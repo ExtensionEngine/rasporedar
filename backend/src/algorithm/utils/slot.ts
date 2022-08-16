@@ -1,6 +1,6 @@
 import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
 import { hash, unhash } from './hash';
-import { shuffle } from 'lodash';
+import { getFallbackClassroom } from './classroom';
 import { validateSwap } from './constraint';
 
 export function swapSlots(
@@ -9,17 +9,15 @@ export function swapSlots(
   remainingLectures: RemainingLectures,
   class_: Class,
   newSubject: Subject,
-  dayIndex: number,
-  periodIndex: number,
+  currentDay: number,
+  currentPeriod: number,
   periods: Periods,
 ) {
-  let found = false;
+  for (let previousDay = 0; previousDay <= currentDay; ++previousDay) {
+    const periodLength = previousDay === currentDay ? currentPeriod : periods[class_.name][previousDay];
 
-  for (let oldDayIndex = 0; oldDayIndex <= dayIndex && !found; ++oldDayIndex) {
-    const periodLength = oldDayIndex === dayIndex ? periodIndex : periods[class_.name][oldDayIndex];
-
-    for (let oldPeriodIndex = 0; oldPeriodIndex < periodLength && !found; ++oldPeriodIndex) {
-      const oldSubject = unhash<Subject>(timetable[hash(class_.name)][oldDayIndex][oldPeriodIndex] as string);
+    for (let previousPeriod = 0; previousPeriod < periodLength; ++previousPeriod) {
+      const oldSubject = unhash<Subject>(timetable[hash(class_.name)][previousDay][previousPeriod] as string);
 
       if (
         validateSwap(
@@ -28,19 +26,18 @@ export function swapSlots(
           remainingLectures,
           class_,
           newSubject,
-          dayIndex,
-          periodIndex,
+          currentDay,
+          currentPeriod,
           oldSubject,
-          oldDayIndex,
-          oldPeriodIndex,
+          previousDay,
+          previousPeriod,
         )
       ) {
         // set new subject to old slot
-        setSlot(timetable, unavailable, remainingLectures, true, class_, newSubject, oldDayIndex, oldPeriodIndex);
+        setSlot(timetable, unavailable, remainingLectures, true, class_, newSubject, previousDay, previousPeriod);
         // set old subject to new spot
-        setSlot(timetable, unavailable, remainingLectures, false, class_, oldSubject, dayIndex, periodIndex);
-
-        found = true;
+        setSlot(timetable, unavailable, remainingLectures, false, class_, oldSubject, currentDay, currentPeriod);
+        return;
       }
     }
   }
@@ -53,17 +50,16 @@ export function setSlot(
   shouldDecrementQuantity: boolean,
   class_: Class,
   subject: Subject,
-  dayIndex: number,
-  periodIndex: number,
+  day: number,
+  period: number,
 ) {
   // used if classroom constraint is not present
-  const fallbackClassroom = shuffle(
-    Object.keys(unavailable.classrooms).filter(room => !unavailable.classrooms[room][dayIndex][periodIndex]),
-  )[0];
+  const fallbackClassroom = getFallbackClassroom(unavailable.classrooms, day, period);
+  const subjectHash = hash(subject);
 
-  timetable[hash(class_.name)][dayIndex][periodIndex] = hash(subject);
-  unavailable.teachers[hash(subject.teacher)][dayIndex][periodIndex] = hash(subject);
-  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][dayIndex][periodIndex] = hash(subject);
+  timetable[hash(class_.name)][day][period] = subjectHash;
+  unavailable.teachers[hash(subject.teacher)][day][period] = subjectHash;
+  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][day][period] = subjectHash;
 
   if (shouldDecrementQuantity) remainingLectures[class_.name][subject.name]--;
 }

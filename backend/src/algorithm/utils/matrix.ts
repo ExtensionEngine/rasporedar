@@ -1,5 +1,6 @@
 import { daysPerWeek, maxPeriodsPerDay } from '../consts';
 import { hash } from './hash';
+import { MatrixHashmap } from 'algorithm/types';
 
 export function getMatrix(x: number, y: number) {
   const matrix = new Array(x);
@@ -12,5 +13,10 @@ export function getMatrix(x: number, y: number) {
 }
 
 export function getMatrixHashmap(keys: unknown[]) {
-  return Object.fromEntries(keys.map(key => [hash(key), getMatrix(daysPerWeek, maxPeriodsPerDay)]));
+  const matrixHashmap = keys.reduce((map: MatrixHashmap, key) => {
+    map[hash(key)] = getMatrix(daysPerWeek, maxPeriodsPerDay);
+    return map;
+  }, {});
+
+  return matrixHashmap;
 }

@@ -6,13 +6,13 @@ export function getTotalTimesPerWeek({ timesPerWeek }: Subject) {
 }
 
 export function getTotalRemainingLectures(remainingLectures: RemainingLectures) {
-  return Object.values(remainingLectures).reduce(
-    (sum, ls) => sum + Object.values(ls).reduce((sum, l) => sum + l, 0),
-    0,
-  );
+  return Object.values(remainingLectures).reduce((sum, ls) => {
+    const lectureSum = Object.values(ls).reduce((sum, l) => sum + l, 0);
+    return sum + lectureSum;
+  }, 0);
 }
 
-export function getLectureCountForDay(timetable: MatrixHashmap, class_: Class, subject: Subject, dayIndex: number) {
-  const subjectLecturesOnDay = timetable[hash(class_.name)][dayIndex].filter(period => period === hash(subject));
+export function getLectureCountForDay(timetable: MatrixHashmap, class_: Class, subject: Subject, day: number) {
+  const subjectLecturesOnDay = timetable[hash(class_.name)][day].filter(period => period === hash(subject));
   return subjectLecturesOnDay.length;
 }

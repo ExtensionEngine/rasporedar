@@ -16,3 +16,16 @@ export function getClassPeriodsPerDay(class_: Class) {
 
   return shuffle(periodsPerDay);
 }
+
+export function getRemainingLectures(classes: Class[]) {
+  return Object.fromEntries(
+    classes.map(class_ => [
+      class_.name,
+      Object.fromEntries(class_.subjects.map(subject => [subject.name, getTotalTimesPerWeek(subject)])),
+    ]),
+  );
+}
+
+export function getPeriodsPerClass(classes: Class[]) {
+  return Object.fromEntries(classes.map(class_ => [class_.name, getClassPeriodsPerDay(class_)])); // holds daily total period quantity for every class
+}

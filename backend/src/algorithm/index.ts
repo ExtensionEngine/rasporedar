@@ -1,50 +1,47 @@
 import { daysPerWeek, maxPeriodsPerDay } from './consts';
-import { GenerateTimetableProps, GenerateTimetableResult, RemainingLectures } from './types';
-import { getTotalRemainingLectures, getTotalTimesPerWeek } from './utils/subject';
+import { GenerateTimetableProps, GenerateTimetableResult } from './types';
+import { getPeriodsPerClass, getRemainingLectures } from './utils/class';
 import { setSlot, swapSlots } from './utils/slot';
-import { checkConstraints } from './utils/constraint';
+import { checkIfAnyConstraintBroken } from './utils/constraint';
 import { generateTimetableProps } from './seed';
-import { getClassPeriodsPerDay } from './utils/class';
 import { getMatrixHashmap } from './utils/matrix';
 import { getTeachers } from './utils/teachers';
+import { getTotalRemainingLectures } from './utils/subject';
 import { shuffle } from 'lodash';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
   const teachers = getTeachers(classes);
   const timetable = getMatrixHashmap(classes.map(class_ => class_.name));
+  const remainingLectures = getRemainingLectures(classes); // holds current state for every subject lecture count
   // holds current state for every teacher and classroom occupancy at certain time slot
   const unavailable = {
     teachers: getMatrixHashmap(teachers),
     classrooms: getMatrixHashmap(classrooms),
   };
+  const periods = getPeriodsPerClass(classes);
 
-  // holds current state for every subject lecture count
-  const remainingLectures: RemainingLectures = Object.fromEntries(
-    classes.map(class_ => [
-      class_.name,
-      Object.fromEntries(class_.subjects.map(subject => [subject.name, getTotalTimesPerWeek(subject)])),
-    ]),
-  );
-  // holds daily total period quantity for every class
-  const periods = Object.fromEntries(classes.map(class_ => [class_.name, getClassPeriodsPerDay(class_)]));
-
-  for (let dayIndex = 0; dayIndex < daysPerWeek; ++dayIndex) {
-    for (let periodIndex = 0; periodIndex < maxPeriodsPerDay; ++periodIndex) {
+  for (let day = 0; day < daysPerWeek; ++day) {
+    for (let period = 0; period < maxPeriodsPerDay; ++period) {
       // shuffle classes for for more equal classroom distribution
       shuffle(classes).forEach(class_ => {
-        if (periodIndex < periods[class_.name][dayIndex]) {
-          // shuffle subjects for more equal subject distribution
-          shuffle(class_.subjects).forEach(subject => {
-            // check if subject breaks any of the constraints
-            if (checkConstraints(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex)) {
-              // constraints are not met, try to swap with any of the previously allocated time slots
-              swapSlots(timetable, unavailable, remainingLectures, class_, subject, dayIndex, periodIndex, periods);
-              return;
-            }
-            // constraints are met, set subject to current time slot
-            setSlot(timetable, unavailable, remainingLectures, true, class_, subject, dayIndex, periodIndex);
-          });
-        }
+        // check if current period exceeds calculated period count for current class on current day
+        if (period >= periods[class_.name][day]) return;
+        // shuffle subjects for more equal subject distribution
+        shuffle(class_.subjects).forEach(subject => {
+          const isConstraintBroken = checkIfAnyConstraintBroken(
+            timetable,
+            unavailable,
+            remainingLectures,
+            class_,
+            subject,
+            day,
+            period,
+          );
+
+          return isConstraintBroken
+            ? swapSlots(timetable, unavailable, remainingLectures, class_, subject, day, period, periods)
+            : setSlot(timetable, unavailable, remainingLectures, true, class_, subject, day, period);
+        });
       });
     }
   }
