@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.0.2",
-    "lodash.zip": "^4.2.0",
     "normalize.css": "^8.0.1",
     "pdfmake": "^0.2.5",
     "pinia": "^2.0.17",
