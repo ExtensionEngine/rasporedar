@@ -1,14 +1,27 @@
 <script setup>
 import { generateColor } from '@/helpers/color';
+import { getDocDefinition } from '@/helpers/pdf';
 import { maxHoursPerDay } from '@/helpers/count';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from 'pdfmake/build/pdfmake';
 
-defineProps({
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+const props = defineProps({
   timetable: { type: Object, default: () => ({}) },
   getCardPrimaryText: { type: Function, default: () => '' },
   getCardSecondaryText: { type: Function, default: () => '' },
 });
 
 const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+function handleDownload(timetableTitle, timetableData) {
+  pdfMake
+    .createPdf(
+      getDocDefinition({ [timetableTitle]: timetableData }, props.getCardPrimaryText, props.getCardSecondaryText),
+    )
+    .open();
+}
 </script>
 
 <template>
@@ -16,7 +29,9 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     <div v-for="(timetableData, timetableTitle) in timetable" :key="timetableTitle" class="timetable">
       <div class="rsprd-bar">
         <h2 class="timetable__title">{{ timetableTitle }}</h2>
-        <button type="button" class="rsprd-button">&darr; Download</button>
+        <button @click="() => handleDownload(timetableTitle, timetableData)" type="button" class="rsprd-button">
+          &darr; Download
+        </button>
       </div>
       <div class="table">
         <div class="row row--header">
