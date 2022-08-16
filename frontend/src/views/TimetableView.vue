@@ -22,7 +22,15 @@ onMounted(() => {
 });
 
 function handleDownloadAll() {
-  pdfMake.createPdf(getDocDefinition(timetable.data.timetable)).open();
+  pdfMake
+    .createPdf(
+      getDocDefinition(
+        timetable.data.timetable,
+        subject => subject.name,
+        subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`,
+      ),
+    )
+    .open();
 }
 </script>
 
