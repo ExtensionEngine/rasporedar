@@ -35,7 +35,7 @@ export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondary
                   const subject = JSON.parse(col);
                   return {
                     stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
-                    fillColor: generateColor(subject.name),
+                    fillColor: generateColor(getCardPrimaryText(subject)),
                     fillOpacity: 0.6,
                     margin: [3, 4],
                   };

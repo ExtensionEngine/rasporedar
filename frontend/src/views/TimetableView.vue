@@ -56,8 +56,8 @@ function handleDownloadAll() {
 
         <TimeTable
           :timetable="timetable.data.timetable"
-          :get-subject-primary-text="subject => subject.name"
-          :get-subject-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
+          :get-card-primary-text="subject => subject.name"
+          :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
         />
       </div>
     </div>
