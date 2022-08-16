@@ -1,7 +1,12 @@
 <script setup>
 import { onMounted, reactive } from 'vue';
+import { getDocDefinition } from '@/helpers/pdf';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
 import timetableService from '@/api/timetable';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
 
@@ -15,6 +20,10 @@ onMounted(() => {
     })
     .finally(() => (timetable.loading = false));
 });
+
+function handleDownloadAll() {
+  pdfMake.createPdf(getDocDefinition(timetable.data.timetable)).open();
+}
 </script>
 
 <template>
@@ -33,7 +42,7 @@ onMounted(() => {
           </div>
           <div>
             <button type="button" class="rsprd-button">Monochrome mode</button>
-            <button type="button" class="rsprd-button">&darr; Download all</button>
+            <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
           </div>
         </header>
 
