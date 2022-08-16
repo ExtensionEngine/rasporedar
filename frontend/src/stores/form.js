@@ -1,32 +1,32 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-const defaultSubjectFormState = {
+const buildSubjectFormState = () => ({
   name: '',
   timesPerWeek: 0,
   teacher: { name: '' },
   classroom: { name: '' },
-};
+});
 
-const defaultClassFormState = {
+const buildClassFormState = () => ({
   name: '',
-  subjects: [defaultSubjectFormState],
-};
+  subjects: [buildSubjectFormState()],
+});
 
-const defaultFormState = {
-  classes: [defaultClassFormState],
-};
+const buildFormState = () => ({
+  classes: [buildClassFormState()],
+});
 
 export const useFormStore = defineStore('form', () => {
-  const form = useStorage('form', structuredClone(defaultFormState));
+  const form = useStorage('form', buildFormState());
   const accordionState = useStorage('accordionState', {});
 
   function addClass() {
-    form.value.classes.push(structuredClone(defaultClassFormState));
+    form.value.classes.push(buildClassFormState());
   }
 
   function addSubject(index) {
-    form.value.classes[index].subjects.push(structuredClone(defaultSubjectFormState));
+    form.value.classes[index].subjects.push(buildSubjectFormState());
   }
 
   return { form, accordionState, addClass, addSubject };
