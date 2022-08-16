@@ -8,7 +8,7 @@ export type Classroom = {
 
 export type Subject = {
   name: string;
-  timesPerWeek: number | number[];
+  timesPerWeek: number;
   teacher: Teacher;
   classroom?: Classroom;
 };
