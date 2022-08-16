@@ -81,7 +81,7 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 }
 
 .card__title {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
