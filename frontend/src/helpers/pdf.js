@@ -1,14 +1,13 @@
 import { generateColor } from './color';
 import { maxHoursPerDay } from './count';
-import zip from 'lodash.zip';
+
+const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondaryText) {
-  console.log(timetable);
-  const dd = {
+  return {
     content: Object.keys(timetable).map((timetableTitle, i) => {
       const timetableData = timetable[timetableTitle];
-      console.log(timetableData);
-      console.log();
+      const hoursPerDay = maxHoursPerDay(timetableData);
       return [
         { text: timetableTitle, fontSize: 28, bold: true, margin: [0, 0, 0, 10], pageBreak: i === 0 ? null : 'before' },
         {
@@ -17,30 +16,27 @@ export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondary
             body: [
               [
                 { text: '#', alignment: 'center', bold: true },
-                { text: 'Monday', bold: true, margin: [3, 0] },
-                { text: 'Tuesday', bold: true, margin: [3, 0] },
-                { text: 'Wednesday', bold: true, margin: [3, 0] },
-                { text: 'Thursday', bold: true, margin: [3, 0] },
-                { text: 'Friday', bold: true, margin: [3, 0] },
+                ...daysInWeek.map(day => ({ text: day, bold: true, margin: [3, 0] })),
               ],
-              ...zip(...timetableData).map((row, i) => [
-                { stack: ['\n', { text: i + 1, bold: true, alignment: 'center' }, '\n'], margin: [3, 4] },
-                ...row.map((col, i) => {
-                  if (i + 1 > maxHoursPerDay(timetableData)) {
-                    return undefined;
-                  }
-                  if (!col) {
-                    return { stack: [] };
-                  }
-                  const subject = JSON.parse(col);
-                  return {
-                    stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
-                    fillColor: generateColor(getCardPrimaryText(subject)),
-                    fillOpacity: 0.6,
-                    margin: [3, 4],
-                  };
-                }),
-              ]),
+              ...Array(hoursPerDay)
+                .fill()
+                .map((_, hourIndex) => [
+                  { stack: ['\n', { text: hourIndex + 1, bold: true, alignment: 'center' }, '\n'], margin: [3, 4] },
+                  ...Array(daysInWeek.length)
+                    .fill()
+                    .map((_, dayIndex) => {
+                      if (!timetableData[dayIndex][hourIndex]) {
+                        return { stack: [] };
+                      }
+                      const subject = JSON.parse(timetableData[dayIndex][hourIndex]);
+                      return {
+                        stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
+                        fillColor: generateColor(getCardPrimaryText(subject)),
+                        fillOpacity: 0.6,
+                        margin: [3, 4],
+                      };
+                    }),
+                ]),
             ],
           },
         },
@@ -48,5 +44,4 @@ export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondary
     }),
     pageOrientation: 'landscape',
   };
-  return dd;
 }
