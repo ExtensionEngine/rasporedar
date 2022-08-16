@@ -55,11 +55,11 @@ export function setSlot(
 ) {
   // used if classroom constraint is not present
   const fallbackClassroom = getFallbackClassroom(unavailable.classrooms, day, period);
-  const subjectHash = hash(subject);
+  const subjectHashed = hash(subject);
 
-  timetable[hash(class_.name)][day][period] = subjectHash;
-  unavailable.teachers[hash(subject.teacher)][day][period] = subjectHash;
-  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][day][period] = subjectHash;
+  timetable[hash(class_.name)][day][period] = subjectHashed;
+  unavailable.teachers[hash(subject.teacher)][day][period] = subjectHashed;
+  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][day][period] = subjectHashed;
 
   if (shouldDecrementQuantity) remainingLectures[class_.name][subject.name]--;
 }

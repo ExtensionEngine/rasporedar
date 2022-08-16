@@ -5,8 +5,8 @@ import { setSlot, swapSlots } from './utils/slot';
 import { checkIfAnyConstraintBroken } from './utils/constraint';
 import { generateTimetableProps } from './seed';
 import { getMatrixHashmap } from './utils/matrix';
-import { getTeachers } from './utils/teachers';
-import { getTotalRemainingLectures } from './utils/subject';
+import { getTeachers } from './utils/teacher';
+import { getTotalRemainingLecturesCount } from './utils/subject';
 import { shuffle } from 'lodash';
 
 export function generateTimetable({ classes, classrooms }: GenerateTimetableProps): GenerateTimetableResult {
@@ -46,7 +46,7 @@ export function generateTimetable({ classes, classrooms }: GenerateTimetableProp
     }
   }
   // recursively generates timetables until it finds one with no remaining lectures
-  if (getTotalRemainingLectures(remainingLectures) === 0) {
+  if (getTotalRemainingLecturesCount(remainingLectures) === 0) {
     return { timetable, remainingLectures };
   }
 

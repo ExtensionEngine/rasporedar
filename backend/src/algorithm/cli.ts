@@ -1,6 +1,6 @@
 import { generateTimetable } from './index';
 import { generateTimetableProps } from './seed';
-import { getTotalRemainingLectures } from './utils/subject';
+import { getTotalRemainingLecturesCount } from './utils/subject';
 import { Subject } from './types';
 import { unhash } from './utils/hash';
 
@@ -15,5 +15,5 @@ Object.keys(timetable).forEach(class_ => {
   );
 });
 // display total remaing lecture count from all timetables and a table that displays remaing lecture count for every subject related to every class
-console.log('Remaining lectures', getTotalRemainingLectures(remainingLectures));
+console.log('Remaining lectures', getTotalRemainingLecturesCount(remainingLectures));
 console.table(remainingLectures);

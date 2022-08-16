@@ -1,11 +1,15 @@
 import { Class, MatrixHashmap, RemainingLectures, Subject } from '../types';
+import { sum, sumBy } from 'lodash';
 import { hash } from './hash';
 
-export function getTotalRemainingLectures(remainingLectures: RemainingLectures) {
-  return Object.values(remainingLectures).reduce((sum, ls) => {
-    const lectureSum = Object.values(ls).reduce((sum, l) => sum + l, 0);
-    return sum + lectureSum;
-  }, 0);
+export function getTotalRemainingLecturesCount(remainingLectures: RemainingLectures) {
+  const classes = Object.values(remainingLectures);
+  const totalRemainingLecturesCount = sumBy(classes, subjects => {
+    const lectureCounts = Object.values(subjects);
+    return sum(lectureCounts);
+  });
+
+  return totalRemainingLecturesCount;
 }
 
 export function getLectureCountForDay(timetable: MatrixHashmap, class_: Class, subject: Subject, day: number) {
