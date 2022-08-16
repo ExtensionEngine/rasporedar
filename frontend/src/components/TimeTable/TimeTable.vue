@@ -4,8 +4,8 @@ import { maxHoursPerDay } from '@/helpers/count';
 
 defineProps({
   timetable: { type: Object, default: () => ({}) },
-  getSubjectPrimaryText: { type: Function, default: () => '' },
-  getSubjectSecondaryText: { type: Function, default: () => '' },
+  getCardPrimaryText: { type: Function, default: () => '' },
+  getCardSecondaryText: { type: Function, default: () => '' },
 });
 
 const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -28,11 +28,13 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
           <div v-for="subject in timetableData.map(day => JSON.parse(day[hour - 1]))" :key="subject" class="col">
             <div
               v-if="subject"
-              :style="{ backgroundColor: generateColor(getSubjectPrimaryText(subject)) }"
+              :style="{
+                backgroundColor: generateColor(getCardPrimaryText(subject)) + '99' /* set background opacity to 60% */,
+              }"
               class="card"
             >
-              <div class="card__title">{{ getSubjectPrimaryText(subject) }}</div>
-              <div class="card__footer">{{ getSubjectSecondaryText(subject) }}</div>
+              <div class="card__title">{{ getCardPrimaryText(subject) }}</div>
+              <div class="card__footer">{{ getCardSecondaryText(subject) }}</div>
             </div>
           </div>
         </div>

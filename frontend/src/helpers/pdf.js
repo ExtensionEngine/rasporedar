@@ -2,7 +2,7 @@ import { generateColor } from './color';
 import { maxHoursPerDay } from './count';
 import zip from 'lodash.zip';
 
-export function getDocDefinition(timetable, getSubjectPrimaryText, getSubjectSecondaryText) {
+export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondaryText) {
   console.log(timetable);
   const dd = {
     content: Object.keys(timetable).map((timetableTitle, i) => {
@@ -34,12 +34,8 @@ export function getDocDefinition(timetable, getSubjectPrimaryText, getSubjectSec
                   }
                   const subject = JSON.parse(col);
                   return {
-                    stack: [
-                      { text: getSubjectPrimaryText(subject), bold: true },
-                      '\n',
-                      getSubjectSecondaryText(subject),
-                    ],
-                    fillColor: generateColor(subject.name, false),
+                    stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
+                    fillColor: generateColor(subject.name),
                     fillOpacity: 0.6,
                     margin: [3, 4],
                   };
