@@ -1,4 +1,4 @@
-import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
+import { Class, Classroom, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
 import { hash, unhash } from './hash';
 import { getFallbackClassroom } from './classroom';
 import { validateSwap } from './constraint';
@@ -56,11 +56,12 @@ export function setSlot(
   if (subject === null) return;
   // used if classroom constraint is not present
   const fallbackClassroom = getFallbackClassroom(unavailable.classrooms, day, period);
-  const subjectHashed = hash(subject);
+  const assignedClassroom = subject.classroom || fallbackClassroom;
+  const subjectHashed = hash({ ...subject, classroom: assignedClassroom });
 
   timetable[hash(class_.name)][day][period] = subjectHashed;
   unavailable.teachers[hash(subject.teacher)][day][period] = subjectHashed;
-  unavailable.classrooms[hash(subject.classroom) || fallbackClassroom][day][period] = subjectHashed;
+  unavailable.classrooms[hash(assignedClassroom)][day][period] = subjectHashed;
 
   if (shouldDecrementQuantity) remainingLectures[class_.name][subject.name]--;
 }
