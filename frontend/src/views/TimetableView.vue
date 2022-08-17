@@ -46,9 +46,9 @@ function handleDownloadAll() {
       <div v-else>
         <header class="rsprd-bar">
           <div>
-            <span>By class</span>
-            <span>By teacher</span>
-            <span>By classroom</span>
+            <a class="rsprd-link">By class</a>
+            <a class="rsprd-link">By teacher</a>
+            <a class="rsprd-link">By classroom</a>
           </div>
           <div>
             <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
@@ -71,6 +71,15 @@ function handleDownloadAll() {
 
 <style scoped>
 header.rsprd-bar {
-  margin-bottom: 32px;
+  margin-top: 48px;
+  margin-bottom: 24px;
+}
+
+.rsprd-button {
+  margin-top: 0;
+}
+
+.rsprd-button:not(:last-child) {
+  margin-right: 12px;
 }
 </style>
