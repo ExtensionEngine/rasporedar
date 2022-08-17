@@ -19,9 +19,16 @@ const routes = [
     component: () => import('@/views/AuthPage.vue'),
   },
   {
-    path: '/timetable',
-    name: 'timetable',
-    component: () => import('@/views/TimeTableView.vue'),
+    path: '/timetables',
+    name: 'timetables',
+    component: () => import('@/views/TimetableView.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/timetable-generator',
+    name: 'timetable-generator',
+    component: () => import('@/views/TimeTableGeneratorView.vue'),
+    meta: { requiresAuth: true },
   },
 ];
 
