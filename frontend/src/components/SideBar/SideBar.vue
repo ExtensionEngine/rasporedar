@@ -14,8 +14,8 @@ import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
     <h4>Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <side-bar-link :icon="TimetableIcon">Timetables</side-bar-link>
-      <side-bar-link :icon="TimetableAddIcon">Timetable Generator</side-bar-link>
+      <side-bar-link to="/timetables" :icon="TimetableIcon">Timetables</side-bar-link>
+      <side-bar-link to="/timetable-generator" :icon="TimetableAddIcon">Timetable Generator</side-bar-link>
     </div>
   </aside>
 </template>

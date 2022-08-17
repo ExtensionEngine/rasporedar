@@ -1,20 +1,19 @@
-<script>
-export default {
-  props: {
-    icon: { type: String, required: true },
-  },
-};
+<script setup>
+const props = defineProps({
+  to: { type: String, required: true },
+  icon: { type: String, required: true },
+});
 </script>
 
 <template>
-  <div class="link">
+  <router-link :to="props.to" class="link">
     <span class="icon-wrapper">
-      <img class="icon" :src="icon" />
+      <img class="icon" :src="props.icon" />
     </span>
     <span class="link-text">
       <slot />
     </span>
-  </div>
+  </router-link>
 </template>
 
 <style scoped>
