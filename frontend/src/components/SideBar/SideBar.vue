@@ -1,9 +1,6 @@
 <script setup>
-import ClassroomIcon from '@/assets/img/sidebar/classroom_icon.svg';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
-import ProfileIcon from '@/assets/img/sidebar/profile_icon.svg';
 import SideBarLink from './SideBarLink.vue';
-import TeacherIcon from '@/assets/img/sidebar/teacher_icon.svg';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
 </script>
@@ -17,9 +14,6 @@ import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
     <h4>Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <side-bar-link :icon="ProfileIcon">My Profile</side-bar-link>
-      <side-bar-link :icon="ClassroomIcon">Classrooms</side-bar-link>
-      <side-bar-link :icon="TeacherIcon">Teachers</side-bar-link>
       <side-bar-link :icon="TimetableIcon">Timetables</side-bar-link>
       <side-bar-link :icon="TimetableAddIcon">Timetable Generator</side-bar-link>
     </div>
