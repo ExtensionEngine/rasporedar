@@ -2,6 +2,7 @@
 import ClassroomIcon from '@/assets/img/sidebar/classroom_icon.svg';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
 import ProfileIcon from '@/assets/img/sidebar/profile_icon.svg';
+import SideBarLink from './SideBarLink.vue';
 import TeacherIcon from '@/assets/img/sidebar/teacher_icon.svg';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
@@ -16,36 +17,11 @@ import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
     <h4>Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <div class="link">
-        <span class="icon-wrapper">
-          <img class="icon" :src="ProfileIcon" />
-        </span>
-        <span class="link-text"> My Profile </span>
-      </div>
-      <div class="link">
-        <span class="icon-wrapper">
-          <img class="icon" :src="ClassroomIcon" />
-        </span>
-        <span class="link-text"> Classrooms </span>
-      </div>
-      <div class="link">
-        <span class="icon-wrapper">
-          <img class="icon" :src="TeacherIcon" />
-        </span>
-        <span class="link-text"> Teachers </span>
-      </div>
-      <div class="link">
-        <span class="icon-wrapper">
-          <img class="icon" :src="TimetableAddIcon" />
-        </span>
-        <span class="link-text"> Timetable Generator </span>
-      </div>
-      <div class="link">
-        <span class="icon-wrapper">
-          <img class="icon" :src="TimetableIcon" />
-        </span>
-        <span class="link-text"> Timetables </span>
-      </div>
+      <side-bar-link :icon="ProfileIcon">My Profile</side-bar-link>
+      <side-bar-link :icon="ClassroomIcon">Classrooms</side-bar-link>
+      <side-bar-link :icon="TeacherIcon">Teachers</side-bar-link>
+      <side-bar-link :icon="TimetableIcon">Timetables</side-bar-link>
+      <side-bar-link :icon="TimetableAddIcon">Timetable Generator</side-bar-link>
     </div>
   </aside>
 </template>
@@ -86,35 +62,5 @@ h4 {
 
 .menu {
   margin: 0 -1rem;
-}
-
-.link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: 0.2s ease-in-out;
-  margin-left: 0.4rem;
-  padding: 0.5rem 1rem;
-}
-
-.link:hover {
-  background-color: var(--color-active);
-}
-
-.icon-wrapper {
-  font-size: 1em;
-  color: var(--color-light);
-}
-
-.icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 1rem;
-}
-
-.link-text {
-  opacity: 1;
-  color: var(--color-light);
-  transition: opacity 0.3s ease-in-out;
 }
 </style>
