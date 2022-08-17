@@ -11,6 +11,7 @@ const props = defineProps({
   timetable: { type: Object, default: () => ({}) },
   getCardPrimaryText: { type: Function, default: () => '' },
   getCardSecondaryText: { type: Function, default: () => '' },
+  monochromeMode: { type: Boolean, default: () => false },
 });
 
 const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -18,7 +19,12 @@ const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 function handleDownload(timetableTitle, timetableData) {
   pdfMake
     .createPdf(
-      getDocDefinition({ [timetableTitle]: timetableData }, props.getCardPrimaryText, props.getCardSecondaryText),
+      getDocDefinition(
+        { [timetableTitle]: timetableData },
+        props.getCardPrimaryText,
+        props.getCardSecondaryText,
+        props.monochromeMode,
+      ),
     )
     .open();
 }
@@ -44,7 +50,9 @@ function handleDownload(timetableTitle, timetableData) {
             <div
               v-if="subject"
               :style="{
-                backgroundColor: generateColor(getCardPrimaryText(subject)) + '99' /* set background opacity to 60% */,
+                backgroundColor: monochromeMode
+                  ? null
+                  : generateColor(getCardPrimaryText(subject)) + '99' /* set background opacity to 60% */,
               }"
               class="card"
             >
@@ -93,6 +101,7 @@ function handleDownload(timetableTitle, timetableData) {
 
 .card {
   padding: 8px;
+  border: 1px solid var(--color-darker);
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }

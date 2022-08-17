@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -9,6 +9,7 @@ import timetableService from '@/api/timetable';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
+const monochromeMode = ref(false);
 
 onMounted(() => {
   timetableService
@@ -28,6 +29,7 @@ function handleDownloadAll() {
         timetable.data.timetable,
         subject => subject.name,
         subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`,
+        monochromeMode.value,
       ),
     )
     .open();
@@ -49,7 +51,9 @@ function handleDownloadAll() {
             <span>By classroom</span>
           </div>
           <div>
-            <button type="button" class="rsprd-button">Monochrome mode</button>
+            <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
+              Monochrome mode
+            </button>
             <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
           </div>
         </header>
@@ -58,6 +62,7 @@ function handleDownloadAll() {
           :timetable="timetable.data.timetable"
           :get-card-primary-text="subject => subject.name"
           :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
+          :monochrome-mode="monochromeMode"
         />
       </div>
     </div>

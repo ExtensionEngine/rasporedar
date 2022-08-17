@@ -3,7 +3,7 @@ import { maxHoursPerDay } from './count';
 
 const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondaryText) {
+export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondaryText, monochromeMode) {
   return {
     content: Object.keys(timetable).map((timetableTitle, i) => {
       const timetableData = timetable[timetableTitle];
@@ -31,7 +31,7 @@ export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondary
                       const subject = JSON.parse(timetableData[dayIndex][hourIndex]);
                       return {
                         stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
-                        fillColor: generateColor(getCardPrimaryText(subject)),
+                        fillColor: monochromeMode ? null : generateColor(getCardPrimaryText(subject)),
                         fillOpacity: 0.6,
                         margin: [3, 4],
                       };
