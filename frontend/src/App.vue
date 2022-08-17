@@ -1,17 +1,17 @@
 <script>
-import NavigationBar from './components/NavigationBar.vue';
+import SideBar from './components/SideBar/SideBar.vue';
 
 export default {
   name: 'app',
   components: {
-    NavigationBar,
+    SideBar,
   },
 };
 </script>
 
 <template>
   <div>
-    <navigation-bar />
+    <side-bar />
     <router-view />
   </div>
 </template>
