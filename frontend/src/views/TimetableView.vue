@@ -71,8 +71,8 @@ function handleDownloadAll() {
 
 <style scoped>
 header.rsprd-bar {
-  margin-top: 48px;
-  margin-bottom: 24px;
+  margin-top: 32px;
+  margin-bottom: 16px;
 }
 
 .rsprd-button {
