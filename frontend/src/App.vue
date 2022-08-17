@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="app">
     <side-bar />
     <router-view />
   </div>
@@ -19,4 +19,8 @@ export default {
 <style>
 @import 'normalize.css';
 @import '@/assets/styles/global.css';
+
+.app {
+  display: flex;
+}
 </style>
