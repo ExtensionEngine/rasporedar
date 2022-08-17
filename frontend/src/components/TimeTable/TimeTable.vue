@@ -1,4 +1,5 @@
 <script setup>
+import { daysInWeek } from '@/constants/day';
 import { generateColor } from '@/helpers/color';
 import { getDocDefinition } from '@/helpers/pdf';
 import { maxHoursPerDay } from '@/helpers/count';
@@ -13,8 +14,6 @@ const props = defineProps({
   getCardSecondaryText: { type: Function, default: () => '' },
   monochromeMode: { type: Boolean, default: () => false },
 });
-
-const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 function handleDownload(timetableTitle, timetableData) {
   pdfMake

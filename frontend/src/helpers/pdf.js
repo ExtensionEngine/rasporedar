@@ -1,7 +1,6 @@
+import { daysInWeek } from '@/constants/day';
 import { generateColor } from './color';
 import { maxHoursPerDay } from './count';
-
-const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 export function getDocDefinition(timetable, getCardPrimaryText, getCardSecondaryText, monochromeMode) {
   return {
