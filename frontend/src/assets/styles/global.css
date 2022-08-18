@@ -9,10 +9,12 @@
   --color-darker: #39393a;
   --color-light: #f9f9f9;
   --color-lighter: #fff;
+  --sidebar-width: 25%;
 }
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-light);
   margin: 0;
   padding: 0;
 }
@@ -39,7 +41,6 @@ body {
   cursor: pointer;
   transition: border 200ms ease-out;
   color: var(--color-text);
-  margin-top: 12px;
 }
 
 .rsprd-button:hover,
@@ -110,4 +111,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.rsprd-bar-title {
+  margin: 0;
+  padding: 5px;
 }
