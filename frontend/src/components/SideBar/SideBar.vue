@@ -2,14 +2,24 @@
 import CollapseIcon from '@/assets/img/sidebar/collapse_icon.svg';
 import { computed } from 'vue';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
+import LogoutIcon from '@/assets/img/sidebar/logout_icon.svg';
 import SideBarLink from './SideBarLink.vue';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
+import { useRouter } from 'vue-router';
 import { useStorage } from '@vueuse/core';
+import { useUserStore } from '@/stores/user';
 
 const collapsed = useStorage('collapsed', false);
 const toggleMenu = () => (collapsed.value = !collapsed.value);
 const isCollapsed = computed(() => ({ expanded: !collapsed.value }));
+const userStore = useUserStore();
+const router = useRouter();
+
+const handleLogOut = () => {
+  userStore.logoutUser();
+  router.push({ name: 'auth' });
+};
 </script>
 
 <template>
@@ -30,9 +40,15 @@ const isCollapsed = computed(() => ({ expanded: !collapsed.value }));
     <hr class="sidebar-line" />
     <div class="menu">
       <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
-      <side-bar-link to="timetable-generator" :icon="TimetableAddIcon" :is-collapsed="collapsed"
-        >Timetable Generator</side-bar-link
-      >
+      <side-bar-link to="timetable-generator" :icon="TimetableAddIcon" :is-collapsed="collapsed">
+        Timetable Generator
+      </side-bar-link>
+    </div>
+
+    <div class="flex"></div>
+
+    <div class="menu rsprd-logout">
+      <side-bar-link @click="handleLogOut" to="auth" :icon="LogoutIcon" :is-collapsed="collapsed">Logout</side-bar-link>
     </div>
   </aside>
 </template>
@@ -43,11 +59,14 @@ aside {
   flex-direction: column;
   background-color: var(--color-darker);
   color: var(--color-light);
+  height: 100vh;
   width: calc(3rem + 36px);
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
+  position: sticky;
   transition: 0.4s ease-in-out;
+  top: 0;
 }
 
 .flex {
@@ -114,6 +133,10 @@ aside {
 
 .menu {
   margin: 0 -1rem;
+}
+
+.rsprd-logout {
+  margin-bottom: 1rem;
 }
 
 .expanded {

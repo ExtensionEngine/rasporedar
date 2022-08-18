@@ -44,7 +44,7 @@ router.beforeEach(to => {
     return { name: 'auth' };
   }
   if (to.name === 'auth' && isLoggedIn) {
-    return { name: 'home' };
+    return { name: 'timetable-generator' };
   }
 });
 
