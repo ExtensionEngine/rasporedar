@@ -52,6 +52,11 @@ const handleLogOut = () => {
 </template>
 
 <style scoped>
+:root {
+  --color-active: #4d4d4f;
+  --sidebar-width: 20%;
+}
+
 aside {
   display: flex;
   flex-direction: column;
