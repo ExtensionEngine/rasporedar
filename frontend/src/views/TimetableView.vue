@@ -69,10 +69,6 @@ function handleDownloadAll() {
 </template>
 
 <style scoped>
-.container {
-  margin: 10%;
-  width: 100vw;
-}
 header.rsprd-bar {
   margin-bottom: 1rem;
 }

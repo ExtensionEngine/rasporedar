@@ -19,6 +19,11 @@ body {
   padding: 0;
 }
 
+.container {
+  margin: 10%;
+  width: 100vw;
+}
+
 .rsprd-link {
   color: var(--color-text);
   text-decoration: underline;
