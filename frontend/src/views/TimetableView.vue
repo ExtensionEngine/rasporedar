@@ -11,10 +11,14 @@ import { timetableTransform } from '@/helpers/timetable';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
+const filter = ref(timetableFilters.BY_CLASS);
+const filteredTimetable = computed(() => {
+  if (!timetable.data) return null;
+  return timetableTransform[filter.value](timetable.data.timetable);
+});
 
 const monochromeMode = ref(false);
 const modeButtonText = computed(() => (monochromeMode.value ? 'Color Mode' : 'Monochrome Mode'));
-const filter = ref(timetableFilters.BY_CLASS);
 
 onMounted(() => {
   timetableService
@@ -31,7 +35,7 @@ function handleDownloadAll() {
   pdfMake
     .createPdf(
       getDocDefinition(
-        timetable.data.timetable,
+        filteredTimetable.value,
         subject => subject.name,
         subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`,
         monochromeMode.value,
@@ -78,7 +82,7 @@ function handleDownloadAll() {
       </header>
 
       <TimeTable
-        :timetable="timetableTransform[filter](timetable.data.timetable)"
+        :timetable="filteredTimetable"
         :get-card-primary-text="subject => subject.name"
         :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
         :monochrome-mode="monochromeMode"

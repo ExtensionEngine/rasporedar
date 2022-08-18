@@ -1,3 +1,4 @@
+import { daysInWeek } from '@/constants/day';
 import { mapObject } from '@/helpers/object';
 import { maxHoursPerDay } from './count';
 import { timetableFilters } from '@/constants/timetableFilters';
@@ -41,7 +42,9 @@ function iterateOverTimetable(timetable, callback) {
 
 function insertInTimetable(timetable, key, day, hour, subject) {
   if (!timetable[key]) {
-    timetable[key] = [];
+    timetable[key] = Array(daysInWeek.length)
+      .fill()
+      .map(() => []);
   }
   if (!timetable[key][day]) {
     timetable[key][day] = Array(8).fill(null);
