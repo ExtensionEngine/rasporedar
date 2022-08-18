@@ -7,9 +7,11 @@ const router = Router();
 router.get('/', (req: Request, res: Response) => {
   const { timetable } = generateTimetable(generateTimetableProps);
 
-  res.json({
-    timetable: Object.fromEntries(Object.keys(timetable).map(key => [JSON.parse(key), timetable[key]])),
-  });
+  const mapper = (key: string) => [JSON.parse(key), timetable[key]];
+  const mappedKeys = Object.keys(timetable).map(mapper);
+  const timetableData = Object.fromEntries(mappedKeys);
+
+  res.json({ timetable: timetableData });
 });
 
 export default router;
