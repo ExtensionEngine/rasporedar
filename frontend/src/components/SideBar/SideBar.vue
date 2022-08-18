@@ -47,7 +47,7 @@ aside {
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
-  transition: 0.3s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .flex {
@@ -108,6 +108,8 @@ aside {
 
 .sidebar-line {
   opacity: 0;
+  width: 100%;
+  transition: opacity 0.8s ease-in-out;
 }
 
 .menu {
