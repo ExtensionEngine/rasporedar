@@ -52,11 +52,6 @@ const handleLogOut = () => {
 </template>
 
 <style scoped>
-:root {
-  --color-active: #4d4d4f;
-  --sidebar-width: 20%;
-}
-
 aside {
   display: flex;
   flex-direction: column;
@@ -143,7 +138,7 @@ aside {
 }
 
 .expanded {
-  width: var(--sidebar-width);
+  width: 16%;
   transition: 0.3s ease-in-out;
 }
 .expanded .rsprd-logo img {

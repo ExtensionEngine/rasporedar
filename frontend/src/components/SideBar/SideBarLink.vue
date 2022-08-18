@@ -51,7 +51,7 @@ const checkExpanded = computed(() => (props.isCollapsed ? 'item-text' : 'item-te
   color: var(--color-light);
 }
 .sidebar-item:hover {
-  background-color: var(--color-active);
+  background-color: #4d4d4f;
 }
 .item-text-extended {
   opacity: 1;
