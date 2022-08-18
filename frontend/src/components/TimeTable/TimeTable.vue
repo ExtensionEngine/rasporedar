@@ -1,7 +1,9 @@
 <script setup>
+import { computed } from 'vue';
 import { daysInWeek } from '@/constants/day';
 import { generateColor } from '@/helpers/color';
 import { getDocDefinition } from '@/helpers/pdf';
+import { mapObject } from '@/helpers/object';
 import { maxHoursPerDay } from '@/helpers/count';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -14,6 +16,10 @@ const props = defineProps({
   getCardSecondaryText: { type: Function, default: () => '' },
   monochromeMode: { type: Boolean, default: () => false },
 });
+
+const maxHoursPerDayPerTimetable = computed(() =>
+  mapObject(props.timetable, classTimetable => maxHoursPerDay(classTimetable)),
+);
 
 function handleDownload(timetableTitle, timetableData) {
   pdfMake
@@ -43,7 +49,7 @@ function handleDownload(timetableTitle, timetableData) {
           <div class="col col--small">#</div>
           <div v-for="day in daysInWeek" :key="day" class="col">{{ day }}</div>
         </div>
-        <div v-for="hour in maxHoursPerDay(timetableData)" :key="hour" class="row">
+        <div v-for="hour in maxHoursPerDayPerTimetable[timetableTitle]" :key="hour" class="row">
           <div class="col col--small col--vertical-center">{{ hour }}</div>
           <div v-for="subject in timetableData.map(day => JSON.parse(day[hour - 1]))" :key="subject" class="col">
             <div
