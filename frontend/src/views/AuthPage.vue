@@ -71,7 +71,9 @@ export default {
 
 <template>
   <div class="form-screen">
-    <img src="@/assets/img/timetable_illustration.png" />
+    <div class="form-illustration-wrapper">
+      <img class="form-illustration" src="@/assets/img/timetable_illustration.png" />
+    </div>
     <div class="form-wrapper" :class="{ toggled: isToggled }">
       <div class="login-form">
         <h2 class="form-title">Login</h2>
@@ -116,14 +118,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 100px);
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   background-color: var(--color-lighter);
 }
 
-.form-screen img,
+.form-illustration-wrapper,
 .form-screen .form-wrapper {
-  width: 50%;
+  width: 40%;
+}
+
+.form-illustration {
+  height: 100%;
+  width: 80%;
+  display: block;
+  margin: 0 0 0 auto;
 }
 
 .form-wrapper {
