@@ -99,7 +99,7 @@ aside {
 }
 .menu-header {
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
   color: var(--color-muted);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -127,6 +127,9 @@ aside {
 }
 .expanded .toggle-wrap .toggle-button {
   transform: rotate(-180deg);
+}
+.expanded .menu-header {
+  transition: 0.8s ease-in-out;
 }
 .expanded h4 {
   opacity: 1;
