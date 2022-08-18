@@ -45,7 +45,7 @@ function handleDownload(timetableTitle, timetableData) {
         </button>
       </div>
       <div class="table">
-        <div class="row row--header">
+        <div class="row row--bold">
           <div class="col col--small">#</div>
           <div v-for="day in daysInWeek" :key="day" class="col">{{ day }}</div>
         </div>
@@ -84,7 +84,7 @@ function handleDownload(timetableTitle, timetableData) {
   display: flex;
 }
 
-.row--header {
+.row--bold {
   font-weight: bold;
 }
 
