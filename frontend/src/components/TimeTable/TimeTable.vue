@@ -33,11 +33,12 @@ function handleDownload(timetableTitle, timetableData) {
   <div>
     <div v-for="(timetableData, timetableTitle) in timetable" :key="timetableTitle" class="timetable">
       <div class="rsprd-bar">
-        <h2 class="timetable__title">{{ timetableTitle }}</h2>
+        <h2 class="rsprd-bar-title">{{ timetableTitle }}</h2>
         <button @click="() => handleDownload(timetableTitle, timetableData)" type="button" class="rsprd-button">
           &darr; Download
         </button>
       </div>
+      <hr />
       <div class="table">
         <div class="row row--header">
           <div class="col col--small">#</div>
@@ -66,12 +67,19 @@ function handleDownload(timetableTitle, timetableData) {
 </template>
 
 <style scoped>
-.timetable {
-  margin-bottom: 64px;
+.table {
+  margin-top: 40px;
 }
 
-.timetable__title {
-  font-size: 32px;
+.timetable {
+  background-color: var(--color-lighter);
+  border-radius: 20px;
+  margin-bottom: 64px;
+  padding: 30px;
+}
+
+.rsprd-bar-title {
+  font-size: 28px;
 }
 
 .row {
@@ -84,7 +92,7 @@ function handleDownload(timetableTitle, timetableData) {
 
 .col {
   width: 20%;
-  padding: 4px;
+  padding: 8px;
 }
 
 .col--small {
@@ -107,10 +115,9 @@ function handleDownload(timetableTitle, timetableData) {
 
 .card__title {
   margin-bottom: 20px;
-  font-weight: bold;
 }
 
 .card__footer {
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

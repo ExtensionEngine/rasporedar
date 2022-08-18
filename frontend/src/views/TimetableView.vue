@@ -37,7 +37,7 @@ function handleDownloadAll() {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
@@ -57,7 +57,6 @@ function handleDownloadAll() {
             <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
           </div>
         </header>
-
         <TimeTable
           :timetable="timetable.data.timetable"
           :get-card-primary-text="subject => subject.name"
@@ -70,9 +69,12 @@ function handleDownloadAll() {
 </template>
 
 <style scoped>
+.container {
+  margin: 10%;
+  width: 100vw;
+}
 header.rsprd-bar {
-  margin-top: 32px;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .rsprd-button {
