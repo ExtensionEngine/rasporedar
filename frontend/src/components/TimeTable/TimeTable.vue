@@ -34,7 +34,7 @@ function handleDownload(timetableTitle, timetableData) {
     <div v-for="(timetableData, timetableTitle) in timetable" :key="timetableTitle" class="timetable">
       <div class="rsprd-bar">
         <h2 class="timetable__title">{{ timetableTitle }}</h2>
-        <button @click="() => handleDownload(timetableTitle, timetableData)" type="button" class="rsprd-button">
+        <button @click="handleDownload(timetableTitle, timetableData)" type="button" class="rsprd-button">
           &darr; Download
         </button>
       </div>
