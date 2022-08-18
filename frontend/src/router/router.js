@@ -18,6 +18,11 @@ const routes = [
     name: 'auth',
     component: () => import('@/views/AuthPage.vue'),
   },
+  {
+    path: '/timetable',
+    name: 'timetable',
+    component: () => import('@/views/TimeTableView.vue'),
+  },
 ];
 
 const router = createRouter({
