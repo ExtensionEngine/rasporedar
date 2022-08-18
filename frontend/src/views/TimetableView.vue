@@ -1,12 +1,12 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
+import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/helpers/timetable';
 import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
 import { timetableFilters } from '@/constants/timetableFilters';
 import timetableService from '@/api/timetable';
-import { timetableTransform } from '@/helpers/timetable';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -14,7 +14,11 @@ const timetable = reactive({ data: null, loading: true, errored: false });
 const filter = ref(timetableFilters.BY_CLASS);
 const filteredTimetable = computed(() => {
   if (!timetable.data) return null;
-  return timetableTransform[filter.value](timetable.data.timetable);
+  return {
+    timetable: timetableTransform[filter.value](timetable.data.timetable),
+    getCardPrimaryText: getCardPrimaryText[filter.value],
+    getCardSecondaryText: getCardSecondaryText[filter.value],
+  };
 });
 
 const monochromeMode = ref(false);
@@ -35,9 +39,9 @@ function handleDownloadAll() {
   pdfMake
     .createPdf(
       getDocDefinition(
-        filteredTimetable.value,
-        subject => subject.name,
-        subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`,
+        filteredTimetable.value.timetable,
+        filteredTimetable.value.getCardPrimaryText,
+        filteredTimetable.value.getCardSecondaryText,
         monochromeMode.value,
       ),
     )
@@ -82,9 +86,9 @@ function handleDownloadAll() {
       </header>
 
       <TimeTable
-        :timetable="filteredTimetable"
-        :get-card-primary-text="subject => subject.name"
-        :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
+        :timetable="filteredTimetable.timetable"
+        :get-card-primary-text="filteredTimetable.getCardPrimaryText"
+        :get-card-secondary-text="filteredTimetable.getCardSecondaryText"
         :monochrome-mode="monochromeMode"
       />
     </div>

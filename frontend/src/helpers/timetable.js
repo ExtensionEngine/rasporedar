@@ -3,6 +3,18 @@ import { mapObject } from '@/helpers/object';
 import { maxHoursPerDay } from './count';
 import { timetableFilters } from '@/constants/timetableFilters';
 
+export const getCardPrimaryText = {
+  [timetableFilters.BY_CLASS]: subject => subject.name,
+  [timetableFilters.BY_TEACHER]: subject => subject.class.name,
+  [timetableFilters.BY_CLASSROOM]: subject => subject.name,
+};
+
+export const getCardSecondaryText = {
+  [timetableFilters.BY_CLASS]: subject => `${subject.teacher.name} - ${subject.classroom.name}`,
+  [timetableFilters.BY_TEACHER]: subject => `${subject.name} - ${subject.classroom.name}`,
+  [timetableFilters.BY_CLASSROOM]: subject => `${subject.teacher.name} - ${subject.class.name}`,
+};
+
 export const timetableTransform = {
   [timetableFilters.BY_CLASS]: timetable => timetable,
   [timetableFilters.BY_TEACHER]: timetable => timetableByTeacher(timetable),
@@ -33,7 +45,7 @@ function iterateOverTimetable(timetable, callback) {
         if (!subject) {
           return;
         }
-        const subjectData = { ...subject, className: timetableTitle };
+        const subjectData = { ...subject, class: { name: timetableTitle } };
         callback(subjectData, day, hour);
       });
     });
