@@ -1,17 +1,13 @@
-<script>
+<script setup>
 import SideBar from './components/SideBar/SideBar.vue';
+import { useUserStore } from '@/stores/user';
 
-export default {
-  name: 'app',
-  components: {
-    SideBar,
-  },
-};
+const userStore = useUserStore();
 </script>
 
 <template>
   <div class="app">
-    <side-bar />
+    <side-bar v-if="userStore.isLoggedIn" />
     <router-view />
   </div>
 </template>
