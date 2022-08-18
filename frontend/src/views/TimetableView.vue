@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -11,7 +11,9 @@ import { timetableTransform } from '@/helpers/timetable';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
+
 const monochromeMode = ref(false);
+const modeButtonText = computed(() => (monochromeMode.value ? 'Color Mode' : 'Monochrome Mode'));
 const filter = ref(timetableFilters.BY_CLASS);
 
 onMounted(() => {
@@ -68,8 +70,10 @@ function handleDownloadAll() {
           >
         </div>
         <div>
-          <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">Monochrome mode</button>
-          <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
+          <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
+            {{ modeButtonText }}
+          </button>
+          <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download All</button>
         </div>
       </header>
 
