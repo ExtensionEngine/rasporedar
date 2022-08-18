@@ -69,7 +69,7 @@ aside {
   margin-bottom: 1rem;
   position: relative;
   top: 0;
-  transition: 0.2s ease-in-out;
+  transition: 0.18s ease-out;
 }
 
 .toggle-button {
@@ -123,7 +123,7 @@ aside {
 }
 .expanded .toggle-wrap {
   top: -8rem;
-  transition: 0.2s ease-in-out;
+  transition: 0.56s ease-in-out;
 }
 .expanded .toggle-wrap .toggle-button {
   transform: rotate(-180deg);
