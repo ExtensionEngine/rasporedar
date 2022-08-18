@@ -41,30 +41,26 @@ function handleDownloadAll() {
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
+    <div v-else-if="timetable.loading">Loading...</div>
     <div v-else>
-      <div v-if="timetable.loading">Loading...</div>
-      <div v-else>
-        <header class="rsprd-bar">
-          <div>
-            <a class="rsprd-link">By class</a>
-            <a class="rsprd-link">By teacher</a>
-            <a class="rsprd-link">By classroom</a>
-          </div>
-          <div>
-            <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
-              Monochrome mode
-            </button>
-            <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
-          </div>
-        </header>
+      <header class="rsprd-bar">
+        <div>
+          <a class="rsprd-link">By class</a>
+          <a class="rsprd-link">By teacher</a>
+          <a class="rsprd-link">By classroom</a>
+        </div>
+        <div>
+          <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">Monochrome mode</button>
+          <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
+        </div>
+      </header>
 
-        <TimeTable
-          :timetable="timetable.data.timetable"
-          :get-card-primary-text="subject => subject.name"
-          :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
-          :monochrome-mode="monochromeMode"
-        />
-      </div>
+      <TimeTable
+        :timetable="timetable.data.timetable"
+        :get-card-primary-text="subject => subject.name"
+        :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
+        :monochrome-mode="monochromeMode"
+      />
     </div>
   </div>
 </template>
