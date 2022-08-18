@@ -1,63 +1,78 @@
 <script setup>
 import CollapseIcon from '@/assets/img/sidebar/collapse_icon.svg';
+import { computed } from 'vue';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
 import SideBarLink from './SideBarLink.vue';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
+import { useStorage } from '@vueuse/core';
+
+const collapsed = useStorage('collapsed', false);
+const toggleMenu = () => (collapsed.value = !collapsed.value);
+const isCollapsed = computed(() => ({ expanded: !collapsed.value }));
 </script>
 
 <template>
-  <aside class="sidebar">
-    <div class="logo">
+  <aside :class="isCollapsed">
+    <div class="rsprd-logo">
       <img :src="LogoURL" alt="Vue" />
     </div>
 
-    <div class="menu-toggle-wrap">
-      <button class="menu-toggle">
+    <div class="toggle-wrap">
+      <button @click="toggleMenu" class="toggle-button">
         <span class="toggle-icon">
           <img :src="CollapseIcon" />
         </span>
       </button>
     </div>
 
-    <h4>Menu</h4>
+    <h4 class="menu-header">Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <side-bar-link to="/timetables" :icon="TimetableIcon">Timetables</side-bar-link>
-      <side-bar-link to="/timetable-generator" :icon="TimetableAddIcon">Timetable Generator</side-bar-link>
+      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
+      <side-bar-link to="timetable-generator" :icon="TimetableAddIcon" :is-collapsed="collapsed"
+        >Timetable Generator</side-bar-link
+      >
     </div>
   </aside>
 </template>
 
 <style scoped>
-.sidebar {
+aside {
   display: flex;
   flex-direction: column;
   background-color: var(--color-darker);
   color: var(--color-light);
-  width: 300px;
+  width: calc(3rem + 36px);
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
+  transition: 0.3s ease-in-out;
 }
 
-.logo {
-  margin: 0 auto;
-}
-
-.logo .flex {
+.flex {
   flex: 1 1 0%;
 }
 
-.logo img {
+.rsprd-logo {
+  margin: 1rem auto;
+}
+
+.rsprd-logo img {
   width: 4rem;
+  transition: 0.3s ease-in-out;
 }
 
-.menu-toggle-wrap {
-  top: -3rem;
+.toggle-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  position: relative;
+  top: 0;
+  transition: 0.2s ease-in-out;
 }
 
-.menu-toggle {
+.toggle-button {
   cursor: pointer;
   appearance: none;
   border: none;
@@ -69,30 +84,64 @@ import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
 .toggle-icon {
   font-size: 3rem;
   color: var(--color-light);
-  transition: 0.2s ease-out;
 }
 
 .toggle-icon {
   color: var(--color-main);
-  transform: translateX(0.5rem);
 }
 
 .toggle-icon img {
-  width: 24px;
-  height: 24px;
+  width: 0.4em;
+  height: 0.4em;
 }
-
-h4 {
+.toggle-icon {
+  color: var(--color-main);
+}
+.menu-header {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
   color: var(--color-muted);
-  margin-bottom: 0;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
 .sidebar-line {
-  color: var(--color-muted);
-  width: 100%;
+  opacity: 0;
 }
 
 .menu {
   margin: 0 -1rem;
+}
+
+.expanded {
+  width: var(--sidebar-width);
+  transition: 0.3s ease-in-out;
+}
+.expanded .rsprd-logo img {
+  width: 7rem;
+}
+.expanded .toggle-wrap {
+  top: -8rem;
+  transition: 0.2s ease-in-out;
+}
+.expanded .toggle-wrap .toggle-button {
+  transform: rotate(-180deg);
+}
+.expanded h4 {
+  opacity: 1;
+}
+
+.expanded .sidebar-line {
+  opacity: 1;
+  color: var(--color-muted);
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  aside {
+    position: absolute;
+    z-index: 99;
+  }
 }
 </style>

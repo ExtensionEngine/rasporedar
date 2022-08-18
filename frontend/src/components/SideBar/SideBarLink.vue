@@ -1,52 +1,75 @@
 <script setup>
+import { computed } from 'vue';
 const props = defineProps({
   to: { type: String, required: true },
   icon: { type: String, required: true },
+  isCollapsed: { type: Boolean, required: true },
 });
+const checkExpanded = computed(() => (props.isCollapsed ? 'item-text' : 'item-text-extended'));
 </script>
 
 <template>
-  <router-link :to="props.to" class="link">
-    <span class="icon-wrapper">
-      <img class="icon" :src="props.icon" />
+  <router-link :to="{ name: props.to }" class="sidebar-item">
+    <span class="item-icon-wrapper">
+      <img class="item-icon" :src="props.icon" />
     </span>
-    <span class="link-text">
+    <span :class="checkExpanded">
       <slot />
     </span>
   </router-link>
 </template>
 
 <style scoped>
-.link {
+.sidebar-item {
   display: flex;
   align-items: center;
   text-decoration: none;
-  transition: 0.2s ease-in-out;
+  transition: 0.3s ease-in-out;
   margin-left: 0.4rem;
   padding: 0.5rem 1rem;
 }
-.icon-wrapper {
+.item-icon-wrapper {
   font-size: 3rem;
   color: var(--color-light);
-  transition: 0.2s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-.icon {
-  width: 40px;
-  height: 40px;
+.item-icon {
+  width: 2.4rem;
+  height: 2.4rem;
   margin-right: 1rem;
 }
-.link-text {
+.item-text {
+  opacity: 0;
+  color: var(--color-light);
+  transition: opacity 0.3s ease-in-out;
+}
+.item-text:hover {
+  color: var(--color-main);
+}
+.sidebar-item:hover .item-text,
+.sidebar-item:hover .item-text-extended {
+  color: var(--color-light);
+}
+.sidebar-item:hover {
+  background-color: var(--color-active);
+}
+.item-text-extended {
   opacity: 1;
   color: var(--color-light);
   transition: opacity 0.3s ease-in-out;
 }
-.link-text:hover {
+.item-text-extended:hover {
   color: var(--color-main);
 }
-.link:hover .link-text {
-  color: var(--color-light);
+.sidebar-item.router-link-exact-active {
+  /* background-color: var(--color-darker); */
+  border-right: 5px solid var(--color-main);
 }
-.link:hover {
-  background-color: var(--color-active);
+.sidebar-item.router-link-exact-active .link-text-extended {
+  color: var(--color-main);
+}
+.sidebar-item.router-link-exact-inactive {
+  background-color: var(--color-darker);
+  border-right: 5px solid var(--color-main);
 }
 </style>
