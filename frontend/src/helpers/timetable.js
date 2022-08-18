@@ -5,18 +5,26 @@ import { timetableFilters } from '@/constants/timetableFilters';
 export const timetableTransform = {
   [timetableFilters.BY_CLASS]: timetable => timetable,
   [timetableFilters.BY_TEACHER]: timetable => timetableByTeacher(timetable),
-  [timetableFilters.BY_CLASSROOM]: timetable => [],
+  [timetableFilters.BY_CLASSROOM]: timetable => timetableByClassroom(timetable),
 };
 
 function timetableByTeacher(timetable) {
   const timetableByTeacher = {};
-  iterateOverTimetable(timetable, 'className', (subjectData, day, hour) => {
+  iterateOverTimetable(timetable, (subjectData, day, hour) => {
     insertInTimetable(timetableByTeacher, subjectData.teacher.name, day, hour, subjectData);
   });
   return mapObject(timetableByTeacher, cutExtraHours);
 }
 
-function iterateOverTimetable(timetable, timetableTitleKey, callback) {
+function timetableByClassroom(timetable) {
+  const timetableByClassroom = {};
+  iterateOverTimetable(timetable, (subjectData, day, hour) => {
+    insertInTimetable(timetableByClassroom, subjectData.classroom.name, day, hour, subjectData);
+  });
+  return mapObject(timetableByClassroom, cutExtraHours);
+}
+
+function iterateOverTimetable(timetable, callback) {
   Object.keys(timetable).forEach(timetableTitle => {
     const timetableData = timetable[timetableTitle];
     Object.keys(timetableData).forEach(day => {
@@ -24,7 +32,7 @@ function iterateOverTimetable(timetable, timetableTitleKey, callback) {
         if (!subject) {
           return;
         }
-        const subjectData = { ...subject, [timetableTitleKey]: timetableTitle };
+        const subjectData = { ...subject, className: timetableTitle };
         callback(subjectData, day, hour);
       });
     });
