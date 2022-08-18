@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+
 const props = defineProps({
   to: { type: String, required: true },
   icon: { type: String, required: true },
