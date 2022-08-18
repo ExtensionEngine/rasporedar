@@ -3,8 +3,8 @@ import { useUserStore } from '@/stores/user';
 
 const routes = [
   {
-    path: '/home',
-    name: 'home',
+    path: '/home2',
+    name: 'home2',
     component: () => import('@/views/HomePage.vue'),
     meta: { requiresAuth: true },
   },
@@ -26,8 +26,8 @@ const routes = [
   },
   {
     path: '/',
-    alias: '/timetable-generator',
-    name: 'timetable-generator',
+    alias: ['/home', '/timetable-generator'],
+    name: 'home',
     component: () => import('@/views/TimeTableGeneratorView.vue'),
     meta: { requiresAuth: true },
   },
@@ -44,7 +44,7 @@ router.beforeEach(to => {
     return { name: 'auth' };
   }
   if (to.name === 'auth' && isLoggedIn) {
-    return { name: 'timetable-generator' };
+    return { name: 'home' };
   }
 });
 
