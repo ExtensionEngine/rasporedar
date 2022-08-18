@@ -40,9 +40,7 @@ const handleLogOut = () => {
     <hr class="sidebar-line" />
     <div class="menu">
       <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
-      <side-bar-link to="timetable-generator" :icon="TimetableAddIcon" :is-collapsed="collapsed">
-        Timetable Generator
-      </side-bar-link>
+      <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
     </div>
 
     <div class="flex"></div>
