@@ -1,4 +1,4 @@
-import { Class, Classroom, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
+import { Class, MatrixHashmap, Periods, RemainingLectures, Subject, Unavailable } from '../types';
 import { hash, unhash } from './hash';
 import { getFallbackClassroom } from './classroom';
 import { validateSwap } from './constraint';
