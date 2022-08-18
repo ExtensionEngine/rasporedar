@@ -4,12 +4,15 @@ import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
+import { timetableFilters } from '@/constants/timetableFilters';
 import timetableService from '@/api/timetable';
+import { timetableTransform } from '@/helpers/timetable';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
 const monochromeMode = ref(false);
+const filter = ref(timetableFilters.BY_CLASS);
 
 onMounted(() => {
   timetableService
@@ -45,9 +48,24 @@ function handleDownloadAll() {
     <div v-else>
       <header class="rsprd-bar">
         <div>
-          <a class="rsprd-link">By class</a>
-          <a class="rsprd-link">By teacher</a>
-          <a class="rsprd-link">By classroom</a>
+          <a
+            @click="filter = timetableFilters.BY_CLASS"
+            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_CLASS }"
+            class="rsprd-link"
+            >By Class</a
+          >
+          <a
+            @click="filter = timetableFilters.BY_TEACHER"
+            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_TEACHER }"
+            class="rsprd-link"
+            >By Teacher</a
+          >
+          <a
+            @click="filter = timetableFilters.BY_CLASSROOM"
+            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_CLASSROOM }"
+            class="rsprd-link"
+            >By Classroom</a
+          >
         </div>
         <div>
           <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">Monochrome mode</button>
@@ -56,7 +74,7 @@ function handleDownloadAll() {
       </header>
 
       <TimeTable
-        :timetable="timetable.data.timetable"
+        :timetable="timetableTransform[filter](timetable.data.timetable)"
         :get-card-primary-text="subject => subject.name"
         :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
         :monochrome-mode="monochromeMode"

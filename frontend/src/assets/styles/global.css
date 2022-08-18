@@ -31,6 +31,11 @@ body {
   margin-right: 16px;
 }
 
+.rsprd-link--active {
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .rsprd-button {
   padding: 6px 18px;
   background-color: var(--color-light);
