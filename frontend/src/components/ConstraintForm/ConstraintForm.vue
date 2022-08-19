@@ -2,17 +2,18 @@
 import { AccordionList } from 'vue3-rich-accordion';
 import ClassAccordionItem from './ClassAccordionItem.vue';
 import { useFormStore } from '@/stores/form';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const formStore = useFormStore();
+    const router = useRouter();
 
-    const generateTimetable = () => {
-      // TODO: submit handler will be implemented when algorithm backend is merged
-      console.log(formStore.form);
+    const handleSubmit = () => {
+      router.push({ name: 'timetables' });
     };
 
-    return { formStore, generateTimetable };
+    return { formStore, handleSubmit };
   },
   components: {
     AccordionList,
@@ -23,7 +24,7 @@ export default {
 
 <template>
   <div class="main">
-    <form @submit.prevent="generateTimetable">
+    <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
         <h2 class="rsprd-bar-title">Classes</h2>
       </div>

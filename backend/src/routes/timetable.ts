@@ -4,8 +4,11 @@ import { generateTimetableProps } from 'algorithm/seed';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  const { timetable } = generateTimetable(generateTimetableProps);
+router.post('/', (req: Request, res: Response) => {
+  const { timetable } = generateTimetable({
+    ...req.body,
+    classrooms: generateTimetableProps.classrooms /* will be removed when classroom crud is merged */,
+  });
 
   res.json({
     timetable,
