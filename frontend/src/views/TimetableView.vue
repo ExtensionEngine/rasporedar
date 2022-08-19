@@ -1,11 +1,11 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from 'vue';
 import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/helpers/timetable';
+import { timetableFilterLabels, timetableFilters } from '@/constants/timetableFilters';
 import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
-import { timetableFilters } from '@/constants/timetableFilters';
 import timetableService from '@/api/timetable';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -59,22 +59,12 @@ function handleDownloadAll() {
       <header class="rsprd-bar">
         <div>
           <a
-            @click="filter = timetableFilters.BY_CLASS"
-            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_CLASS }"
+            v-for="filterOption in Object.keys(timetableFilters)"
+            :key="filterOption"
+            @click="filter = timetableFilters[filterOption]"
+            :class="{ 'rsprd-link--active': filter === timetableFilters[filterOption] }"
             class="rsprd-link"
-            >By Class</a
-          >
-          <a
-            @click="filter = timetableFilters.BY_TEACHER"
-            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_TEACHER }"
-            class="rsprd-link"
-            >By Teacher</a
-          >
-          <a
-            @click="filter = timetableFilters.BY_CLASSROOM"
-            :class="{ 'rsprd-link--active': filter === timetableFilters.BY_CLASSROOM }"
-            class="rsprd-link"
-            >By Classroom</a
+            >{{ timetableFilterLabels[filterOption] }}</a
           >
         </div>
         <div>
