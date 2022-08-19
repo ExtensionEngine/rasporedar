@@ -1,17 +1,13 @@
-<script>
-import NavigationBar from './components/NavigationBar.vue';
+<script setup>
+import SideBar from './components/SideBar/SideBar.vue';
+import { useUserStore } from '@/stores/user';
 
-export default {
-  name: 'app',
-  components: {
-    NavigationBar,
-  },
-};
+const userStore = useUserStore();
 </script>
 
 <template>
-  <div>
-    <navigation-bar />
+  <div class="app">
+    <side-bar v-if="userStore.isLoggedIn" />
     <router-view />
   </div>
 </template>
@@ -19,4 +15,8 @@ export default {
 <style>
 @import 'normalize.css';
 @import '@/assets/styles/global.css';
+
+.app {
+  display: flex;
+}
 </style>
