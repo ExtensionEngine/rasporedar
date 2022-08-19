@@ -7,5 +7,3 @@ import MyProfile from '@/components/MyProfile';
     <my-profile />
   </div>
 </template>
-
-<style scoped></style>

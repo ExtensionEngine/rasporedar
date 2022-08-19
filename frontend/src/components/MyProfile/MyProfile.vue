@@ -13,10 +13,13 @@ const logout = () => {
 };
 const deleteUser = async () => {
   const isDeleteConfirmed = confirm('Do you really want to delete account?');
-  if (isDeleteConfirmed === false) return;
+  if (!isDeleteConfirmed) return;
 
   const deleteResponse = await userService.deleteUserProfile();
-  if ('error' in deleteResponse) return alert('Internal Server Error. User can not be deleted.'); // TODO: add better error handling
+
+  if ('error' in deleteResponse) {
+    return alert('Internal Server Error. User can not be deleted.'); // TODO: add better error handling
+  }
 
   logout();
 };
@@ -25,14 +28,13 @@ const deleteUser = async () => {
 <template>
   <div class="main">
     <div class="rsprd-bar">
-      <h2 class="rsprd-bar-title">My Profile</h2>
+      <h2 class="rsprd-bar__title">My Profile</h2>
     </div>
     <hr />
     <div class="rsprd-body">
       <div class="info">
         <p class="info-item">Email: {{ userStore.user.email }}</p>
         <p class="info-item">Password: *******</p>
-        <div class="flex"></div>
         <button @click="deleteUser" class="delete-button">
           <img class="delete-icon" :src="DeleteIcon" />
           Delete your account
@@ -62,6 +64,7 @@ const deleteUser = async () => {
   border: 0;
   background-color: var(--color-lighter);
   cursor: pointer;
+  margin-top: 120px;
 }
 
 .delete-button:hover {
