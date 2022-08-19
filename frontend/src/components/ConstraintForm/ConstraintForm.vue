@@ -1,6 +1,7 @@
 <script>
 import { AccordionList } from 'vue3-rich-accordion';
 import ClassAccordionItem from './ClassAccordionItem.vue';
+import timetableService from '@/api/timetable';
 import { useFormStore } from '@/stores/form';
 import { useRouter } from 'vue-router';
 
@@ -13,7 +14,11 @@ export default {
       router.push({ name: 'timetables' });
     };
 
-    return { formStore, handleSubmit };
+    const insertSeed = () => {
+      timetableService.getSeed().then(json => (formStore.form = json));
+    };
+
+    return { formStore, handleSubmit, insertSeed };
   },
   components: {
     AccordionList,
@@ -27,6 +32,7 @@ export default {
     <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
         <h2 class="rsprd-bar-title">Classes</h2>
+        <button @click="insertSeed" type="button" class="rsprd-button">Insert Seed</button>
       </div>
       <hr />
       <accordion-list
