@@ -50,7 +50,7 @@ function handleDownloadAll() {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
@@ -87,8 +87,7 @@ function handleDownloadAll() {
 
 <style scoped>
 header.rsprd-bar {
-  margin-top: 32px;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .rsprd-button {

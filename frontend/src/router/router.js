@@ -3,8 +3,8 @@ import { useUserStore } from '@/stores/user';
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: '/home2',
+    name: 'home2',
     component: () => import('@/views/HomePage.vue'),
     meta: { requiresAuth: true },
   },
@@ -19,9 +19,17 @@ const routes = [
     component: () => import('@/views/AuthPage.vue'),
   },
   {
-    path: '/timetable',
-    name: 'timetable',
-    component: () => import('@/views/TimeTableView.vue'),
+    path: '/timetables',
+    name: 'timetables',
+    component: () => import('@/views/TimetableView.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/',
+    alias: ['/home', '/timetable-generator'],
+    name: 'home',
+    component: () => import('@/views/TimeTableGeneratorView.vue'),
+    meta: { requiresAuth: true },
   },
 ];
 

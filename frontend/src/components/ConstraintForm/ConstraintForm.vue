@@ -22,24 +22,29 @@ export default {
 </script>
 
 <template>
-  <form @submit.prevent="generateTimetable">
-    <h2>Classes</h2>
-    <accordion-list
-      @update:state="newState => (formStore.accordionState = newState)"
-      open-multiple-items
-      :state="formStore.accordionState"
-    >
-      <class-accordion-item
-        v-for="classIndex in formStore.form.classes.length"
-        :key="classIndex"
-        :index="classIndex - 1"
-      />
-    </accordion-list>
-    <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--lighter">&plus; Add class</button>
-    <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
-    <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
-    <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
-  </form>
+  <div class="main">
+    <form @submit.prevent="generateTimetable">
+      <div class="rsprd-bar">
+        <h2 class="rsprd-bar-title">Classes</h2>
+      </div>
+      <hr />
+      <accordion-list
+        @update:state="newState => (formStore.accordionState = newState)"
+        open-multiple-items
+        :state="formStore.accordionState"
+      >
+        <class-accordion-item
+          v-for="classIndex in formStore.form.classes.length"
+          :key="classIndex"
+          :index="classIndex - 1"
+        />
+      </accordion-list>
+      <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--lighter">&plus; Add class</button>
+      <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
+      <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
+      <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
+    </form>
+  </div>
 </template>
 
 <style>
@@ -47,6 +52,16 @@ export default {
 
 :root {
   --acco-active: var(--color-main);
+}
+
+.main {
+  background-color: var(--color-lighter);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.accordion-list {
+  margin: 30px 0px;
 }
 
 .accordion-item {
@@ -72,5 +87,9 @@ export default {
 .submit-button {
   display: block;
   margin-bottom: 24px;
+}
+
+.rsprd-button {
+  margin-top: 12px;
 }
 </style>
