@@ -33,8 +33,8 @@ const deleteUser = async () => {
     <hr />
     <div class="rsprd-body">
       <div class="info">
-        <p class="info-item">Email: {{ userStore.user.email }}</p>
-        <p class="info-item">Password: *******</p>
+        <p class="info__item">Email: {{ userStore.user.email }}</p>
+        <p class="info__item">Password: *******</p>
         <button @click="deleteUser" class="delete-button">
           <img class="delete-icon" :src="DeleteIcon" />
           Delete your account
@@ -77,13 +77,9 @@ const deleteUser = async () => {
   width: 50%;
 }
 
-.info-item {
+.info__item {
   border-bottom: 1px solid var(--color-muted);
   padding: 4px;
-}
-
-.flex {
-  height: 120px;
 }
 
 .delete-icon {
