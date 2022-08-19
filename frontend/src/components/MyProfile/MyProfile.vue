@@ -1,21 +1,39 @@
 <script setup>
 import DeleteIcon from '@/assets/img/delete_icon.svg';
 import ProfileIllustration from '@/assets/img/illustrations/profile_illustration.svg';
+import { useRouter } from 'vue-router';
+import userService from '@/api/users.js';
 import { useUserStore } from '@/stores/user';
 
-const store = useUserStore();
+const userStore = useUserStore();
+const router = useRouter();
+const logout = () => {
+  userStore.logoutUser();
+  router.push({ name: 'auth' });
+};
+const deleteUser = async () => {
+  const isDeleteConfirmed = confirm('Do you really want to delete account?');
+  if (isDeleteConfirmed === false) return;
+
+  const deleteResponse = await userService.deleteUserProfile();
+  if ('error' in deleteResponse) return alert('Internal Server Error. User can not be deleted.'); // TODO: add better error handling
+
+  logout();
+};
 </script>
 
 <template>
-  <div class="main-wrapper">
-    <h2>My Profile</h2>
+  <div class="main">
+    <div class="rsprd-bar">
+      <h2 class="rsprd-bar-title">My Profile</h2>
+    </div>
     <hr />
     <div class="rsprd-body">
       <div class="info">
-        <p class="info-item">Email: {{ store.user.email }}</p>
+        <p class="info-item">Email: {{ userStore.user.email }}</p>
         <p class="info-item">Password: *******</p>
         <div class="flex"></div>
-        <button class="delete-button">
+        <button @click="deleteUser" class="delete-button">
           <img class="delete-icon" :src="DeleteIcon" />
           Delete your account
         </button>
@@ -28,7 +46,7 @@ const store = useUserStore();
 </template>
 
 <style scoped>
-.main-wrapper {
+.main {
   width: 70%;
   padding: 20px;
   background-color: var(--color-lighter);
@@ -62,7 +80,7 @@ const store = useUserStore();
 }
 
 .flex {
-  height: 100px;
+  height: 120px;
 }
 
 .delete-icon {
