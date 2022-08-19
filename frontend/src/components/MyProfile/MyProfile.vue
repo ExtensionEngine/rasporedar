@@ -29,9 +29,11 @@ const store = useUserStore();
 
 <style scoped>
 .main-wrapper {
+  width: 70%;
   padding: 20px;
   background-color: var(--color-lighter);
   border-radius: 20px;
+  margin: 0 auto;
 }
 
 .rsprd-body {
