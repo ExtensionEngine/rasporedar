@@ -25,7 +25,7 @@ export default {
   <div class="main">
     <form @submit.prevent="generateTimetable">
       <div class="rsprd-bar">
-        <h2 class="rsprd-bar-title">Classes</h2>
+        <h2 class="rsprd-bar__title">Classes</h2>
       </div>
       <hr />
       <accordion-list

@@ -4,4 +4,9 @@ const baseUrl = '/api/users';
 
 const getUserProfile = () => fetcher(`${baseUrl}/profile`);
 
-export default { getUserProfile };
+const deleteUserProfile = () =>
+  fetcher(`${baseUrl}/profile`, {
+    method: 'DELETE',
+  });
+
+export default { getUserProfile, deleteUserProfile };

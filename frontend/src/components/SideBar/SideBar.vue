@@ -3,6 +3,7 @@ import CollapseIcon from '@/assets/img/sidebar/collapse_icon.svg';
 import { computed } from 'vue';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
 import LogoutIcon from '@/assets/img/sidebar/logout_icon.svg';
+import ProfileIcon from '@/assets/img/sidebar/profile_icon.svg';
 import SideBarLink from './SideBarLink.vue';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
@@ -39,6 +40,7 @@ const handleLogOut = () => {
     <h4 class="menu-header">Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
+      <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed">My Profile</side-bar-link>
       <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
       <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
     </div>
