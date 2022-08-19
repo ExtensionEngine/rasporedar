@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/helpers/timetable';
 import { timetableFilterLabels, timetableFilters } from '@/constants/timetableFilters';
 import { getDocDefinition } from '@/helpers/pdf';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
@@ -54,7 +55,9 @@ function handleDownloadAll() {
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
-    <div v-else-if="timetable.loading">Loading...</div>
+    <div v-else-if="timetable.loading">
+      <LoadingSpinner />
+    </div>
     <div v-else>
       <header class="rsprd-bar">
         <div>
