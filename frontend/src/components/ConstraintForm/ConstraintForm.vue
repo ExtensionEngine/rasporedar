@@ -35,7 +35,7 @@ export default {
       >
         <class-accordion-item
           v-for="classIndex in formStore.form.classes.length"
-          :key="classIndex"
+          :key="formStore.form.classes[classIndex - 1]._id"
           :index="classIndex - 1"
         />
       </accordion-list>

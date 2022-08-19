@@ -15,7 +15,15 @@ export default {
 
     const subject = formStore.form.classes[props.classIndex].subjects[props.index];
 
-    return { formStore, teachers, classrooms, subject };
+    const handleSubjectDelete = () => {
+      if (!confirm('Are you sure?')) {
+        return;
+      }
+
+      formStore.deleteSubject(props.classIndex, props.index);
+    };
+
+    return { formStore, teachers, classrooms, subject, handleSubjectDelete };
   },
   components: {
     AccordionItem,
@@ -25,18 +33,23 @@ export default {
 
 <template>
   <accordion-item
-    :id="`${classIndex}_${index}`"
-    :default-opened="formStore?.accordionState?.[`${classIndex}_${index}`] ?? true"
+    :id="subject._id"
+    :default-opened="formStore?.accordionState?.[subject._id] ?? true"
     class="subject-accordion"
   >
     <template #summary>
-      <input
-        v-model="subject.name"
-        @click.stop
-        type="text"
-        class="rsprd-input rsprd-input--lighter"
-        placeholder="Math"
-      />
+      <div class="rsprd-accordion-header">
+        <input
+          v-model="subject.name"
+          @click.stop
+          type="text"
+          class="rsprd-input rsprd-input--lighter"
+          placeholder="Math"
+        />
+        <button @click.stop="handleSubjectDelete" type="button" class="rsprd-icon-button">
+          <img src="@/assets/img/delete_icon.svg" />
+        </button>
+      </div>
     </template>
     <div class="row">
       <span>Times per week</span>
