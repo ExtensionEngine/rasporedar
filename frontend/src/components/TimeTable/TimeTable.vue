@@ -52,7 +52,7 @@ function handleDownload(timetableTitle, timetableData) {
         </div>
         <div v-for="hour in maxHoursPerDayPerTimetable[timetableTitle]" :key="hour" class="row">
           <div class="col col--small col--vertical-center">{{ hour }}</div>
-          <div v-for="subject in timetableData.map(day => JSON.parse(day[hour - 1]))" :key="subject" class="col">
+          <div v-for="subject in timetableData.map(day => day[hour - 1])" :key="subject" class="col">
             <div
               v-if="subject"
               :style="{

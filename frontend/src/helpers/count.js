@@ -1,10 +1,14 @@
 export function maxHoursPerDay(timetable) {
   let maxHoursPerDay = 0;
+
   timetable.forEach(day => {
-    const hoursPerDay = day.filter(subject => subject !== null).length;
-    if (hoursPerDay > maxHoursPerDay) {
-      maxHoursPerDay = hoursPerDay;
-    }
+    day.forEach((hour, hourIndex) => {
+      if (!hour) {
+        return;
+      }
+      maxHoursPerDay = Math.max(maxHoursPerDay, hourIndex + 1);
+    });
   });
+
   return maxHoursPerDay;
 }

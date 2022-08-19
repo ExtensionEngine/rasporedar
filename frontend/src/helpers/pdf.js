@@ -57,9 +57,12 @@ function buildRowCells(timetableData, hourIndex, getCardPrimaryText, getCardSeco
   return Array(daysInWeek.length)
     .fill()
     .map((_, dayIndex) => {
-      if (!timetableData[dayIndex][hourIndex]) return { stack: [] };
+      const subject = timetableData[dayIndex][hourIndex];
 
-      const subject = JSON.parse(timetableData[dayIndex][hourIndex]);
+      if (!subject) {
+        return { stack: [] };
+      }
+
       return {
         stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
         fillColor: monochromeMode ? null : generateColor(getCardPrimaryText(subject)),

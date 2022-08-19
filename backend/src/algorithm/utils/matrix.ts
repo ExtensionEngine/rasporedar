@@ -20,3 +20,18 @@ export function getMatrixHashmap(keys: unknown[]) {
 
   return matrixHashmap;
 }
+
+export function mapMatrixHashmap(
+  timetable: MatrixHashmap,
+  transformCell: (cell: string | null) => unknown,
+  transformTitle: (title: string) => unknown,
+) {
+  const transformedTimetable = Object.keys(timetable).map(timetableTitle => {
+    const timetableData = timetable[timetableTitle];
+    const transformedTimetableData = timetableData.map(day => day.map(transformCell));
+
+    return [transformTitle(timetableTitle), transformedTimetableData];
+  });
+
+  return Object.fromEntries(transformedTimetable);
+}

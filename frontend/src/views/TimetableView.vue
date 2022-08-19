@@ -1,5 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
+import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/helpers/timetable';
+import { timetableFilterLabels, timetableFilters } from '@/constants/timetableFilters';
 import { getDocDefinition } from '@/helpers/pdf';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -9,7 +11,18 @@ import timetableService from '@/api/timetable';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const timetable = reactive({ data: null, loading: true, errored: false });
+const filter = ref(timetableFilters.BY_CLASS);
+const filteredTimetable = computed(() => {
+  if (!timetable.data) return null;
+  return {
+    timetable: timetableTransform[filter.value](timetable.data.timetable),
+    getCardPrimaryText: getCardPrimaryText[filter.value],
+    getCardSecondaryText: getCardSecondaryText[filter.value],
+  };
+});
+
 const monochromeMode = ref(false);
+const modeButtonText = computed(() => (monochromeMode.value ? 'Color Mode' : 'Monochrome Mode'));
 
 onMounted(() => {
   timetableService
@@ -26,9 +39,9 @@ function handleDownloadAll() {
   pdfMake
     .createPdf(
       getDocDefinition(
-        timetable.data.timetable,
-        subject => subject.name,
-        subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`,
+        filteredTimetable.value.timetable,
+        filteredTimetable.value.getCardPrimaryText,
+        filteredTimetable.value.getCardSecondaryText,
         monochromeMode.value,
       ),
     )
@@ -43,28 +56,31 @@ function handleDownloadAll() {
     </div>
     <div v-else-if="timetable.loading">Loading...</div>
     <div v-else>
-      <div v-if="timetable.loading">Loading...</div>
-      <div v-else>
-        <header class="rsprd-bar">
-          <div>
-            <a class="rsprd-link">By class</a>
-            <a class="rsprd-link">By teacher</a>
-            <a class="rsprd-link">By classroom</a>
-          </div>
-          <div>
-            <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
-              Monochrome mode
-            </button>
-            <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download all</button>
-          </div>
-        </header>
-        <TimeTable
-          :timetable="timetable.data.timetable"
-          :get-card-primary-text="subject => subject.name"
-          :get-card-secondary-text="subject => `${subject.teacher.name} - ${subject.classroom?.name || ''}`"
-          :monochrome-mode="monochromeMode"
-        />
-      </div>
+      <header class="rsprd-bar">
+        <div>
+          <a
+            v-for="filterOption in Object.keys(timetableFilters)"
+            :key="filterOption"
+            @click="filter = timetableFilters[filterOption]"
+            :class="{ 'rsprd-link--active': filter === timetableFilters[filterOption] }"
+            class="rsprd-link"
+            >{{ timetableFilterLabels[filterOption] }}</a
+          >
+        </div>
+        <div>
+          <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
+            {{ modeButtonText }}
+          </button>
+          <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download All</button>
+        </div>
+      </header>
+
+      <TimeTable
+        :timetable="filteredTimetable.timetable"
+        :get-card-primary-text="filteredTimetable.getCardPrimaryText"
+        :get-card-secondary-text="filteredTimetable.getCardSecondaryText"
+        :monochrome-mode="monochromeMode"
+      />
     </div>
   </div>
 </template>
