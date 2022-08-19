@@ -1,3 +1,5 @@
+#!npx ts-node
+
 import { generateTimetable } from './index';
 import { generateTimetableProps } from './seed';
 import { getTotalRemainingLecturesCount } from './utils/subject';
@@ -10,7 +12,11 @@ const { timetable, remainingLectures } = generateTimetable(generateTimetableProp
 Object.keys(timetable).forEach(class_ => {
   console.log('Class: ', class_);
   console.table(
-    timetable[class_].map(day => day.map(period => (period ? unhash<Subject>(period).name : null)).filter(d => d)),
+    timetable[class_].map(day =>
+      day
+        .map(period => (period ? `${unhash<Subject>(period).name} - ${unhash<Subject>(period).classroom?.name}` : null))
+        .filter(d => d),
+    ),
     //                                                                                             ^^^^^^^^^^^^^^ hide empty slots in output
   );
 });

@@ -41,6 +41,7 @@ function handleDownloadAll() {
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
+    <div v-else-if="timetable.loading">Loading...</div>
     <div v-else>
       <div v-if="timetable.loading">Loading...</div>
       <div v-else>
