@@ -71,6 +71,25 @@ body {
   color: var(--color-text);
 }
 
+.rsprd-icon-button {
+  width: 24px;
+  height: 24px;
+  margin-left: 14px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.rsprd-icon-button img {
+  margin-top: 2px;
+}
+
+.rsprd-accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .rsprd-input {
   background-color: transparent;
   color: var(--color-lighter);

@@ -12,7 +12,15 @@ export default {
 
     const class_ = formStore.form.classes[props.index];
 
-    return { formStore, class_ };
+    const handleClassDelete = () => {
+      if (!confirm('Are you sure?')) {
+        return;
+      }
+
+      formStore.deleteClass(props.index);
+    };
+
+    return { formStore, class_, handleClassDelete };
   },
   components: {
     AccordionList,
@@ -23,15 +31,24 @@ export default {
 </script>
 
 <template>
-  <accordion-item :id="index" :default-opened="formStore?.accordionState?.[index] ?? true" class="class-accordion">
+  <accordion-item
+    :id="class_._id"
+    :default-opened="formStore?.accordionState?.[class_._id] ?? true"
+    class="class-accordion"
+  >
     <template #summary>
-      <input
-        v-model="class_.name"
-        @click.stop
-        type="text"
-        placeholder="3a"
-        class="rsprd-input rsprd-input--shorter rsprd-input--lighter"
-      />
+      <div class="rsprd-accordion-header">
+        <input
+          v-model="class_.name"
+          @click.stop
+          type="text"
+          placeholder="3a"
+          class="rsprd-input rsprd-input--shorter rsprd-input--lighter"
+        />
+        <button @click.stop="handleClassDelete" type="button" class="rsprd-icon-button">
+          <img src="@/assets/img/delete_icon.svg" />
+        </button>
+      </div>
     </template>
     <h3>Subjects</h3>
     <accordion-list
@@ -41,7 +58,7 @@ export default {
     >
       <subject-accordion-item
         v-for="subjectIndex in class_.subjects.length"
-        :key="subjectIndex"
+        :key="class_.subjects[subjectIndex - 1]._id"
         :class-index="index"
         :index="subjectIndex - 1"
       />

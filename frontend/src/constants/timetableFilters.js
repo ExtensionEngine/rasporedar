@@ -5,7 +5,7 @@ export const timetableFilters = {
 };
 
 export const timetableFilterLabels = {
-  [timetableFilters.BY_CLASS]: 'By class',
-  [timetableFilters.BY_TEACHER]: 'By teacher',
-  [timetableFilters.BY_CLASSROOM]: 'By classroom',
+  [timetableFilters.BY_CLASS]: 'By Class',
+  [timetableFilters.BY_TEACHER]: 'By Teacher',
+  [timetableFilters.BY_CLASSROOM]: 'By Classroom',
 };
