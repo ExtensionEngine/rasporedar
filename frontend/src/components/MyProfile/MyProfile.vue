@@ -15,10 +15,10 @@ const store = useUserStore();
         <p class="info-item">Email: {{ store.user.email }}</p>
         <p class="info-item">Password: *******</p>
         <div class="flex"></div>
-        <div class="delete-wrapper">
+        <button class="delete-button">
           <img class="delete-icon" :src="DeleteIcon" />
           Delete your account
-        </div>
+        </button>
       </div>
       <div class="illustration-wrapper">
         <img :src="ProfileIllustration" class="illustration" />
@@ -38,6 +38,17 @@ const store = useUserStore();
 
 .rsprd-body {
   display: flex;
+}
+
+.delete-button {
+  border: 0;
+  background-color: var(--color-lighter);
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  color: #ff6863;
+  text-decoration: underline;
 }
 
 .info {
