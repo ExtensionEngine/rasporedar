@@ -1,5 +1,5 @@
 <script setup>
-import MyProfile from '@/compoenents/MyProfile';
+import MyProfile from '@/components/MyProfile';
 </script>
 
 <template>
