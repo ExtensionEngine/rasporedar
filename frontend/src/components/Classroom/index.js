@@ -1,4 +1,4 @@
-import ClassroomForm from '@/components/ConstraintForm/ConstraintForm.vue';
-import ClassroomList from '@/compoennts/Classroom/ClassroomList.vue';
+import ClassroomForm from './ClassroomForm.vue';
+import ClassroomList from './ClassroomList.vue';
 
-export default { ClassroomForm, ClassroomList };
+export { ClassroomForm, ClassroomList };

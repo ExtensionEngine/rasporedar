@@ -1,5 +1,5 @@
 <script setup>
-import { ClassroomForm, ClassroomList } from '@/compoennts/Classroom';
+import { ClassroomForm, ClassroomList } from '@/components/Classroom';
 </script>
 
 <template>
