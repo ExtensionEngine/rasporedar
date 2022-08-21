@@ -1,5 +1,17 @@
 <script setup>
 import ClassroomIllustration from '@/assets/img/illustrations/classroom_illustration.svg';
+import classroomService from '@/api/classrooms';
+import { reactive } from 'vue';
+
+const initialState = {
+  name: '',
+  capacity: 0,
+};
+const addForm = reactive({ ...initialState });
+const addClassroom = async () => {
+  await classroomService.addClassroom(addForm);
+  Object.assign(addForm, initialState);
+};
 </script>
 
 <template>
@@ -12,13 +24,27 @@ import ClassroomIllustration from '@/assets/img/illustrations/classroom_illustra
       <div class="rsprd-body__form">
         <div class="input-container">
           <label for="name">Name</label>
-          <input id="name" class="rsprd-body__input" type="text" placeholder="Enter here..." required />
+          <input
+            v-model="addForm.name"
+            id="name"
+            class="rsprd-body__input"
+            type="text"
+            placeholder="Enter name here..."
+            required
+          />
         </div>
         <div class="input-container">
           <label for="capacity">Capacity</label>
-          <input id="capacity" class="rsprd-body__input" type="number" placeholder="Enter here..." required />
+          <input
+            v-model="addForm.capacity"
+            id="capacity"
+            class="rsprd-body__input"
+            type="number"
+            placeholder="Enter here..."
+            required
+          />
         </div>
-        <button class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addClassroom" class="rsprd-button rsprd-button--cta">Add</button>
       </div>
       <div class="illustration-container">
         <img :src="ClassroomIllustration" class="illustration" />
