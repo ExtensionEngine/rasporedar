@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import { generateTimetable } from 'algorithm';
 import { generateTimetableProps } from 'algorithm/seed';
 import { removeEmptyFields } from 'helpers/timetable';
+import { Subject } from 'algorithm/types';
 
 const router = Router();
 
@@ -17,19 +18,21 @@ router.post('/', (req: Request, res: Response) => {
 });
 
 router.get('/seed', (req: Request, res: Response) => {
-  const { classes } = generateTimetableProps;
   let id = 1;
 
+  const subjectsMapper = (subject: Subject, id: number) => {
+    const classroom = subject.classroom || { name: '' };
+    return { ...subject, _id: id, classroom };
+  };
+
+  const classes = generateTimetableProps.classes.map(classItem => {
+    const _id = id++;
+    const subjects = classItem.subjects.map(subject => subjectsMapper(subject, id++));
+    return { ...classItem, _id, subjects };
+  });
+
   const seed = {
-    classes: classes.map(classItem => ({
-      ...classItem,
-      _id: id++,
-      subjects: classItem.subjects.map(subject => ({
-        ...subject,
-        _id: id++,
-        classroom: subject.classroom || { name: '' },
-      })),
-    })),
+    classes,
   };
 
   res.json(seed);
