@@ -8,6 +8,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
 import timetableService from '@/api/timetable';
+import { useFormStore } from '@/stores/form';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -25,9 +26,11 @@ const filteredTimetable = computed(() => {
 const monochromeMode = ref(false);
 const modeButtonText = computed(() => (monochromeMode.value ? 'Color Mode' : 'Monochrome Mode'));
 
+const formStore = useFormStore();
+
 onMounted(() => {
   timetableService
-    .getTimetable()
+    .getTimetable(formStore.form)
     .then(json => (timetable.data = json))
     .catch(error => {
       console.log(error);

@@ -1,18 +1,24 @@
 <script>
 import { AccordionList } from 'vue3-rich-accordion';
 import ClassAccordionItem from './ClassAccordionItem.vue';
+import timetableService from '@/api/timetable';
 import { useFormStore } from '@/stores/form';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const formStore = useFormStore();
+    const router = useRouter();
 
-    const generateTimetable = () => {
-      // TODO: submit handler will be implemented when algorithm backend is merged
-      console.log(formStore.form);
+    const handleSubmit = () => {
+      router.push({ name: 'timetables' });
     };
 
-    return { formStore, generateTimetable };
+    const insertSeed = () => {
+      timetableService.getSeed().then(json => (formStore.form = json));
+    };
+
+    return { formStore, handleSubmit, insertSeed };
   },
   components: {
     AccordionList,
@@ -23,9 +29,10 @@ export default {
 
 <template>
   <div class="main">
-    <form @submit.prevent="generateTimetable">
+    <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
         <h2 class="rsprd-bar__title">Classes</h2>
+        <button @click="insertSeed" type="button" class="rsprd-button">Insert Seed</button>
       </div>
       <hr />
       <accordion-list
