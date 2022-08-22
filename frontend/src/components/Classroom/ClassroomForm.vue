@@ -29,7 +29,7 @@ const addClassroom = async () => {
             id="name"
             class="rsprd-body__input"
             type="text"
-            placeholder="Enter name here..."
+            placeholder="Enter name..."
             required
           />
         </div>
@@ -59,6 +59,7 @@ const addClassroom = async () => {
   border-radius: 20px;
   margin: 0 auto 80px;
   padding: 20px;
+  width: 70%;
 }
 
 .rsprd-body {

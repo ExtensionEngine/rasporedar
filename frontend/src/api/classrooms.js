@@ -2,7 +2,9 @@ import fetcher from './helpers';
 
 const baseUrl = '/api/classrooms';
 
-const addClassroom = ({ name, capacity }) =>
+const getAllClassrooms = () => fetcher(`${baseUrl}/`);
+
+const addClassroom = ({ name, capacity }) => {
   fetcher(`${baseUrl}`, {
     method: 'POST',
     body: {
@@ -10,5 +12,6 @@ const addClassroom = ({ name, capacity }) =>
       capacity,
     },
   });
+};
 
-export default { addClassroom };
+export default { addClassroom, getAllClassrooms };
