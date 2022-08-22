@@ -23,6 +23,9 @@ services:
       POSTGRES_PASSWORD: rasporedar
       JWT_SECRET_KEY: "${JWT_SECRET_KEY:?err}"
       SALT_ROUNDS: "${SALT_ROUNDS:?err}"
+    healthcheck:
+      test: curl -f localhost:3001/healthcheck/ping
+      interval: 3s
     ports:
       - 3001:3001
     depends_on:
@@ -36,4 +39,5 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
