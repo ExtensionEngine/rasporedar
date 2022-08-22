@@ -14,4 +14,6 @@ const addClassroom = ({ name, capacity }) => {
   });
 };
 
-export default { addClassroom, getAllClassrooms };
+const deleteClassroomById = id => fetcher(`${baseUrl}/${id}`, { method: 'DELETE' });
+
+export default { getAllClassrooms, addClassroom, deleteClassroomById };

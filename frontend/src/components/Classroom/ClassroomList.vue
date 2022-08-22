@@ -10,6 +10,18 @@ const fields = {
   createdAt: 'Created At',
 };
 const even = num => (num % 2 === 0 ? '' : 'rsprd-table__row-darker');
+const deleteClassroom = async classroomId => {
+  const isDeleteConfirmed = confirm('Do you really want to delete account?');
+  if (!isDeleteConfirmed) return;
+
+  const deleteResponse = await classroomService.deleteClassroomById(classroomId);
+
+  if ('error' in deleteResponse) {
+    return alert('Internal Server Error. User can not be deleted.'); // TODO: add better error handling
+  }
+
+  classroomService.getAllClassrooms().then(resp => (classrooms.data = resp));
+};
 
 onMounted(() => {
   classroomService.getAllClassrooms().then(resp => (classrooms.data = resp));
@@ -39,7 +51,9 @@ onMounted(() => {
           >
             <td v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
             <td class="delete-container rsprd-table__cell">
-              <img class="delete-icon" :src="DeleteIcon" />
+              <button @click="deleteClassroom(classroom.id)" class="delete-button">
+                <img class="delete-icon" :src="DeleteIcon" />
+              </button>
             </td>
           </tr>
         </tbody>
@@ -83,6 +97,12 @@ onMounted(() => {
 
 .delete-container {
   text-align: center;
+}
+
+.delete-button {
+  border: 0;
+  background-color: var(--color-lighter);
+  cursor: pointer;
 }
 
 .delete-icon {
