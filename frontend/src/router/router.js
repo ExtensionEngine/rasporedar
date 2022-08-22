@@ -19,6 +19,13 @@ const routes = [
     component: () => import('@/views/AuthPage.vue'),
   },
   {
+    path: '/profile',
+    alias: '/my-profile',
+    name: 'profile',
+    component: () => import('@/views/MyProfileView.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
     path: '/timetables',
     name: 'timetables',
     component: () => import('@/views/TimetableView.vue'),

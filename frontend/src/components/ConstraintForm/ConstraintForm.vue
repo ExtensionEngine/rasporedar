@@ -31,7 +31,7 @@ export default {
   <div class="main">
     <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
-        <h2 class="rsprd-bar-title">Classes</h2>
+        <h2 class="rsprd-bar__title">Classes</h2>
         <button @click="insertSeed" type="button" class="rsprd-button">Insert Seed</button>
       </div>
       <hr />
