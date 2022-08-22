@@ -3,14 +3,22 @@ import ClassroomIllustration from '@/assets/img/illustrations/classroom_illustra
 import classroomService from '@/api/classrooms';
 import { reactive } from 'vue';
 
-const initialState = {
+const formInitState = {
   name: '',
   capacity: 0,
 };
-const addForm = reactive({ ...initialState });
+const addForm = reactive({ ...formInitState });
+
+const emit = defineEmits(['reload']);
 const addClassroom = async () => {
-  await classroomService.addClassroom(addForm);
-  Object.assign(addForm, initialState);
+  const addResponse = await classroomService.addClassroom(addForm);
+
+  if (!addResponse) {
+    return alert('Internal Server Error. Can not get classroooms.');
+  }
+
+  Object.assign(addForm, formInitState);
+  emit('reload');
 };
 </script>
 
@@ -44,7 +52,7 @@ const addClassroom = async () => {
             required
           />
         </div>
-        <button @click="addClassroom" class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addClassroom" @reload="reload" class="rsprd-button rsprd-button--cta">Add</button>
       </div>
       <div class="illustration-container">
         <img :src="ClassroomIllustration" class="illustration" />

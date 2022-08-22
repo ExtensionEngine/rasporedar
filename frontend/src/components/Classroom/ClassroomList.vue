@@ -1,31 +1,33 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, ref } from 'vue';
 import classroomService from '@/api/classrooms';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
+import { parseDates } from '@/helpers/parse';
 
-const classrooms = reactive({ data: null });
+const classrooms = ref(null);
 const fields = {
   name: 'Name',
   capacity: 'Capacity',
   createdAt: 'Created At',
 };
+
+onMounted(() => loadClassrooms());
+const loadClassrooms = () => {
+  classroomService.getAllClassrooms().then(resp => (classrooms.value = parseDates(resp)));
+};
 const even = num => (num % 2 === 0 ? '' : 'rsprd-table__row-darker');
-const deleteClassroom = async classroomId => {
-  const isDeleteConfirmed = confirm('Do you really want to delete account?');
+const handleDelete = async classroomId => {
+  const isDeleteConfirmed = confirm('Do you really want to delete classroom?');
   if (!isDeleteConfirmed) return;
 
   const deleteResponse = await classroomService.deleteClassroomById(classroomId);
 
   if ('error' in deleteResponse) {
-    return alert('Internal Server Error. User can not be deleted.'); // TODO: add better error handling
+    return alert('Internal Server Error. Can not get classroooms.');
   }
 
-  classroomService.getAllClassrooms().then(resp => (classrooms.data = resp));
+  loadClassrooms();
 };
-
-onMounted(() => {
-  classroomService.getAllClassrooms().then(resp => (classrooms.data = resp));
-});
 </script>
 
 <template>
@@ -39,19 +41,19 @@ onMounted(() => {
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
             <th v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ value }}</th>
-            <th class="rsprd-table__cell action">Action</th>
+            <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="(classroom, index) in classrooms.data"
+            v-for="(classroom, index) in classrooms"
             :key="classroom.id"
             class="rsprd-table__row"
             :class="even(index)"
           >
             <td v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
-            <td class="delete-container rsprd-table__cell">
-              <button @click="deleteClassroom(classroom.id)" class="delete-button">
+            <td class="rsprd-table__cell">
+              <button @click="handleDelete(classroom.id)" class="delete-button">
                 <img class="delete-icon" :src="DeleteIcon" />
               </button>
             </td>
@@ -95,22 +97,18 @@ onMounted(() => {
   padding: 8px;
 }
 
-.delete-container {
+.rsprd-table__cell:last-child {
   text-align: center;
 }
 
 .delete-button {
   border: 0;
-  background-color: var(--color-lighter);
+  background-color: transparent;
   cursor: pointer;
 }
 
 .delete-icon {
   height: 20px;
   width: 20px;
-}
-
-.action {
-  text-align: center;
 }
 </style>
