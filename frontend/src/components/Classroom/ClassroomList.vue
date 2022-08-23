@@ -21,7 +21,6 @@ const filterClassrooms = (search = '') => {
     classrooms.value = filtered;
   });
 };
-const even = num => (num % 2 === 0 ? '' : 'rsprd-table__row-darker');
 const handleDelete = async classroomId => {
   const isDeleteConfirmed = confirm('Do you really want to delete classroom?');
   if (!isDeleteConfirmed) return;
@@ -56,7 +55,7 @@ const handleDelete = async classroomId => {
             v-for="(classroom, index) in classrooms"
             :key="classroom.id"
             class="rsprd-table__row"
-            :class="even(index)"
+            :class="{ 'rsprd-table__row-darker': index % 2 === 0 }"
           >
             <td v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
             <td class="rsprd-table__cell">
