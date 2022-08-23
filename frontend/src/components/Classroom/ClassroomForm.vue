@@ -7,17 +7,17 @@ const formInitState = {
   name: '',
   capacity: 0,
 };
-const addForm = reactive({ ...formInitState });
+const additionForm = reactive({ ...formInitState });
 
 const emit = defineEmits(['reload']);
 const addClassroom = async () => {
-  const addResponse = await classroomService.addClassroom(addForm);
+  const addResponse = await classroomService.addClassroom(additionForm);
 
   if (!addResponse) {
     return alert('Internal Server Error. Can not get classroooms.');
   }
 
-  Object.assign(addForm, formInitState);
+  Object.assign(additionForm, formInitState);
   emit('reload');
 };
 </script>
@@ -33,7 +33,7 @@ const addClassroom = async () => {
         <div class="input-container">
           <label for="name">Name</label>
           <input
-            v-model="addForm.name"
+            v-model="additionForm.name"
             id="name"
             class="rsprd-body__input"
             type="text"
@@ -44,7 +44,7 @@ const addClassroom = async () => {
         <div class="input-container">
           <label for="capacity">Capacity</label>
           <input
-            v-model="addForm.capacity"
+            v-model="additionForm.capacity"
             id="capacity"
             class="rsprd-body__input"
             type="number"

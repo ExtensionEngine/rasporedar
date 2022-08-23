@@ -1,19 +1,25 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import classroomService from '@/api/classrooms';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
 import { parseDates } from '@/helpers/parse';
 
 const classrooms = ref(null);
+const searchTerm = ref('');
 const fields = {
   name: 'Name',
   capacity: 'Capacity',
   createdAt: 'Created At',
 };
 
-onMounted(() => loadClassrooms());
-const loadClassrooms = () => {
-  classroomService.getAllClassrooms().then(resp => (classrooms.value = parseDates(resp)));
+onMounted(() => filterClassrooms(''));
+watch(searchTerm, newSearchTerm => filterClassrooms(newSearchTerm));
+const filterClassrooms = (search = '') => {
+  classroomService.getAllClassrooms().then(resp => {
+    const parsed = parseDates(resp);
+    const filtered = parsed.filter(room => room.name.toLowerCase().includes(search.toLowerCase()));
+    classrooms.value = filtered;
+  });
 };
 const even = num => (num % 2 === 0 ? '' : 'rsprd-table__row-darker');
 const handleDelete = async classroomId => {
@@ -26,7 +32,7 @@ const handleDelete = async classroomId => {
     return alert('Internal Server Error. Can not get classroooms.');
   }
 
-  loadClassrooms();
+  filterClassrooms(searchTerm.value);
 };
 </script>
 
@@ -34,6 +40,7 @@ const handleDelete = async classroomId => {
   <div class="main">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Classrooms</h2>
+      <input v-model="searchTerm" class="rsprd-body__input" type="text" placeholder="Search..." />
     </div>
     <hr />
     <div class="rsprd-body">
@@ -71,6 +78,20 @@ const handleDelete = async classroomId => {
   margin: 0 auto 80px;
   padding: 20px;
   width: 70%;
+}
+
+.rsprd-body__input {
+  border: none;
+  border-bottom: 1px solid black;
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.rsprd-body__input:focus {
+  color: var(--color-darker);
+  border-bottom: 1px solid black;
+  outline: none;
 }
 
 .rsprd-table {
