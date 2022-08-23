@@ -50,13 +50,8 @@ const handleDelete = async classroomId => {
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
-        <tbody>
-          <tr
-            v-for="(classroom, index) in classrooms"
-            :key="classroom.id"
-            class="rsprd-table__row"
-            :class="{ 'rsprd-table__row-darker': index % 2 === 0 }"
-          >
+        <tbody class="rsprd-table__body">
+          <tr v-for="classroom in classrooms" :key="classroom.id" class="rsprd-table__row">
             <td v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
             <td class="rsprd-table__cell">
               <button @click="handleDelete(classroom.id)" class="delete-button">
@@ -109,7 +104,7 @@ const handleDelete = async classroomId => {
   border-bottom: 1px solid black;
 }
 
-.rsprd-table__row-darker {
+.rsprd-table__body .rsprd-table__row:nth-child(odd) {
   background-color: var(--color-light);
 }
 
