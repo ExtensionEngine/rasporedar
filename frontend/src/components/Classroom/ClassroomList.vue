@@ -18,9 +18,10 @@ const classroomFields = {
 
 const emit = defineEmits(['reload']);
 const filteredClassrooms = computed(() => {
-  const filtered = props.classrooms.filter(classroom =>
-    classroom.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
-  );
+  const searchQueryLowercased = searchQuery.value.toLowerCase();
+  const filtered = props.classrooms.filter(classroom => {
+    return classroom.name.toLowerCase().includes(searchQueryLowercased.value.toLowerCase());
+  });
   return filtered;
 });
 const handleDelete = async classroomId => {

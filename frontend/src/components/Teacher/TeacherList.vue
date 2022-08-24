@@ -19,9 +19,10 @@ const teacherFields = {
 
 const emit = defineEmits(['reload']);
 const filteredTeachers = computed(() => {
-  const filtered = props.teachers.filter(teacher =>
-    teacher.firstName.toLowerCase().includes(searchQuery.value.toLowerCase()),
-  );
+  const searchQueryLowercased = searchQuery.value.toLowerCase();
+  const filtered = props.teachers.filter(teacher => {
+    return teacher.firstName.toLowerCase().includes(searchQueryLowercased.value.toLowerCase());
+  });
   return filtered;
 });
 const handleDelete = async teacherId => {
