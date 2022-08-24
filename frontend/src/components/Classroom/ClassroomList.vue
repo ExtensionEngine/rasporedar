@@ -1,26 +1,28 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import classroomService from '@/api/classrooms';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
-import { parseDates } from '@/helpers/parse';
 
-const classrooms = ref(null);
-const searchTerm = ref('');
-const fields = {
+const searchQuery = ref('');
+const props = defineProps({
+  classrooms: {
+    type: Array,
+    default: () => [],
+  },
+});
+const classroomFields = {
   name: 'Name',
   capacity: 'Capacity',
   createdAt: 'Created At',
 };
 
-onMounted(() => filterClassrooms(''));
-watch(searchTerm, newSearchTerm => filterClassrooms(newSearchTerm));
-const filterClassrooms = (search = '') => {
-  classroomService.getAllClassrooms().then(resp => {
-    const parsed = parseDates(resp);
-    const filtered = parsed.filter(room => room.name.toLowerCase().includes(search.toLowerCase()));
-    classrooms.value = filtered;
-  });
-};
+const emit = defineEmits(['reload']);
+const filteredClassrooms = computed(() => {
+  const filtered = props.classrooms.filter(classroom =>
+    classroom.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  );
+  return filtered;
+});
 const handleDelete = async classroomId => {
   const isDeleteConfirmed = confirm('Do you really want to delete classroom?');
   if (!isDeleteConfirmed) return;
@@ -30,8 +32,7 @@ const handleDelete = async classroomId => {
   if ('error' in deleteResponse) {
     return alert('Internal Server Error. Can not get classroooms.');
   }
-
-  filterClassrooms(searchTerm.value);
+  emit('reload');
 };
 </script>
 
@@ -39,20 +40,20 @@ const handleDelete = async classroomId => {
   <div class="main">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Classrooms</h2>
-      <input v-model="searchTerm" class="rsprd-body__input" type="text" placeholder="Search..." />
+      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search..." />
     </div>
     <hr />
     <div class="rsprd-body">
       <table class="rsprd-table">
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
-            <th v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
-          <tr v-for="classroom in classrooms" :key="classroom.id" class="rsprd-table__row">
-            <td v-for="(value, key) in fields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
+          <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
+            <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
             <td class="rsprd-table__cell">
               <button @click="handleDelete(classroom.id)" class="delete-button">
                 <img class="delete-icon" :src="DeleteIcon" />

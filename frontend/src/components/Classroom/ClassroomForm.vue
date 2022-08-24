@@ -52,7 +52,7 @@ const addClassroom = async () => {
             required
           />
         </div>
-        <button @click="addClassroom" @reload="reload" class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addClassroom" class="rsprd-button rsprd-button--cta">Add</button>
       </div>
       <div class="illustration-container">
         <img :src="ClassroomIllustration" class="illustration" />
