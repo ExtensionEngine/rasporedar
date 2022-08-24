@@ -10,6 +10,7 @@ const formInitState = {
 };
 const additionForm = reactive({ ...formInitState });
 
+const emit = defineEmits(['reload']);
 const addTeacher = async () => {
   const addResponse = await teacherService.addTeacher(additionForm);
 
@@ -18,6 +19,7 @@ const addTeacher = async () => {
   }
 
   Object.assign(additionForm, formInitState);
+  emit('reload');
 };
 </script>
 

@@ -17,7 +17,7 @@ const reloadTeachers = () => {
 
 <template>
   <div class="container">
-    <teacher-form />
-    <teacher-list :teachers="teachers" />
+    <teacher-form @reload="reloadTeachers" />
+    <teacher-list @reload="reloadTeachers" :teachers="teachers" />
   </div>
 </template>

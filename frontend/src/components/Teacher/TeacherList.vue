@@ -14,6 +14,7 @@ const teacherFields = {
   lastName: 'Last name',
 };
 
+const emit = defineEmits(['reload']);
 const handleDelete = async teacherId => {
   const isDeleteConfirmed = confirm('Do you really want to delete the teacher?');
   if (!isDeleteConfirmed) return;
@@ -23,6 +24,8 @@ const handleDelete = async teacherId => {
   if ('error' in deleteResponse) {
     return alert('Internal Server Error. Can not delete teacher.');
   }
+
+  emit('reload');
 };
 </script>
 
