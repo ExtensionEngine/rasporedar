@@ -1,7 +1,15 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-export function createNetwork(networkName: string) {
+export type Network = {
+  vpc: aws.ec2.Vpc;
+  gateway: aws.ec2.InternetGateway;
+  subnet: aws.ec2.Subnet;
+  routes: aws.ec2.RouteTable;
+  securityGroup: aws.ec2.SecurityGroup;
+};
+
+export function createNetwork(networkName = pulumi.getProject()): Network {
   const vpc = new aws.ec2.Vpc(networkName, {
     cidrBlock: "10.0.0.0/16",
   });
@@ -26,7 +34,7 @@ export function createNetwork(networkName: string) {
     ],
   });
 
-  const routeTableAssociation = new aws.ec2.RouteTableAssociation(networkName, {
+  new aws.ec2.RouteTableAssociation(networkName, {
     subnetId: subnet.id,
     routeTableId: routes.id,
   });
@@ -40,6 +48,12 @@ export function createNetwork(networkName: string) {
         fromPort: 22,
         toPort: 22,
       },
+      {
+        cidrBlocks: ["0.0.0.0/0"],
+        protocol: "tcp",
+        fromPort: 80,
+        toPort: 80,
+      },
     ],
     egress: [
       {
@@ -51,5 +65,5 @@ export function createNetwork(networkName: string) {
     ],
   });
 
-  return { vpc, gateway, subnet, routes, routeTableAssociation, securityGroup };
+  return { vpc, gateway, subnet, routes, securityGroup };
 }

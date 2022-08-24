@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-export function createKeyPair(keyName: string) {
+export function createKeyPair(keyName = pulumi.getProject()) {
   const config = new pulumi.Config();
 
   const keyPair = new aws.ec2.KeyPair(keyName, {

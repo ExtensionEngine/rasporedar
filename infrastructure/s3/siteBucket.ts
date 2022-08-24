@@ -1,6 +1,7 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-export function createSiteBucket(bucketName: string) {
+export function createSiteBucket(bucketName = pulumi.getProject()) {
   const bucket = new aws.s3.Bucket(bucketName, {
     website: {
       indexDocument: "index.html",

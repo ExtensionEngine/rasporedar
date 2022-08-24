@@ -8,7 +8,8 @@ export enum Ami {
 export function findAmi(ami: Ami) {
   const amiArgs = {
     [Ami.Debian]: {
-      owners: ["136693071363"], // https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye
+      // https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye
+      owners: ["136693071363"],
       mostRecent: true,
       filters: [
         { name: "name", values: ["debian-11*"] },
@@ -19,5 +20,5 @@ export function findAmi(ami: Ami) {
 
   const amiSearchResult = aws.ec2.getAmi(amiArgs[ami]);
 
-  return pulumi.output(amiSearchResult);
+  return pulumi.output(amiSearchResult).id;
 }
