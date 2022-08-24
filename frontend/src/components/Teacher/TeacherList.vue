@@ -21,7 +21,7 @@ const handleDelete = async teacherId => {
   const deleteResponse = await teacherService.deleteTeacherById(teacherId);
 
   if ('error' in deleteResponse) {
-    return alert('Internal Server Error. Can not get teachers.');
+    return alert('Internal Server Error. Can not delete teacher.');
   }
 };
 </script>

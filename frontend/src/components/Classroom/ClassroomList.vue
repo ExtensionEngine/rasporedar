@@ -30,7 +30,7 @@ const handleDelete = async classroomId => {
   const deleteResponse = await classroomService.deleteClassroomById(classroomId);
 
   if ('error' in deleteResponse) {
-    return alert('Internal Server Error. Can not get classroooms.');
+    return alert('Internal Server Error. Can not delete classrooom.');
   }
 
   emit('reload');
