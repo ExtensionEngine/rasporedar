@@ -1,13 +1,24 @@
 <script setup>
 import { reactive } from 'vue';
 import TeacherIllustration from '@/assets/img/illustrations/teacher_illustration.svg';
+import teacherService from '@/api/teachers';
 
 const formInitState = {
-  code: '',
+  teacherCode: '',
   firstName: '',
   lastName: '',
 };
 const additionForm = reactive({ ...formInitState });
+
+const addTeacher = async () => {
+  const addResponse = await teacherService.addTeacher(additionForm);
+
+  if (!addResponse) {
+    return alert('Internal Server Error. Can not get teachers.');
+  }
+
+  Object.assign(additionForm, formInitState);
+};
 </script>
 
 <template>
@@ -21,7 +32,7 @@ const additionForm = reactive({ ...formInitState });
         <div class="input-container">
           <label for="code">Teachers code</label>
           <input
-            v-model="additionForm.code"
+            v-model="additionForm.teacherCode"
             id="code"
             class="rsprd-body__input"
             type="text"
@@ -51,7 +62,7 @@ const additionForm = reactive({ ...formInitState });
             required
           />
         </div>
-        <button class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addTeacher" class="rsprd-button rsprd-button--cta">Add</button>
       </div>
       <div class="illustration-container">
         <img :src="TeacherIllustration" class="illustration" />
