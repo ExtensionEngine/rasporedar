@@ -1,7 +1,7 @@
 import * as aws from "@pulumi/aws";
 
 export function createSiteBucket(bucketName: string) {
-  const siteBucket = new aws.s3.Bucket(bucketName, {
+  const bucket = new aws.s3.Bucket(bucketName, {
     website: {
       indexDocument: "index.html",
       errorDocument: "index.html",
@@ -9,11 +9,11 @@ export function createSiteBucket(bucketName: string) {
   });
 
   new aws.s3.BucketPolicy(bucketName, {
-    bucket: siteBucket.bucket,
-    policy: siteBucket.bucket.apply(publicReadPolicyForBucket),
+    bucket: bucket.bucket,
+    policy: bucket.bucket.apply(publicReadPolicyForBucket),
   });
 
-  return siteBucket;
+  return bucket;
 }
 
 function publicReadPolicyForBucket(bucketName: string) {
