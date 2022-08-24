@@ -32,6 +32,7 @@ const handleDelete = async classroomId => {
   if ('error' in deleteResponse) {
     return alert('Internal Server Error. Can not get classroooms.');
   }
+
   emit('reload');
 };
 </script>

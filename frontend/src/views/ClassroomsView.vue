@@ -2,15 +2,15 @@
 import { ClassroomForm, ClassroomList } from '@/components/Classroom';
 import { onMounted, ref } from 'vue';
 import classroomService from '@/api/classrooms';
-import { parseDates } from '@/helpers/parse';
+import { formatDates } from '@/helpers/format';
 
 const classrooms = ref([]);
 
 onMounted(() => reloadClassrooms());
 const reloadClassrooms = () => {
   classroomService.getAllClassrooms().then(clasroomsResponse => {
-    const classroomsParsed = parseDates(clasroomsResponse);
-    classrooms.value = classroomsParsed;
+    const formattedClassrooms = formatDates(clasroomsResponse);
+    classrooms.value = formattedClassrooms;
   });
 };
 </script>
