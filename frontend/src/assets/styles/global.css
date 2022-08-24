@@ -143,4 +143,9 @@ body {
 .rsprd-bar__title {
   margin: 0;
   padding: 5px;
+  color: var(--color-darker);
+}
+
+.rsprd-bar__separator {
+  color: var(--color-darker);
 }

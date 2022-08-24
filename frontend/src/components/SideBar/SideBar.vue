@@ -1,4 +1,5 @@
 <script setup>
+import ClassroomIcon from '@/assets/img/sidebar/classroom_icon.svg';
 import CollapseIcon from '@/assets/img/sidebar/collapse_icon.svg';
 import { computed } from 'vue';
 import LogoURL from '@/assets/img/rasporedar_logo.svg';
@@ -41,6 +42,7 @@ const handleLogOut = () => {
     <hr class="sidebar-line" />
     <div class="menu">
       <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed">My Profile</side-bar-link>
+      <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed">Classrooms</side-bar-link>
       <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
       <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
     </div>
