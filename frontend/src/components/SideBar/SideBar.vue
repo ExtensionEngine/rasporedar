@@ -6,6 +6,7 @@ import LogoURL from '@/assets/img/rasporedar_logo.svg';
 import LogoutIcon from '@/assets/img/sidebar/logout_icon.svg';
 import ProfileIcon from '@/assets/img/sidebar/profile_icon.svg';
 import SideBarLink from './SideBarLink.vue';
+import TeacherIcon from '@/assets/img/sidebar/teacher_icon.svg';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
 import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
 import { useRouter } from 'vue-router';
@@ -43,6 +44,7 @@ const handleLogOut = () => {
     <div class="menu">
       <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed">My Profile</side-bar-link>
       <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed">Classrooms</side-bar-link>
+      <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed">Teachers</side-bar-link>
       <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
       <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
     </div>
