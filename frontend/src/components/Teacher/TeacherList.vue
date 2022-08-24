@@ -1,4 +1,7 @@
 <script setup>
+import DeleteIcon from '@/assets/img/delete_icon.svg';
+import teacherService from '@/api/teachers';
+
 const props = defineProps({
   teachers: {
     type: Array,
@@ -9,6 +12,17 @@ const teacherFields = {
   teacherCode: 'Code',
   firstName: 'First name',
   lastName: 'Last name',
+};
+
+const handleDelete = async teacherId => {
+  const isDeleteConfirmed = confirm('Do you really want to delete the teacher?');
+  if (!isDeleteConfirmed) return;
+
+  const deleteResponse = await teacherService.deleteTeacherById(teacherId);
+
+  if ('error' in deleteResponse) {
+    return alert('Internal Server Error. Can not get teachers.');
+  }
 };
 </script>
 
@@ -28,6 +42,11 @@ const teacherFields = {
         <tbody class="rsprd-table__body">
           <tr v-for="teacher in props.teachers" :key="teacher.id" class="rsprd-table__row">
             <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
+            <td class="rsprd-table__cell">
+              <button @click="handleDelete(teacher.id)" class="delete-button">
+                <img class="delete-icon" :src="DeleteIcon" />
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -84,5 +103,16 @@ const teacherFields = {
 
 .rsprd-table__cell:last-child {
   text-align: center;
+}
+
+.delete-button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.delete-icon {
+  height: 20px;
+  width: 20px;
 }
 </style>

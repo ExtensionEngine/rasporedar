@@ -14,4 +14,6 @@ const addTeacher = ({ teacherCode, firstName, lastName }) =>
     },
   });
 
-export default { addTeacher, getAllTeachers };
+const deleteTeacherById = id => fetcher(`${baseUrl}/${id}`, { method: 'DELETE' });
+
+export default { addTeacher, getAllTeachers, deleteTeacherById };
