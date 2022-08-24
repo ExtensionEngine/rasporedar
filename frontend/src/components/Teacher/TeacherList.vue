@@ -1,7 +1,9 @@
 <script setup>
+import { computed, ref } from 'vue';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
 import teacherService from '@/api/teachers';
 
+const searchQuery = ref('');
 const props = defineProps({
   teachers: {
     type: Array,
@@ -12,9 +14,16 @@ const teacherFields = {
   teacherCode: 'Code',
   firstName: 'First name',
   lastName: 'Last name',
+  createdAt: 'Created At',
 };
 
 const emit = defineEmits(['reload']);
+const filteredTeachers = computed(() => {
+  const filtered = props.teachers.filter(teacher =>
+    teacher.firstName.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  );
+  return filtered;
+});
 const handleDelete = async teacherId => {
   const isDeleteConfirmed = confirm('Do you really want to delete the teacher?');
   if (!isDeleteConfirmed) return;
@@ -33,6 +42,7 @@ const handleDelete = async teacherId => {
   <div class="main">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Teachers</h2>
+      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search by first name..." />
     </div>
     <hr />
     <div class="rsprd-body">
@@ -44,7 +54,7 @@ const handleDelete = async teacherId => {
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
-          <tr v-for="teacher in props.teachers" :key="teacher.id" class="rsprd-table__row">
+          <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
             <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
             <td class="rsprd-table__cell">
               <button @click="handleDelete(teacher.id)" class="delete-button">
