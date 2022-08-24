@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import TeacherIllustration from '@/assets/img/illustrations/teacher_illustration.svg';
 
 const formInitState = {
   code: '',
@@ -52,6 +53,9 @@ const additionForm = reactive({ ...formInitState });
         </div>
         <button class="rsprd-button rsprd-button--cta">Add</button>
       </div>
+      <div class="illustration-container">
+        <img :src="TeacherIllustration" class="illustration" />
+      </div>
     </div>
   </div>
 </template>
@@ -67,7 +71,7 @@ const additionForm = reactive({ ...formInitState });
 
 .rsprd-body {
   display: flex;
-  height: 250px;
+  height: 320px;
 }
 
 .rsprd-body__form {
@@ -104,5 +108,18 @@ const additionForm = reactive({ ...formInitState });
   padding: 5px 20px;
   position: absolute;
   width: 25%;
+}
+
+.illustration-container {
+  position: relative;
+  width: 50%;
+}
+
+.illustration {
+  bottom: 0;
+  height: 280px;
+  position: absolute;
+  right: 0;
+  width: 280px;
 }
 </style>
