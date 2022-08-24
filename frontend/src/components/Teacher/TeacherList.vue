@@ -40,6 +40,7 @@ const handleDelete = async teacherId => {
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
             <th v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
