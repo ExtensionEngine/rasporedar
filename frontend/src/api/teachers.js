@@ -2,6 +2,8 @@ import fetcher from './helpers';
 
 const baseUrl = '/api/teachers';
 
+const getAllTeachers = () => fetcher(`${baseUrl}/`);
+
 const addTeacher = ({ teacherCode, firstName, lastName }) =>
   fetcher(`${baseUrl}`, {
     method: 'POST',
@@ -12,4 +14,4 @@ const addTeacher = ({ teacherCode, firstName, lastName }) =>
     },
   });
 
-export default { addTeacher };
+export default { addTeacher, getAllTeachers };
