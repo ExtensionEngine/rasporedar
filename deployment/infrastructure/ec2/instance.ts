@@ -6,9 +6,9 @@ import { Network } from "./network";
 
 export function createInstance(
   instanceType: pulumi.Input<string>,
+  volumeSize: number,
   ami: pulumi.Input<string>,
   network: Network,
-  volumeSize: number,
   userDataPath: string = "",
   instanceName = pulumi.getProject()
 ) {

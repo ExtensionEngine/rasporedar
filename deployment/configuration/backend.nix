@@ -10,7 +10,7 @@
 
   users.users.rasporedar = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHeS9LRxPeUFrTL/80ucq4tyYwadWBw45wRdJpPh9+N bdeak@extensionengine.com"
@@ -21,14 +21,18 @@
     passwordAuthentication = false;
   };
 
+  virtualisation.docker.enable = true;
+
   environment.systemPackages = with pkgs; [
+    # system utils
     curl
     wget
     htop
-    neofetch
     git
     vim
     tmux
-    ripgrep
+    neofetch
+    # app dependencies
+    docker
   ];
 }
