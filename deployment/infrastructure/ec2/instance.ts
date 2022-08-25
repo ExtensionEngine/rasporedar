@@ -9,6 +9,7 @@ export function createInstance(
   volumeSize: number,
   ami: pulumi.Input<string>,
   network: Network,
+  key: aws.ec2.KeyPair,
   userDataPath: string = "",
   instanceName = pulumi.getProject()
 ) {
@@ -23,6 +24,7 @@ export function createInstance(
         volumeSize,
       },
     ],
+    keyName: key.keyName,
     userData: userDataPath && fs.readFileSync(userDataPath, "utf8"),
     userDataReplaceOnChange: true,
   });

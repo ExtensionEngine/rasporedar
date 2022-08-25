@@ -10,11 +10,18 @@ const project = pulumi.getProject();
 const siteBucket = s3.createSiteBucket(`${project}-frontend`);
 
 const net = ec2.createNetwork();
-// const key = ec2.createKeyPair();
+const key = ec2.createKeyPair();
 const ami = ec2.findAmi(ec2.Ami.NixOS);
 const userDataPath = path.resolve("../configuration/backend.nix");
 
-const instance = ec2.createInstance("t2.micro", 20, ami, net, userDataPath);
+const instance = ec2.createInstance(
+  "t2.micro",
+  20,
+  ami,
+  net,
+  key,
+  userDataPath
+);
 
 export const bucketName = siteBucket.id;
 export const bucketEndpoint = pulumi.interpolate`http://${siteBucket.websiteEndpoint}`;

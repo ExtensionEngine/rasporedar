@@ -4,6 +4,7 @@
   ec2.hvm = true;
 
   networking.hostName = "rasporedar-backend";
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   nix.trustedUsers = [ "@wheel" ];
   security.sudo.wheelNeedsPassword = false;
@@ -17,9 +18,9 @@
     ];
   };
 
-  services.openssh = {
-    passwordAuthentication = false;
-  };
+  services.openssh.passwordAuthentication = false;
+
+  services.nginx.enable = true;
 
   virtualisation.docker.enable = true;
 
@@ -33,6 +34,9 @@
     tmux
     neofetch
     # app dependencies
+    nginx
     docker
   ];
+
+  system.stateVersion = "22.05";
 }
