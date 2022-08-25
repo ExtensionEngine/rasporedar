@@ -3,9 +3,6 @@
   imports = [ <nixpkgs/nixos/modules/virtualisation/amazon-image.nix> ];
   ec2.hvm = true;
 
-  networking.hostName = "rasporedar-backend";
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
   nix.trustedUsers = [ "@wheel" ];
   security.sudo.wheelNeedsPassword = false;
 
@@ -17,6 +14,9 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHeS9LRxPeUFrTL/80ucq4tyYwadWBw45wRdJpPh9+N bdeak@extensionengine.com"
     ];
   };
+
+  networking.hostName = "rasporedar-backend";
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.openssh.passwordAuthentication = false;
 
