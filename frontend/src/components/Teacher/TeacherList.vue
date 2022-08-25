@@ -1,35 +1,36 @@
 <script setup>
 import { computed, ref } from 'vue';
-import classroomService from '@/api/classrooms';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
+import teacherService from '@/api/teachers';
 
 const searchQuery = ref('');
 const props = defineProps({
-  classrooms: {
+  teachers: {
     type: Array,
     default: () => [],
   },
 });
-const classroomFields = {
-  name: 'Name',
-  capacity: 'Capacity',
+const teacherFields = {
+  teacherCode: 'Code',
+  firstName: 'First name',
+  lastName: 'Last name',
   createdAt: 'Created At',
 };
 
 const emit = defineEmits(['reload']);
-const filteredClassrooms = computed(() => {
+const filteredTeachers = computed(() => {
   const searchQueryLowercased = searchQuery.value.toLowerCase();
-  const filtered = props.classrooms.filter(classroom => classroom.name.toLowerCase().includes(searchQueryLowercased));
+  const filtered = props.teachers.filter(teacher => teacher.firstName.toLowerCase().includes(searchQueryLowercased));
   return filtered;
 });
-const handleDelete = async classroomId => {
-  const isDeleteConfirmed = confirm('Do you really want to delete classroom?');
+const handleDelete = async teacherId => {
+  const isDeleteConfirmed = confirm('Do you really want to delete the teacher?');
   if (!isDeleteConfirmed) return;
 
-  const deleteResponse = await classroomService.deleteClassroomById(classroomId);
+  const deleteResponse = await teacherService.deleteTeacherById(teacherId);
 
   if ('error' in deleteResponse) {
-    return alert('Internal Server Error. Can not delete classrooom.');
+    return alert('Internal Server Error. Can not delete teacher.');
   }
 
   emit('reload');
@@ -39,23 +40,23 @@ const handleDelete = async classroomId => {
 <template>
   <div class="main">
     <div class="rsprd-bar">
-      <h2 class="rsprd-bar__title">Classrooms</h2>
-      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search..." />
+      <h2 class="rsprd-bar__title">Teachers</h2>
+      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search by first name..." />
     </div>
     <hr />
     <div class="rsprd-body">
       <table class="rsprd-table">
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
-            <th v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
-          <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
-            <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
+          <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
+            <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
             <td class="rsprd-table__cell">
-              <button @click="handleDelete(classroom.id)" class="delete-button">
+              <button @click="handleDelete(teacher.id)" class="delete-button">
                 <img class="delete-icon" :src="DeleteIcon" />
               </button>
             </td>
