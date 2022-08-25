@@ -38,7 +38,7 @@ const addTeacher = async () => {
             id="code"
             class="rsprd-body__input"
             type="text"
-            placeholder="Enter teachers code..."
+            placeholder="Enter teachers code here..."
             required
           />
         </div>
@@ -49,7 +49,7 @@ const addTeacher = async () => {
             id="fname"
             class="rsprd-body__input"
             type="text"
-            placeholder="Enter first name..."
+            placeholder="Enter first name here..."
             required
           />
         </div>

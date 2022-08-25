@@ -37,20 +37,13 @@ const addClassroom = async () => {
             id="name"
             class="rsprd-body__input"
             type="text"
-            placeholder="Enter name..."
+            placeholder="Enter name here..."
             required
           />
         </div>
         <div class="input-container">
           <label for="capacity">Capacity</label>
-          <input
-            v-model="additionForm.capacity"
-            id="capacity"
-            class="rsprd-body__input"
-            type="number"
-            placeholder="Enter here..."
-            required
-          />
+          <input v-model="additionForm.capacity" id="capacity" class="rsprd-body__input" type="number" required />
         </div>
         <button @click="addClassroom" class="rsprd-button rsprd-button--cta">Add</button>
       </div>
