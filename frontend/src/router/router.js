@@ -36,7 +36,7 @@ const routes = [
     path: '/',
     alias: ['/home', '/timetable-generator'],
     name: 'home',
-    component: () => import('@/views/TimeTableGeneratorView.vue'),
+    component: () => import('@/views/TimetableGeneratorView.vue'),
     meta: { requiresAuth: true },
   },
 ];
