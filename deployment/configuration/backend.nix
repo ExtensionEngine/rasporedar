@@ -20,7 +20,12 @@
 
   services.openssh.passwordAuthentication = false;
 
-  services.nginx.enable = true;
+  services.nginx = {
+    enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+  };
 
   virtualisation.docker.enable = true;
 
