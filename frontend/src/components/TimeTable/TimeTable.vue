@@ -41,7 +41,7 @@ function handleDownload(timetableTitle, timetableData) {
       <div class="rsprd-bar">
         <h2 class="rsprd-bar__title">{{ timetableTitle }}</h2>
         <button
-          @click="() => handleDownload(timetableTitle, timetableData)"
+          @click="handleDownload(timetableTitle, timetableData)"
           type="button"
           class="rsprd-btn rsprd-btn--secondary"
         >
