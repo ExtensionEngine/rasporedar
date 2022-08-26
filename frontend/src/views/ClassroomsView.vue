@@ -16,7 +16,7 @@ const reloadClassrooms = () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="rsprd-container">
     <classroom-form @reload="reloadClassrooms" />
     <classroom-list @reload="reloadClassrooms" :classrooms="classrooms" />
   </div>

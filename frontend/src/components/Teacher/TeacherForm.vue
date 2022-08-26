@@ -24,115 +24,56 @@ const addTeacher = async () => {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Add Teacher</h2>
     </div>
-    <hr class="rsprd-bar__separator" />
-    <div class="rsprd-body">
+    <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
-        <div class="input-container">
+        <div class="rsprd-form__input-container">
           <label for="code">Teachers code</label>
           <input
             v-model="additionForm.teacherCode"
             id="code"
-            class="rsprd-body__input"
+            class="rsprd-form__input"
             type="text"
             placeholder="Enter teachers code here..."
             required
           />
         </div>
-        <div class="input-container">
+        <div class="rsprd-form__input-container">
           <label for="fname">First name</label>
           <input
             v-model="additionForm.firstName"
             id="fname"
-            class="rsprd-body__input"
+            class="rsprd-form__input"
             type="text"
             placeholder="Enter first name here..."
             required
           />
         </div>
-        <div class="input-container">
+        <div class="rsprd-form__input-container">
           <label for="lname">Last name</label>
           <input
             v-model="additionForm.lastName"
             id="lname"
-            class="rsprd-body__input"
+            class="rsprd-form__input"
             type="text"
             placeholder="Enter last name here..."
             required
           />
         </div>
-        <button @click="addTeacher" class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addTeacher" class="rsprd-btn rsprd-btn--primary rsprd-btn--m rsprd-btn-bottom">Add</button>
       </div>
-      <div class="illustration-container">
-        <img :src="TeacherIllustration" class="illustration" />
+      <div class="rsprd-body__illustration-wrapper">
+        <img :src="TeacherIllustration" class="rsprd-body__illustration" />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.main {
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  margin: 0 auto 80px;
-  padding: 20px;
-  width: 70%;
-}
-
 .rsprd-body {
-  display: flex;
   height: 320px;
-}
-
-.rsprd-body__form {
-  padding: 16px;
-  position: relative;
-  width: 50%;
-}
-
-.input-container {
-  margin: 24px 0;
-}
-
-.rsprd-body__input {
-  border: none;
-  border-bottom: 1px solid black;
-  color: var(--color-muted);
-  font-size: 1rem;
-  margin-top: 5px;
-  width: 100%;
-}
-
-.rsprd-body__input:focus {
-  border-bottom: 1px solid black;
-  outline: none;
-}
-
-.rsprd-body__input:focus::placeholder {
-  color: transparent;
-}
-
-.rsprd-button {
-  bottom: 0;
-  height: 30px;
-  padding: 5px 20px;
-  position: absolute;
-  width: 25%;
-}
-
-.illustration-container {
-  position: relative;
-  width: 50%;
-}
-
-.illustration {
-  bottom: 0;
-  height: 280px;
-  position: absolute;
-  right: 0;
-  width: 280px;
 }
 </style>

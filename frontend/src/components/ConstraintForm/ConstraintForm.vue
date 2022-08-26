@@ -28,13 +28,12 @@ export default {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
         <h2 class="rsprd-bar__title">Classes</h2>
-        <button @click="insertSeed" type="button" class="rsprd-button">Insert Seed</button>
+        <button @click="insertSeed" type="button" class="rsprd-btn rsprd-btn--muted">Insert Seed</button>
       </div>
-      <hr />
       <accordion-list
         @update:state="newState => (formStore.accordionState = newState)"
         open-multiple-items
@@ -46,10 +45,8 @@ export default {
           :index="classIndex - 1"
         />
       </accordion-list>
-      <button @click.prevent="formStore.addClass()" class="rsprd-button rsprd-button--lighter">&plus; Add class</button>
-      <button type="submit" class="rsprd-button rsprd-button--cta submit-button">Generate timetable</button>
-      <pre>{{ JSON.stringify(formStore.form, null, 2) }}</pre>
-      <pre>{{ JSON.stringify(formStore.accordionState, null, 2) }}</pre>
+      <button @click.prevent="formStore.addClass()" class="rsprd-btn rsprd-btn--muted">&plus; Add class</button>
+      <button type="submit" class="rsprd-btn rsprd-btn--primary rsprd-btn--l rsprd-d--block">Generate timetable</button>
     </form>
   </div>
 </template>
@@ -59,12 +56,6 @@ export default {
 
 :root {
   --acco-active: var(--color-main);
-}
-
-.main {
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  padding: 30px;
 }
 
 .accordion-list {
@@ -88,15 +79,8 @@ export default {
 .accordion-list .accordion-item {
   border-color: var(--color-text);
 }
-</style>
 
-<style scoped>
-.submit-button {
-  display: block;
-  margin-bottom: 24px;
-}
-
-.rsprd-button {
+.rsprd-btn--l {
   margin-top: 12px;
 }
 </style>

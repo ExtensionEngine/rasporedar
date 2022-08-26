@@ -1,0 +1,21 @@
+.rsprd-form__input {
+  border: none;
+  border-bottom: 1px solid black;
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.rsprd-form__input-container {
+  margin: 24px 0;
+}
+
+.rsprd-form__input:focus {
+  border-bottom: 1px solid black;
+  outline: none;
+}
+
+.rsprd-form__input:focus::placeholder {
+  color: transparent;
+}

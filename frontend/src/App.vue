@@ -14,7 +14,7 @@ const userStore = useUserStore();
 
 <style>
 @import 'normalize.css';
-@import '@/assets/styles/global.css';
+@import '@/assets/styles/index.css';
 
 .app {
   display: flex;

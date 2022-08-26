@@ -1,0 +1,17 @@
+.rsprd-body {
+  padding: 16px 16px 0;
+}
+
+.rsprd-body__form,
+.rsprd-body__illustration-wrapper {
+  position: relative;
+  width: 50%;
+}
+
+.rsprd-body__illustration {
+  bottom: 0;
+  height: 280px;
+  position: absolute;
+  right: 0;
+  width: 280px;
+}

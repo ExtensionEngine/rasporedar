@@ -1,0 +1,33 @@
+.rsprd-bar {
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+.rsprd-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  align-items: center;
+  padding: 8px;
+}
+
+.rsprd-bar__title {
+  color: var(--color-darker);
+  margin: 0;
+}
+
+.rsprd-bar__input {
+  border: none;
+  border-bottom: 1px solid black;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.rsprd-bar__input:hover {
+  color: var(--color-darker);
+  border-bottom: 1px solid var(--color-darker);
+  outline: none;
+}

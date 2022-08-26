@@ -43,10 +43,10 @@ export default {
           @click.stop
           type="text"
           placeholder="3a"
-          class="rsprd-input rsprd-input--shorter rsprd-input--lighter"
+          class="rsprd-input rsprd-input--s rsprd-input--lighter"
         />
-        <button @click.stop="handleClassDelete" type="button" class="rsprd-icon-button">
-          <img src="@/assets/img/delete_icon.svg" />
+        <button @click.stop="handleClassDelete" type="button" class="rsprd-btn rsprd-btn--delete">
+          <img class="rsprd-icon" src="@/assets/img/delete_icon.svg" />
         </button>
       </div>
     </template>
@@ -63,6 +63,8 @@ export default {
         :index="subjectIndex - 1"
       />
     </accordion-list>
-    <button @click="formStore.addSubject(index)" type="button" class="rsprd-button">&plus; Add subject</button>
+    <button @click="formStore.addSubject(index)" type="button" class="rsprd-btn rsprd-btn--muted">
+      &plus; Add subject
+    </button>
   </accordion-item>
 </template>

@@ -1,0 +1,60 @@
+.rsprd-btn {
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid var(--color-darker);
+  text-align: center;
+  padding: 5px 20px;
+}
+
+.rsprd-btn:hover {
+  transform: scale(1.04);
+}
+
+.rsprd-btn--m {
+  height: 30px;
+  width: 204px;
+}
+
+.rsprd-btn--l {
+  height: 44px;
+  width: 252px;
+}
+
+.rsprd-btn--primary {
+  background-color: var(--color-main);
+  color: var(--color-darker);
+}
+
+.rsprd-btn--primary:hover {
+  background-color: #5ccc9b;
+}
+
+.rsprd-btn--secondary {
+  background-color: var(--color-lighter);
+  color: var(--color-darker);
+}
+
+.rsprd-btn--light {
+  background-color: var(--color-light);
+  color: var(--color-darker);
+}
+
+.rsprd-btn--secondary:hover,
+.rsprd-btn--light:hover {
+  background-color: var(--color-muted);
+}
+
+.rsprd-btn-bottom {
+  bottom: 0;
+  position: absolute;
+}
+
+.rsprd-btn--delete {
+  border: 0;
+  background-color: transparent;
+}
+
+.rsprd-btn--delete:hover {
+  color: #ff6863;
+  text-decoration: underline;
+}
