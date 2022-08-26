@@ -1,5 +1,8 @@
 FROM node:18
 
+LABEL org.opencontainers.image.authors="bdeak@extensionengine.com"
+LABEL org.opencontainers.image.source="https://github.com/ExtensionEngine/rasporedar"
+
 WORKDIR /app
 
 COPY package.json ./
