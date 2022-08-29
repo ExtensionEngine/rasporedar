@@ -23,104 +23,38 @@ const addClassroom = async () => {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Add Classroom</h2>
     </div>
-    <hr class="rsprd-bar__separator" />
-    <div class="rsprd-body">
+    <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
-        <div class="input-container">
+        <div class="rsprd-form__input-container">
           <label for="name">Name</label>
           <input
             v-model="additionForm.name"
             id="name"
-            class="rsprd-body__input"
+            class="rsprd-form__input"
             type="text"
-            placeholder="Enter name..."
+            placeholder="Enter name here..."
             required
           />
         </div>
-        <div class="input-container">
+        <div class="rsprd-form__input-container">
           <label for="capacity">Capacity</label>
-          <input
-            v-model="additionForm.capacity"
-            id="capacity"
-            class="rsprd-body__input"
-            type="number"
-            placeholder="Enter here..."
-            required
-          />
+          <input v-model="additionForm.capacity" id="capacity" class="rsprd-form__input" type="number" required />
         </div>
-        <button @click="addClassroom" class="rsprd-button rsprd-button--cta">Add</button>
+        <button @click="addClassroom" class="rsprd-btn rsprd-btn--primary rsprd-btn--m rsprd-btn-bottom">Add</button>
       </div>
-      <div class="illustration-container">
-        <img :src="ClassroomIllustration" class="illustration" />
+      <div class="rsprd-body__illustration-wrapper">
+        <img :src="ClassroomIllustration" class="rsprd-body__illustration" />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.main {
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  margin: 0 auto 80px;
-  padding: 20px;
-  width: 70%;
-}
-
 .rsprd-body {
-  display: flex;
   height: 250px;
-}
-
-.rsprd-body__form {
-  padding: 16px;
-  position: relative;
-  width: 50%;
-}
-
-.input-container {
-  margin: 24px 0;
-}
-
-.rsprd-body__input {
-  border: none;
-  border-bottom: 1px solid black;
-  color: var(--color-muted);
-  font-size: 1rem;
-  margin-top: 5px;
-  width: 100%;
-}
-
-.rsprd-body__input:focus {
-  border-bottom: 1px solid black;
-  outline: none;
-}
-
-.rsprd-body__input:focus::placeholder {
-  color: transparent;
-}
-
-.rsprd-button {
-  bottom: 0;
-  height: 30px;
-  padding: 5px 20px;
-  position: absolute;
-  width: 25%;
-}
-
-.illustration-container {
-  position: relative;
-  width: 50%;
-}
-
-.illustration {
-  bottom: 0;
-  height: 280px;
-  position: absolute;
-  right: 0;
-  width: 280px;
 }
 </style>

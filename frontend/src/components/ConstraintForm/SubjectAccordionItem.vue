@@ -46,8 +46,8 @@ export default {
           class="rsprd-input rsprd-input--lighter"
           placeholder="Math"
         />
-        <button @click.stop="handleSubjectDelete" type="button" class="rsprd-icon-button">
-          <img src="@/assets/img/delete_icon.svg" />
+        <button @click.stop="handleSubjectDelete" type="button" class="rsprd-btn rsprd-btn--delete">
+          <img class="rsprd-icon" src="@/assets/img/delete_icon.svg" />
         </button>
       </div>
     </template>
@@ -74,7 +74,6 @@ export default {
 
 <style scoped>
 .row {
-  display: flex;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

@@ -37,12 +37,11 @@ const handleDelete = async classroomId => {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Classrooms</h2>
-      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search..." />
+      <input v-model="searchQuery" class="rsprd-bar__input" type="text" placeholder="Search by name..." />
     </div>
-    <hr />
     <div class="rsprd-body">
       <table class="rsprd-table">
         <thead>
@@ -55,8 +54,8 @@ const handleDelete = async classroomId => {
           <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
             <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
             <td class="rsprd-table__cell">
-              <button @click="handleDelete(classroom.id)" class="delete-button">
-                <img class="delete-icon" :src="DeleteIcon" />
+              <button @click="handleDelete(classroom.id)" class="rsprd-btn-main rsprd-btn--delete">
+                <img class="rsprd-icon" :src="DeleteIcon" />
               </button>
             </td>
           </tr>
@@ -67,28 +66,6 @@ const handleDelete = async classroomId => {
 </template>
 
 <style scoped>
-.main {
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  margin: 0 auto 80px;
-  padding: 20px;
-  width: 70%;
-}
-
-.rsprd-body__input {
-  border: none;
-  border-bottom: 1px solid black;
-  color: var(--color-muted);
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-.rsprd-body__input:focus {
-  color: var(--color-darker);
-  border-bottom: 1px solid black;
-  outline: none;
-}
-
 .rsprd-table {
   border-collapse: collapse;
   margin-top: 20px;
@@ -115,16 +92,5 @@ const handleDelete = async classroomId => {
 
 .rsprd-table__cell:last-child {
   text-align: center;
-}
-
-.delete-button {
-  border: 0;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.delete-icon {
-  height: 20px;
-  width: 20px;
 }
 </style>

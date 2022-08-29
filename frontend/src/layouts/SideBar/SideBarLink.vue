@@ -53,6 +53,7 @@ const checkExpanded = computed(() => (props.isCollapsed ? 'item-text' : 'item-te
 }
 .sidebar-item:hover {
   background-color: #4d4d4f;
+  border-radius: 5px 0 0 5px;
 }
 .item-text-extended {
   opacity: 1;
@@ -63,14 +64,13 @@ const checkExpanded = computed(() => (props.isCollapsed ? 'item-text' : 'item-te
   color: var(--color-main);
 }
 .sidebar-item.router-link-exact-active {
-  /* background-color: var(--color-darker); */
   border-right: 5px solid var(--color-main);
 }
-.sidebar-item.router-link-exact-active .link-text-extended {
+
+.sidebar-item.router-link-exact-active .item-text-extended {
   color: var(--color-main);
 }
 .sidebar-item.router-link-exact-inactive {
   background-color: var(--color-darker);
-  border-right: 5px solid var(--color-main);
 }
 </style>

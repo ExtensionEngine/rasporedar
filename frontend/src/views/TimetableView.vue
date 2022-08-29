@@ -54,7 +54,7 @@ function handleDownloadAll() {
 </script>
 
 <template>
-  <div class="container">
+  <div class="rsprd-container">
     <div v-if="timetable.errored">
       <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
     </div>
@@ -62,22 +62,28 @@ function handleDownloadAll() {
       <LoadingSpinner />
     </div>
     <div v-else>
-      <header class="rsprd-bar">
+      <header class="rsprd-toolbar">
         <div>
           <a
             v-for="filterOption in Object.keys(timetableFilters)"
             :key="filterOption"
             @click="filter = timetableFilters[filterOption]"
-            :class="{ 'rsprd-link--active': filter === timetableFilters[filterOption] }"
-            class="rsprd-link"
+            :class="{ 'rsprd-toolbar__link--active': filter === timetableFilters[filterOption] }"
+            class="rsprd-toolbar__link"
             >{{ timetableFilterLabels[filterOption] }}</a
           >
         </div>
         <div>
-          <button @click="monochromeMode = !monochromeMode" type="button" class="rsprd-button">
+          <button
+            @click="monochromeMode = !monochromeMode"
+            type="button"
+            class="rsprd-btn rsprd-btn--muted rsprd-btn--m"
+          >
             {{ modeButtonText }}
           </button>
-          <button @click="handleDownloadAll" type="button" class="rsprd-button">&darr; Download All</button>
+          <button @click="handleDownloadAll" type="button" class="rsprd-btn rsprd-btn--primary rsprd-btn--m">
+            &darr; Download All
+          </button>
         </div>
       </header>
 
@@ -92,15 +98,26 @@ function handleDownloadAll() {
 </template>
 
 <style scoped>
-header.rsprd-bar {
-  margin-bottom: 1rem;
+.rsprd-toolbar__link {
+  color: var(--color-darker);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.rsprd-button {
-  margin-top: 0;
+.rsprd-toolbar__link:hover {
+  text-decoration: none;
 }
 
-.rsprd-button:not(:last-child) {
+.rsprd-toolbar__link:not(:last-child) {
+  margin-right: 16px;
+}
+
+.rsprd-toolbar__link--active {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.rsprd-btn:not(:last-child) {
   margin-right: 12px;
 }
 </style>

@@ -26,78 +26,40 @@ const deleteUser = async () => {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">My Profile</h2>
     </div>
-    <hr />
-    <div class="rsprd-body">
-      <div class="info">
-        <p class="info__item">Email: {{ userStore.user.email }}</p>
-        <p class="info__item">Password: *******</p>
-        <button @click="deleteUser" class="delete-button">
-          <img class="delete-icon" :src="DeleteIcon" />
-          Delete your account
-        </button>
+    <div class="rsprd-body rsprd-d-flex">
+      <div class="rsprd-body__info-container">
+        <p class="rsprd-body__info">Email: {{ userStore.user.email }}</p>
+        <p class="rsprd-body__info">Password: *******</p>
+        <div class="rsprd-body__btn-wrapper">
+          <button @click="deleteUser" class="rsprd-btn-main rsprd-btn--delete">
+            <img class="rsprd-icon rsprd-icon--bottom" :src="DeleteIcon" />
+            Delete your account
+          </button>
+        </div>
       </div>
-      <div class="illustration-wrapper">
-        <img :src="ProfileIllustration" class="illustration" />
+      <div class="rsprd-body__illustration-wrapper">
+        <img :src="ProfileIllustration" class="rsprd-body__illustration" />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.main {
-  width: 70%;
-  padding: 20px;
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  margin: 0 auto;
-}
-
-.rsprd-body {
-  display: flex;
-}
-
-.delete-button {
-  border: 0;
-  background-color: var(--color-lighter);
-  cursor: pointer;
-  margin-top: 120px;
-}
-
-.delete-button:hover {
-  color: #ff6863;
-  text-decoration: underline;
-}
-
-.info {
+.rsprd-body__info-container {
   padding: 8px;
   width: 50%;
 }
 
-.info__item {
+.rsprd-body__info {
   border-bottom: 1px solid var(--color-muted);
   padding: 4px;
 }
 
-.delete-icon {
-  height: 20px;
-  width: 20px;
-  vertical-align: bottom;
-}
-
-.illustration-wrapper {
-  width: 50%;
-  position: relative;
-}
-
-.illustration {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 280px;
-  height: 280px;
+.rsprd-body__btn-wrapper {
+  margin-top: 120px;
 }
 </style>

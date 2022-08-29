@@ -38,12 +38,11 @@ const handleDelete = async teacherId => {
 </script>
 
 <template>
-  <div class="main">
+  <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Teachers</h2>
-      <input v-model="searchQuery" class="rsprd-body__input" type="text" placeholder="Search by first name..." />
+      <input v-model="searchQuery" class="rsprd-bar__input" type="text" placeholder="Search by first name..." />
     </div>
-    <hr />
     <div class="rsprd-body">
       <table class="rsprd-table">
         <thead>
@@ -56,8 +55,8 @@ const handleDelete = async teacherId => {
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
             <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
             <td class="rsprd-table__cell">
-              <button @click="handleDelete(teacher.id)" class="delete-button">
-                <img class="delete-icon" :src="DeleteIcon" />
+              <button @click="handleDelete(teacher.id)" class="rsprd-btn rsprd-btn--delete">
+                <img class="rsprd-icon" :src="DeleteIcon" />
               </button>
             </td>
           </tr>
@@ -68,28 +67,6 @@ const handleDelete = async teacherId => {
 </template>
 
 <style scoped>
-.main {
-  background-color: var(--color-lighter);
-  border-radius: 20px;
-  margin: 0 auto 80px;
-  padding: 20px;
-  width: 70%;
-}
-
-.rsprd-body__input {
-  border: none;
-  border-bottom: 1px solid black;
-  color: var(--color-muted);
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-.rsprd-body__input:focus {
-  color: var(--color-darker);
-  border-bottom: 1px solid black;
-  outline: none;
-}
-
 .rsprd-table {
   border-collapse: collapse;
   margin-top: 20px;
@@ -116,16 +93,5 @@ const handleDelete = async teacherId => {
 
 .rsprd-table__cell:last-child {
   text-align: center;
-}
-
-.delete-button {
-  border: 0;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.delete-icon {
-  height: 20px;
-  width: 20px;
 }
 </style>

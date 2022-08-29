@@ -1,5 +1,5 @@
 <script setup>
-import SideBar from './components/SideBar/SideBar.vue';
+import SideBar from './layouts/SideBar/SideBar.vue';
 import { useUserStore } from '@/stores/user';
 
 const userStore = useUserStore();
@@ -14,7 +14,7 @@ const userStore = useUserStore();
 
 <style>
 @import 'normalize.css';
-@import '@/assets/styles/global.css';
+@import '@/assets/styles/index.css';
 
 .app {
   display: flex;
