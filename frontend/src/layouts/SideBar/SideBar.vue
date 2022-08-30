@@ -140,7 +140,7 @@ aside {
 }
 
 .expanded {
-  width: 100%;
+  width: 300px;
   transition: 0.3s ease-in-out;
 }
 .expanded .rsprd-logo img {

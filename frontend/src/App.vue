@@ -8,9 +8,7 @@ const userStore = useUserStore();
 
 <template>
   <div class="app">
-    <div v-if="userStore.isLoggedIn">
-      <side-bar />
-    </div>
+    <side-bar v-if="userStore.isLoggedIn" />
     <div class="rsprd-main">
       <the-header />
       <router-view />
