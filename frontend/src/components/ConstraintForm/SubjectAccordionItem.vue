@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { AccordionItem } from 'vue3-rich-accordion';
 import classroomService from '@/api/classrooms';
 import teacherService from '@/api/teachers';
@@ -33,9 +33,9 @@ const loadClassrooms = () => {
   classroomService.getAllClassrooms().then(response => (classrooms.value = response));
 };
 
-const getTeacherOptionContent = teacher => {
-  return `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
-};
+const formatTeacherOptionContent = computed(() => {
+  return teacher => `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
+});
 
 const handleSubjectDelete = () => {
   if (!confirm('Are you sure?')) {
@@ -75,7 +75,7 @@ const handleSubjectDelete = () => {
       <select v-model="subject.teacher.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">
-          {{ getTeacherOptionContent(teacher) }}
+          {{ formatTeacherOptionContent(teacher) }}
         </option>
       </select>
     </div>
