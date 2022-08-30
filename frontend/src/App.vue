@@ -1,5 +1,6 @@
 <script setup>
 import SideBar from './layouts/SideBar/SideBar.vue';
+import TheHeader from './layouts/Header/TheHeader.vue';
 import { useUserStore } from '@/stores/user';
 
 const userStore = useUserStore();
@@ -8,7 +9,10 @@ const userStore = useUserStore();
 <template>
   <div class="app">
     <side-bar v-if="userStore.isLoggedIn" />
-    <router-view />
+    <div class="rsprd-main">
+      <the-header />
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -18,5 +22,10 @@ const userStore = useUserStore();
 
 .app {
   display: flex;
+}
+
+.rsprd-main {
+  display: block;
+  flex: 1;
 }
 </style>
