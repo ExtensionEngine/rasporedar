@@ -28,7 +28,7 @@ const handleLogOut = () => {
 <template>
   <aside :class="isCollapsed">
     <div class="rsprd-logo">
-      <img :src="LogoURL" alt="Vue" />
+      <img :src="LogoURL" alt="logo" />
     </div>
 
     <div class="toggle-wrap">
@@ -64,10 +64,9 @@ aside {
   background-color: var(--color-darker);
   color: var(--color-light);
   height: 100vh;
-  width: calc(3rem + 36px);
+  width: 6rem;
   overflow: hidden;
   min-height: 100vh;
-  padding: 1rem;
   position: sticky;
   transition: 0.4s ease-in-out;
   top: 0;
@@ -126,6 +125,7 @@ aside {
   color: var(--color-muted);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
   text-transform: uppercase;
 }
 
@@ -135,16 +135,12 @@ aside {
   transition: opacity 0.8s ease-in-out;
 }
 
-.menu {
-  margin: 0 -1rem;
-}
-
 .rsprd-logout {
   margin-bottom: 1rem;
 }
 
 .expanded {
-  width: 16%;
+  width: 100%;
   transition: 0.3s ease-in-out;
 }
 .expanded .rsprd-logo img {

@@ -37,7 +37,11 @@ function handleDownload(timetableTitle, timetableData) {
 
 <template>
   <div>
-    <div v-for="(timetableData, timetableTitle) in timetable" :key="timetableTitle" class="timetable">
+    <div
+      v-for="(timetableData, timetableTitle) in timetable"
+      :key="timetableTitle"
+      class="timetable rsprd-container__item"
+    >
       <div class="rsprd-bar">
         <h2 class="rsprd-bar__title">{{ timetableTitle }}</h2>
         <button
@@ -85,6 +89,10 @@ function handleDownload(timetableTitle, timetableData) {
   border-radius: 20px;
   margin-bottom: 64px;
   padding: 30px;
+}
+
+.timetable:first-child {
+  margin-top: 0;
 }
 
 .row {

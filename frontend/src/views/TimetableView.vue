@@ -98,6 +98,11 @@ function handleDownloadAll() {
 </template>
 
 <style scoped>
+.rsprd-toolbar {
+  margin: 80px auto 24px;
+  width: 70%;
+}
+
 .rsprd-toolbar__link {
   color: var(--color-darker);
   text-decoration: underline;
