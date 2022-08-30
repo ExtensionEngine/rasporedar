@@ -1,33 +1,48 @@
-<script>
+<script setup>
+import { onBeforeMount, ref } from 'vue';
 import { AccordionItem } from 'vue3-rich-accordion';
+import classroomService from '@/api/classrooms';
+import teacherService from '@/api/teachers';
 import { useFormStore } from '@/stores/form';
 
-export default {
-  props: {
-    index: { type: Number, default: -1 },
-    classIndex: { type: Number, default: -1 },
+const props = defineProps({
+  index: {
+    type: Number,
+    default: -1,
   },
-  setup(props) {
-    const formStore = useFormStore();
-
-    const teachers = ['Ante', 'Ana', 'Mate']; // TODO: replace with real data when teacher crud frontend is finished
-    const classrooms = ['001', '002', '003']; // TODO: replace with real data when classroom crud frontend is finished
-
-    const subject = formStore.form.classes[props.classIndex].subjects[props.index];
-
-    const handleSubjectDelete = () => {
-      if (!confirm('Are you sure?')) {
-        return;
-      }
-
-      formStore.deleteSubject(props.classIndex, props.index);
-    };
-
-    return { formStore, teachers, classrooms, subject, handleSubjectDelete };
+  classIndex: {
+    type: Number,
+    default: -1,
   },
-  components: {
-    AccordionItem,
-  },
+});
+const teachers = ref([]);
+const classrooms = ref([]);
+const formStore = useFormStore();
+const subject = formStore.form.classes[props.classIndex].subjects[props.index];
+
+onBeforeMount(() => {
+  loadTeachers();
+  loadClassrooms();
+});
+
+const loadTeachers = () => {
+  teacherService.getAllTeachers().then(response => (teachers.value = response));
+};
+
+const loadClassrooms = () => {
+  classroomService.getAllClassrooms().then(response => (classrooms.value = response));
+};
+
+const getTeacherOptionContent = teacher => {
+  return `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
+};
+
+const handleSubjectDelete = () => {
+  if (!confirm('Are you sure?')) {
+    return;
+  }
+
+  formStore.deleteSubject(props.classIndex, props.index);
 };
 </script>
 
@@ -59,14 +74,16 @@ export default {
       <span>Teacher</span>
       <select v-model="subject.teacher.name" class="rsprd-select">
         <option value="">-</option>
-        <option v-for="teacher in teachers" :key="teacher">{{ teacher }}</option>
+        <option v-for="teacher in teachers" :key="teacher">
+          {{ getTeacherOptionContent(teacher) }}
+        </option>
       </select>
     </div>
     <div class="row">
       <span>Classroom</span>
       <select v-model="subject.classroom.name" class="rsprd-select">
         <option value="">-</option>
-        <option v-for="classroom in classrooms" :key="classroom">{{ classroom }}</option>
+        <option v-for="classroom in classrooms" :key="classroom">{{ classroom.name }}</option>
       </select>
     </div>
   </accordion-item>
