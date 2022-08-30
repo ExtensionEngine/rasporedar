@@ -26,6 +26,6 @@ const userStore = useUserStore();
 
 .rsprd-main {
   display: block;
-  width: 100%;
+  flex: 1;
 }
 </style>
