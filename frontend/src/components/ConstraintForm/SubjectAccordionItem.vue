@@ -26,16 +26,20 @@ onBeforeMount(() => {
 });
 
 const loadTeachers = () => {
-  teacherService.getAllTeachers().then(response => (teachers.value = response));
+  teacherService
+    .getAllTeachers()
+    .then(response => response.map(formatTeacherOptionContent))
+    .then(formattedResponse => (teachers.value = formattedResponse));
 };
 
 const loadClassrooms = () => {
   classroomService.getAllClassrooms().then(response => (classrooms.value = response));
 };
 
-const formatTeacherOptionContent = computed(() => {
-  return teacher => `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
-});
+const formatTeacherOptionContent = teacher => {
+  teacher.displayName = `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
+  return teacher;
+};
 
 const handleSubjectDelete = () => {
   if (!confirm('Are you sure?')) {
@@ -75,7 +79,7 @@ const handleSubjectDelete = () => {
       <select v-model="subject.teacher.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">
-          {{ formatTeacherOptionContent(teacher) }}
+          {{ teacher.displayName }}
         </option>
       </select>
     </div>
