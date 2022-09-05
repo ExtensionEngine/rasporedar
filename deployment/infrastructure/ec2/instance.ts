@@ -3,6 +3,7 @@ import * as aws from "@pulumi/aws";
 import * as fs from "fs";
 
 import { Network } from "./network";
+import { Output } from "@pulumi/pulumi";
 
 export function createInstance(
   instanceType: pulumi.Input<string>,
@@ -13,6 +14,17 @@ export function createInstance(
   userDataPath: string = "",
   instanceName = pulumi.getProject()
 ) {
+  let userData;
+  if (userDataPath) {
+    const config = new pulumi.Config();
+    userData = fs
+      .readFileSync(userDataPath, "utf8")
+      .replace(/{{ ([^ ]+) }}/g, (original, matched) => {
+        let r = config.require(matched);
+        return r ? r : "";
+      });
+  }
+
   const instance = new aws.ec2.Instance(instanceName, {
     ami,
     instanceType,
@@ -25,7 +37,7 @@ export function createInstance(
       },
     ],
     keyName: key.keyName,
-    userData: userDataPath && fs.readFileSync(userDataPath, "utf8"),
+    userData,
     userDataReplaceOnChange: true,
   });
 
