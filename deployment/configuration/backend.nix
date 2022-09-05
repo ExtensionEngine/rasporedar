@@ -23,6 +23,12 @@
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
+
+    virtualHosts."default_server" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:3001";
+      };
+    };
   };
 
   virtualisation.docker.enable = true;
