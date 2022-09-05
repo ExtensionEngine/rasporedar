@@ -40,14 +40,6 @@
   virtualisation.oci-containers = {
     backend = "docker";
     containers = {
-      db = {
-        image = "postgres:14";
-        environment = {
-          POSTGRES_DB = "rasporedar";
-          POSTGRES_USER = "rasporedar";
-          POSTGRES_PASSWORD = "rasporedar";
-        };
-      };
       backend = {
         login = {
           registry = "ghcr.io";
@@ -55,15 +47,15 @@
           passwordFile = "/etc/ghcr_password";
         };
         image = "ghcr.io/extensionengine/rasporedar-backend";
-        ports = [ "3001:3001" ];
         environment = {
-          POSTGRES_HOST = "db";
+          POSTGRES_HOST = "localhost";
           POSTGRES_DB = "rasporedar";
           POSTGRES_USER = "rasporedar";
           POSTGRES_PASSWORD = "rasporedar";
           JWT_SECRET_KEY = "{{ jwtSecretKey }}";
           SALT_ROUNDS = "{{ saltRounds }}";
         };
+        ports = [ "3001:3001" ];
       };
     };
   };
