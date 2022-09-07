@@ -19,6 +19,7 @@ export function createInstance(
     const config = new pulumi.Config();
     userData = fs
       .readFileSync(userDataPath, "utf8")
+      // replace variables `{{ var }}` in user data
       .replace(/{{ ([^ ]+) }}/g, (original, matched) => {
         let r = config.require(matched);
         return r ? r : "";
