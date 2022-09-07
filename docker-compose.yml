@@ -3,6 +3,7 @@ version: "3"
 services:
   db:
     image: postgres:14
+    container_name: db
     restart: on-failure
     environment:
       POSTGRES_DB: rasporedar
@@ -13,6 +14,7 @@ services:
 
   backend:
     build: ./backend
+    container_name: be
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -33,6 +35,7 @@ services:
 
   frontend:
     build: ./frontend
+    container_name: fe
     volumes:
       - ./frontend:/app
       - /app/node_modules

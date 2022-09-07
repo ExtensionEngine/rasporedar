@@ -1,3 +1,11 @@
 config:
   aws:region: eu-central-1
-  rasporedar:sshPublicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHeS9LRxPeUFrTL/80ucq4tyYwadWBw45wRdJpPh9+N bdeak@extensionengine.com
+  rasporedar:ghcrPassword:
+    secure: AAABANK3OC5Sq3yNqkLMnrbkMewpyN7s9yVhNUdDEsjG3d3bgJOdN5+70q6wIh6cwUkUY0WS5x0i5FjsdtoKW0GqNLO3L3cq
+  rasporedar:ghcrUsername:
+    secure: AAABAH9jzgpcXm3fZbXaGq+r0lX5dlg+O5lv7Qmbg4l6BCnA3Nw=
+  rasporedar:jwtSecretKey:
+    secure: AAABAAvAMcu67eBrpw/vU99ypfxrBIkje4miUuFPAOYUZjpnUcBFqIdGZmGqgYOSATq8IDQLKMw1U/dkfwAIbSgRBXrowISbl0QQZrz6z1GXmePydXE8D/H9f0HndiYw
+  rasporedar:saltRounds: "10"
+  rasporedar:sshPublicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGHeS9LRxPeUFrTL/80ucq4tyYwadWBw45wRdJpPh9+N
+    bdeak@extensionengine.com
