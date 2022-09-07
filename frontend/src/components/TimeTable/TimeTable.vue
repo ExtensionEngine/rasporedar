@@ -5,7 +5,7 @@ import { generateColor } from '@/helpers/color';
 import { getDocDefinition } from '@/helpers/pdf';
 import { mapObject } from '@/helpers/object';
 import { maxHoursPerDay } from '@/helpers/count';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;

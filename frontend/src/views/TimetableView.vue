@@ -4,7 +4,7 @@ import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/
 import { timetableFilterLabels, timetableFilters } from '@/constants/timetableFilters';
 import { getDocDefinition } from '@/helpers/pdf';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
 import timetableService from '@/api/timetable';
