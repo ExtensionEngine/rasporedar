@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/app.ts",
-    "lint": "eslint src"
+    "lint": "eslint --ext .ts src"
   },
   "keywords": [],
   "author": "",
