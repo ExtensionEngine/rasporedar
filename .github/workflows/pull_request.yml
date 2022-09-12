@@ -7,8 +7,8 @@ permissions:
   contents: write
 
 jobs:
-  lint:
-    name: Run linters
+  lint-backend:
+    name: Lint backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,6 +21,15 @@ jobs:
 
       - run: yarn lint
         working-directory: backend
+
+  lint-frontend:
+    name: Lint frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
 
       - run: yarn
         working-directory: frontend
