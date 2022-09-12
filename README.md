@@ -11,7 +11,7 @@ $ docker compose up
 ## Run project in development mode
 
 ```sh
-$ yarn && (cd backend && yarn) && (cd frontend && yarn) # install node packages on host machine for eslint, husky...
+$ (cd backend && yarn) && (cd frontend && yarn) # install node packages on host machine for eslint, husky...
 $ docker compose up
 ```
 
