@@ -19,32 +19,14 @@ jobs:
       - run: yarn
         working-directory: backend
 
+      - run: yarn lint
+        working-directory: backend
+
       - run: yarn
         working-directory: frontend
 
-      - name: Run linters on backend
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          eslint_dir: backend
-          eslint_extensions: ts
-          eslint_auto_fix: false
-          prettier: true
-          prettier_dir: backend
-          prettier_extensions: ts
-          prettier_auto_fix: false
-
-      - name: Run linters on frontend
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
-          eslint_dir: backend
-          eslint_extensions: ts
-          eslint_auto_fix: false
-          prettier: true
-          prettier_dir: backend
-          prettier_extensions: ts
-          prettier_auto_fix: false
+      - run: yarn lint
+        working-directory: frontend
 
   pulumi_preview:
     name: Pulumi preview
