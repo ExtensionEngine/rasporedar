@@ -28,19 +28,23 @@ jobs:
           eslint: true
           eslint_dir: backend
           eslint_extensions: ts
+          eslint_auto_fix: false
           prettier: true
           prettier_dir: backend
           prettier_extensions: ts
+          prettier_auto_fix: false
 
       - name: Run linters on frontend
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          eslint_dir: frontend
-          eslint_extensions: vue,js
+          eslint_dir: backend
+          eslint_extensions: ts
+          eslint_auto_fix: false
           prettier: true
-          prettier_dir: frontend
-          prettier_extensions: vue,js
+          prettier_dir: backend
+          prettier_extensions: ts
+          prettier_auto_fix: false
 
   pulumi_preview:
     name: Pulumi preview
