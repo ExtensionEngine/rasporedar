@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { AccordionItem } from 'vue3-rich-accordion';
 import classroomService from '@/api/classrooms';
 import teacherService from '@/api/teachers';
