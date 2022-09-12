@@ -3,6 +3,26 @@ on:
   - pull_request
 
 jobs:
+  lint:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
+      - run: yarn
+        working-directory: backend
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          eslint_dir: backend
+          prettier: true
+          prettier_dir: backend
+
   pulumi_preview:
     name: Pulumi preview
     runs-on: ubuntu-latest
