@@ -1,10 +1,10 @@
 <script setup>
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { computed, onMounted, reactive, ref } from 'vue';
 import { getCardPrimaryText, getCardSecondaryText, timetableTransform } from '@/helpers/timetable';
 import { timetableFilterLabels, timetableFilters } from '@/constants/timetableFilters';
 import { getDocDefinition } from '@/helpers/pdf';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import pdfMake from 'pdfmake/build/pdfmake';
 import TimeTable from '@/components/TimeTable';
 import timetableService from '@/api/timetable';
