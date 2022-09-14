@@ -1,0 +1,33 @@
+#!/bin/sh
+
+CMD=$1; shift
+
+case "$CMD"  in
+  install)
+    (cd backend && yarn)
+    (cd frontend && yarn)
+
+    curl -O https://raw.githubusercontent.com/bdeak4/bin/master/compose
+    chmod +x compose
+
+    if [ ! -f .env ]; then
+      cp .env.example .env
+      echo Please insert variables in .env
+    fi
+    ;;
+
+  dev)
+    echo "Environment variables from .env files loaded"
+    if [ -f .env ]; then
+      export $(grep -v '^#' .env | xargs)
+    fi
+
+    ./compose \
+      --frontend "yarn --cwd frontend dev" \
+      --backend "yarn --cwd backend dev"
+    ;;
+
+  *)
+    echo "help!"
+    ;;
+esac
