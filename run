@@ -1,38 +1,59 @@
 #!/bin/sh
 
-CMD=$1; shift
+set -e
 
-case "$CMD"  in
-  -i|--install)
-    (cd backend && yarn)
-    (cd frontend && yarn)
+run_install()
+{
+  # check for node and yarn
+  NODE_VERSION="v18"
+  if ! node -v | grep -q "$NODE_VERSION"; then
+    echo Please install node $NODE_VERSION before running this project
+    exit 1
+  fi
+  if ! command -v yarn >/dev/null; then
+    echo Please install yarn before running this project
+    exit 1
+  fi
 
-    curl -O https://raw.githubusercontent.com/bdeak4/bin/master/compose
-    chmod +x compose
+  # install node packages
+  (cd backend && yarn)
+  (cd frontend && yarn)
 
-    if [ ! -f .env ]; then
-      cp .env.example .env
-      echo Please insert variables in .env
-    fi
-    ;;
+  # download compose script
+  curl -O https://raw.githubusercontent.com/bdeak4/bin/master/compose
+  chmod +x compose
 
-  -d|--dev)
-    echo "Environment variables from .env files loaded"
-    if [ -f .env ]; then
-      export $(grep -v '^#' .env | xargs)
-    fi
+  # copy sample .env file
+  if [ ! -f .env ]; then
+    cp .env.example .env
+    echo Please insert variables in .env
+  fi
+}
 
-    ./compose \
-      --frontend "yarn --cwd frontend dev" \
-      --backend "yarn --cwd backend dev"
-    ;;
+run_dev()
+{
+  echo "Environment variables from .env files loaded"
+  if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+  fi
 
-  *)
-    echo "error: unknown parameter passed \"$CMD\"";
-    echo "usage: $0 [-i] [-d]"
-    echo
-    echo "  -i, --install            Install project dependencies"
-    echo "  -d, --dev                Run project in development mode"
-    echo
-    ;;
+  ./compose \
+    --frontend "yarn --cwd frontend dev" \
+    --backend "yarn --cwd backend dev"
+}
+
+show_help()
+{
+  echo "error: unknown parameter passed \"$1\""
+  echo "usage: $0 [-i] [-d]"
+  echo
+  echo "  -i, --install            Install project dependencies"
+  echo "  -d, --dev                Run project in development mode"
+  echo
+}
+
+case "$1"  in
+  -i|--install) run_install ;;
+  -d|--dev) run_dev ;;
+  *) show_help ;;
 esac
