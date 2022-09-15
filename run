@@ -3,7 +3,7 @@
 CMD=$1; shift
 
 case "$CMD"  in
-  install)
+  -i|--install)
     (cd backend && yarn)
     (cd frontend && yarn)
 
@@ -16,7 +16,7 @@ case "$CMD"  in
     fi
     ;;
 
-  dev)
+  -d|--dev)
     echo "Environment variables from .env files loaded"
     if [ -f .env ]; then
       export $(grep -v '^#' .env | xargs)
@@ -28,6 +28,11 @@ case "$CMD"  in
     ;;
 
   *)
-    echo "help!"
+    echo "error: unknown parameter passed \"$CMD\"";
+    echo "usage: $0 [-i] [-d]"
+    echo
+    echo "  -i, --install            Install project dependencies"
+    echo "  -d, --dev                Run project in development mode"
+    echo
     ;;
 esac
