@@ -30,7 +30,7 @@ export default {
       }
 
       await userStore.loginUser(user.token);
-      router.push({ name: 'home' });
+      router.push({ name: 'profile' });
     };
 
     const registerForm = reactive({
@@ -59,7 +59,7 @@ export default {
       }
 
       await userStore.loginUser(user.token);
-      router.push({ name: 'home' });
+      router.push({ name: 'profile' });
     };
 
     const isToggled = ref(false);
