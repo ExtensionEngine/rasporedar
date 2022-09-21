@@ -85,7 +85,6 @@ export default {
           </div>
           <button type="submit" class="form-button">Login</button>
           <a @click="isToggled = !isToggled" class="form-link">Want to register?</a>
-          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
 
@@ -106,7 +105,6 @@ export default {
           </div>
           <button type="submit" class="form-button">Register</button>
           <a @click="isToggled = !isToggled" class="form-link">Want to login?</a>
-          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
     </div>
