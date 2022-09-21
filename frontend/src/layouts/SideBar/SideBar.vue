@@ -100,7 +100,6 @@ aside {
   border: none;
   outline: none;
   background: none;
-  transform: rotate(-180deg);
 }
 
 .toggle-icon {
