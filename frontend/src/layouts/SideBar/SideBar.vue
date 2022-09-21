@@ -16,6 +16,7 @@ import { useUserStore } from '@/stores/user';
 const collapsed = useStorage('collapsed', false);
 const toggleMenu = () => (collapsed.value = !collapsed.value);
 const isCollapsed = computed(() => ({ expanded: !collapsed.value }));
+const buttonTitle = computed(() => (collapsed.value ? 'Expand menu' : 'Collapse menu'));
 const userStore = useUserStore();
 const router = useRouter();
 
@@ -32,7 +33,7 @@ const handleLogOut = () => {
     </div>
 
     <div class="toggle-wrap">
-      <button @click="toggleMenu" class="toggle-button">
+      <button @click="toggleMenu" class="toggle-button" :title="buttonTitle">
         <span class="toggle-icon">
           <img :src="CollapseIcon" />
         </span>
