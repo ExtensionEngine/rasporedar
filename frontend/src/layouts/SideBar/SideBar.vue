@@ -43,17 +43,29 @@ const handleLogOut = () => {
     <h4 class="menu-header">Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed">My Profile</side-bar-link>
-      <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed">Classrooms</side-bar-link>
-      <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed">Teachers</side-bar-link>
-      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
-      <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
+      <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed" title="My profile page">
+        My Profile
+      </side-bar-link>
+      <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed" title="Classrooms page">
+        Classrooms
+      </side-bar-link>
+      <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed" title="Teachers page">
+        Teachers
+      </side-bar-link>
+      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed" title="Timetables page">
+        Timetables
+      </side-bar-link>
+      <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed" title="Timetable generator page">
+        Timetable Generator
+      </side-bar-link>
     </div>
 
     <div class="flex"></div>
 
     <div class="menu rsprd-logout">
-      <side-bar-link @click="handleLogOut" to="auth" :icon="LogoutIcon" :is-collapsed="collapsed">Logout</side-bar-link>
+      <side-bar-link @click="handleLogOut" to="auth" :icon="LogoutIcon" :is-collapsed="collapsed" title="Logout">
+        Logout
+      </side-bar-link>
     </div>
   </aside>
 </template>
