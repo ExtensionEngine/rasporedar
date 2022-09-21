@@ -168,6 +168,7 @@ export default {
 .form-error {
   color: red;
   margin-bottom: 28px;
+  width: 275px;
 }
 
 .form-button {
@@ -187,6 +188,7 @@ export default {
 .form-link {
   display: block;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .login-form {
