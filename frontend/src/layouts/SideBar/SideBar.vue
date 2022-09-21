@@ -16,6 +16,7 @@ import { useUserStore } from '@/stores/user';
 const collapsed = useStorage('collapsed', false);
 const toggleMenu = () => (collapsed.value = !collapsed.value);
 const isCollapsed = computed(() => ({ expanded: !collapsed.value }));
+const buttonTitle = computed(() => (collapsed.value ? 'Expand menu' : 'Collapse menu'));
 const userStore = useUserStore();
 const router = useRouter();
 
@@ -32,7 +33,7 @@ const handleLogOut = () => {
     </div>
 
     <div class="toggle-wrap">
-      <button @click="toggleMenu" class="toggle-button">
+      <button @click="toggleMenu" class="toggle-button" :title="buttonTitle">
         <span class="toggle-icon">
           <img :src="CollapseIcon" />
         </span>
@@ -42,17 +43,29 @@ const handleLogOut = () => {
     <h4 class="menu-header">Menu</h4>
     <hr class="sidebar-line" />
     <div class="menu">
-      <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed">My Profile</side-bar-link>
-      <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed">Classrooms</side-bar-link>
-      <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed">Teachers</side-bar-link>
-      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed">Timetables</side-bar-link>
-      <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed">Timetable Generator</side-bar-link>
+      <side-bar-link to="profile" :icon="ProfileIcon" :is-collapsed="collapsed" title="My profile page">
+        My Profile
+      </side-bar-link>
+      <side-bar-link to="classrooms" :icon="ClassroomIcon" :is-collapsed="collapsed" title="Classrooms page">
+        Classrooms
+      </side-bar-link>
+      <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed" title="Teachers page">
+        Teachers
+      </side-bar-link>
+      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed" title="Timetables page">
+        Timetables
+      </side-bar-link>
+      <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed" title="Timetable generator page">
+        Timetable Generator
+      </side-bar-link>
     </div>
 
     <div class="flex"></div>
 
     <div class="menu rsprd-logout">
-      <side-bar-link @click="handleLogOut" to="auth" :icon="LogoutIcon" :is-collapsed="collapsed">Logout</side-bar-link>
+      <side-bar-link @click="handleLogOut" to="auth" :icon="LogoutIcon" :is-collapsed="collapsed" title="Logout">
+        Logout
+      </side-bar-link>
     </div>
   </aside>
 </template>
@@ -88,27 +101,22 @@ aside {
 .toggle-wrap {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1rem;
   position: relative;
   top: 0;
-  transition: 0.18s ease-out;
+  transition: 0.2s ease-out;
 }
 
 .toggle-button {
-  cursor: pointer;
   appearance: none;
-  border: none;
-  outline: none;
   background: none;
-  transform: rotate(-180deg);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding-right: 12px;
 }
 
 .toggle-icon {
-  font-size: 3rem;
-  color: var(--color-light);
-}
-
-.toggle-icon {
+  font-size: 4rem;
   color: var(--color-main);
 }
 
@@ -121,7 +129,7 @@ aside {
 }
 .menu-header {
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   color: var(--color-muted);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -132,7 +140,7 @@ aside {
 .sidebar-line {
   opacity: 0;
   width: 100%;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .rsprd-logout {
@@ -140,18 +148,20 @@ aside {
 }
 
 .expanded {
-  width: 300px;
+  width: 280px;
   transition: 0.3s ease-in-out;
 }
 .expanded .rsprd-logo img {
   width: 7rem;
 }
 .expanded .toggle-wrap {
-  top: -8rem;
-  transition: 0.56s ease-in-out;
+  top: -7.5rem;
+  transition: 0.5s ease-in-out;
 }
 .expanded .toggle-wrap .toggle-button {
+  padding-left: 12px;
   transform: rotate(-180deg);
+  transition: 0.3s ease-in-out;
 }
 .expanded .menu-header {
   transition: 0.8s ease-in-out;
