@@ -116,7 +116,7 @@ aside {
 }
 .menu-header {
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   color: var(--color-muted);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -127,7 +127,7 @@ aside {
 .sidebar-line {
   opacity: 0;
   width: 100%;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .rsprd-logout {
