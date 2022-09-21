@@ -103,11 +103,7 @@ aside {
 }
 
 .toggle-icon {
-  font-size: 3rem;
-  color: var(--color-light);
-}
-
-.toggle-icon {
+  font-size: 4rem;
   color: var(--color-main);
 }
 
