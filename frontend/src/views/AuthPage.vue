@@ -30,7 +30,7 @@ export default {
       }
 
       await userStore.loginUser(user.token);
-      router.push({ name: 'home' });
+      router.push({ name: 'profile' });
     };
 
     const registerForm = reactive({
@@ -59,7 +59,7 @@ export default {
       }
 
       await userStore.loginUser(user.token);
-      router.push({ name: 'home' });
+      router.push({ name: 'profile' });
     };
 
     const isToggled = ref(false);
@@ -85,7 +85,6 @@ export default {
           </div>
           <button type="submit" class="form-button">Login</button>
           <a @click="isToggled = !isToggled" class="form-link">Want to register?</a>
-          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
 
@@ -106,7 +105,6 @@ export default {
           </div>
           <button type="submit" class="form-button">Register</button>
           <a @click="isToggled = !isToggled" class="form-link">Want to login?</a>
-          <a class="form-link">Forgot your password?</a>
         </form>
       </div>
     </div>
@@ -170,6 +168,7 @@ export default {
 .form-error {
   color: red;
   margin-bottom: 28px;
+  width: 275px;
 }
 
 .form-button {
@@ -189,6 +188,7 @@ export default {
 .form-link {
   display: block;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .login-form {

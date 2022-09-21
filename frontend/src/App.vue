@@ -10,7 +10,7 @@ const userStore = useUserStore();
   <div class="app">
     <side-bar v-if="userStore.isLoggedIn" />
     <div class="rsprd-main">
-      <the-header />
+      <the-header v-if="userStore.isLoggedIn" />
       <router-view />
     </div>
   </div>
