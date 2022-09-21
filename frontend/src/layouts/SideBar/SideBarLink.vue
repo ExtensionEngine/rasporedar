@@ -42,7 +42,7 @@ const checkExpanded = computed(() => (props.isCollapsed ? 'item-text' : 'item-te
 .item-text {
   opacity: 0;
   color: var(--color-light);
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 .item-text:hover {
   color: var(--color-main);
