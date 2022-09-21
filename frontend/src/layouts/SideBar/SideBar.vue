@@ -88,18 +88,18 @@ aside {
 .toggle-wrap {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1rem;
   position: relative;
   top: 0;
   transition: 0.2s ease-out;
 }
 
 .toggle-button {
-  cursor: pointer;
   appearance: none;
-  border: none;
-  outline: none;
   background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding-right: 12px;
 }
 
 .toggle-icon {
@@ -142,10 +142,11 @@ aside {
   width: 7rem;
 }
 .expanded .toggle-wrap {
-  top: -8rem;
+  top: -7.5rem;
   transition: 0.5s ease-in-out;
 }
 .expanded .toggle-wrap .toggle-button {
+  padding-left: 12px;
   transform: rotate(-180deg);
   transition: 0.3s ease-in-out;
 }
