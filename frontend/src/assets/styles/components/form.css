@@ -19,3 +19,7 @@
 .rsprd-form__input:focus::placeholder {
   color: transparent;
 }
+
+.rsprd-form__label--bold {
+  font-weight: bold;
+}
