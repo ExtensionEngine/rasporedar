@@ -30,7 +30,7 @@ const addClassroom = async () => {
     <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
         <div class="rsprd-form__input-container">
-          <label for="name">Name</label>
+          <label for="name" class="rsprd-form__label--bold">Name</label>
           <input
             v-model="additionForm.name"
             id="name"
@@ -41,7 +41,7 @@ const addClassroom = async () => {
           />
         </div>
         <div class="rsprd-form__input-container">
-          <label for="capacity">Capacity</label>
+          <label for="capacity" class="rsprd-form__label--bold">Capacity</label>
           <input v-model="additionForm.capacity" id="capacity" class="rsprd-form__input" type="number" required />
         </div>
         <button @click="addClassroom" class="rsprd-btn rsprd-btn--primary rsprd-btn--m rsprd-btn-bottom">Add</button>

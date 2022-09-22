@@ -31,7 +31,7 @@ const addTeacher = async () => {
     <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
         <div class="rsprd-form__input-container">
-          <label for="code">Teachers code</label>
+          <label for="code" class="rsprd-form__label--bold">Teachers code</label>
           <input
             v-model="additionForm.teacherCode"
             id="code"
@@ -42,7 +42,7 @@ const addTeacher = async () => {
           />
         </div>
         <div class="rsprd-form__input-container">
-          <label for="fname">First name</label>
+          <label for="fname" class="rsprd-form__label--bold">First name</label>
           <input
             v-model="additionForm.firstName"
             id="fname"
@@ -53,7 +53,7 @@ const addTeacher = async () => {
           />
         </div>
         <div class="rsprd-form__input-container">
-          <label for="lname">Last name</label>
+          <label for="lname" class="rsprd-form__label--bold">Last name</label>
           <input
             v-model="additionForm.lastName"
             id="lname"

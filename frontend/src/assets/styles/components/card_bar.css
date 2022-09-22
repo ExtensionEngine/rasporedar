@@ -22,7 +22,7 @@
 .rsprd-bar__input {
   border: none;
   border-bottom: 1px solid black;
-  color: var(--color-muted);
+  color: var(--color-text);
   font-size: 1rem;
 }
 

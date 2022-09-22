@@ -42,7 +42,7 @@ export default {
           v-model="class_.name"
           @click.stop
           type="text"
-          placeholder="3a"
+          placeholder="e.g. 3a..."
           class="rsprd-input rsprd-input--s rsprd-input--lighter"
         />
         <button @click.stop="handleClassDelete" type="button" class="rsprd-btn rsprd-btn--delete">
