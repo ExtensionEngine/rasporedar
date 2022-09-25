@@ -1,17 +1,21 @@
 <script setup>
+import { reactive, ref } from 'vue';
 import ClassroomIllustration from '@/assets/img/illustrations/classroom_illustration.svg';
 import classroomService from '@/api/classrooms';
-import { reactive } from 'vue';
 
 const formInitState = {
   name: '',
   capacity: 0,
 };
 const additionForm = reactive({ ...formInitState });
+const errors = ref(null);
 
 const emit = defineEmits(['reload']);
 const addClassroom = async () => {
   const addResponse = await classroomService.addClassroom(additionForm);
+  errors.value = addResponse.errors;
+
+  if (errors.value) return;
 
   if (!addResponse) {
     return alert('Internal Server Error. Can not get classroooms.');
@@ -26,6 +30,11 @@ const addClassroom = async () => {
   <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Add Classroom</h2>
+    </div>
+    <div v-if="errors" class="rsprd-error">
+      <li v-for="(error, index) in errors" :key="index">
+        {{ error.message }}
+      </li>
     </div>
     <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
