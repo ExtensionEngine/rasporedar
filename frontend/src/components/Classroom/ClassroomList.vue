@@ -38,6 +38,9 @@ const filteredClassrooms = computed(() => {
   const filtered = props.classrooms.filter(classroom => classroom.name.toLowerCase().includes(searchQueryLowercased));
   return filtered;
 });
+const isToEdit = classroomId => {
+  return classroomEditingId.value === classroomId;
+};
 const setEditing = classroomId => {
   classroomEditingId.value = classroomId;
 };
@@ -89,7 +92,7 @@ const handleDelete = async classroomId => {
         <tbody class="rsprd-table__body">
           <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
             <td v-for="field in classroomFields" :key="field.property" class="rsprd-table__cell">
-              <span v-if="classroomEditingId == classroom.id && field.isEditable">
+              <span v-if="isToEdit(classroom.id) && field.isEditable">
                 <input v-model="classroom[field.property]" type="text" class="rsprd-input--edit" />
               </span>
               <span v-else>
@@ -97,7 +100,7 @@ const handleDelete = async classroomId => {
               </span>
             </td>
             <td class="rsprd-table__cell">
-              <span v-if="classroomEditingId == classroom.id">
+              <span v-if="isToEdit(classroom.id)">
                 <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="CancelIcon" />
                 </button>
