@@ -46,6 +46,7 @@ const handleDelete = async classroomId => {
     return alert('Internal Server Error. Can not delete classrooom.');
   }
 
+  classroomEditingId.value = null;
   emit('reload');
 };
 </script>
