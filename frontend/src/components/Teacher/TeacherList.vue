@@ -48,8 +48,15 @@ const setEditing = teacherId => {
 };
 const cancelEditing = () => {
   teacherEditingId.value = null;
+  emit('reload');
 };
-const handleEdit = teacher => {
+const handleEdit = async teacher => {
+  const editResponse = await teacherService.editTeacher(teacher);
+
+  if ('error' in editResponse) {
+    return alert(editResponse.error);
+  }
+
   teacherEditingId.value = null;
   emit('reload');
 };
@@ -88,7 +95,7 @@ const handleDelete = async teacherId => {
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
             <td v-for="field in teacherFields" :key="field.property" class="rsprd-table__cell">
               <span v-if="teacherEditingId == teacher.id && field.isEditable">
-                <input type="text" :value="teacher[field.property]" class="rsprd-input--edit" />
+                <input v-model="teacher[field.property]" type="text" class="rsprd-input--edit" />
               </span>
               <span v-else>
                 {{ teacher[field.property] }}
