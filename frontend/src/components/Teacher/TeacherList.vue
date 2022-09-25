@@ -70,7 +70,7 @@ const handleDelete = async teacherId => {
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
             <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">
               <span v-if="teacherEditingId == teacher.id">
-                <input type="text" :value="teacher[key]" />
+                <input type="text" :value="teacher[key]" class="rsprd-input--edit" />
               </span>
               <span v-else>
                 {{ teacher[key] }}
