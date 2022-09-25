@@ -38,8 +38,8 @@ const filteredClassrooms = computed(() => {
   const filtered = props.classrooms.filter(classroom => classroom.name.toLowerCase().includes(searchQueryLowercased));
   return filtered;
 });
-const setEditing = id => {
-  classroomEditingId.value = id;
+const setEditing = classroomId => {
+  classroomEditingId.value = classroomId;
 };
 const cancelEditing = () => {
   classroomEditingId.value = null;
