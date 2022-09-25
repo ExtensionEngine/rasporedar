@@ -13,12 +13,28 @@ const props = defineProps({
     default: () => [],
   },
 });
-const teacherFields = {
-  teacherCode: 'Code',
-  firstName: 'First name',
-  lastName: 'Last name',
-  createdAt: 'Created At',
-};
+const teacherFields = [
+  {
+    displayName: 'Code',
+    property: 'teacherCode',
+    isEditable: true,
+  },
+  {
+    displayName: 'First name',
+    property: 'firstName',
+    isEditable: true,
+  },
+  {
+    displayName: 'Last name',
+    property: 'lastName',
+    isEditable: true,
+  },
+  {
+    displayName: 'Created At',
+    property: 'createdAt',
+    isEditable: false,
+  },
+];
 const teacherEditingId = ref(null);
 
 const emit = defineEmits(['reload']);
@@ -62,18 +78,20 @@ const handleDelete = async teacherId => {
       <table class="rsprd-table">
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
-            <th v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th v-for="field in teacherFields" :key="field.property" class="rsprd-table__cell">
+              {{ field.displayName }}
+            </th>
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
-            <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">
-              <span v-if="teacherEditingId == teacher.id">
-                <input type="text" :value="teacher[key]" class="rsprd-input--edit" />
+            <td v-for="field in teacherFields" :key="field.property" class="rsprd-table__cell">
+              <span v-if="teacherEditingId == teacher.id && field.isEditable">
+                <input type="text" :value="teacher[field.property]" class="rsprd-input--edit" />
               </span>
               <span v-else>
-                {{ teacher[key] }}
+                {{ teacher[field.property] }}
               </span>
             </td>
             <td class="rsprd-table__cell">
