@@ -29,7 +29,7 @@ app.use(
     next: NextFunction,
   ) => {
     if (err instanceof ValidationError) {
-      return res.status(status.BAD_REQUEST).json({ error: err.errors[0].message });
+      return res.status(status.BAD_REQUEST).json({ errors: err.errors });
     }
     if (err instanceof Error) {
       return res.status(status.INTERNAL_SERVER_ERROR).json({ error: err.message });
