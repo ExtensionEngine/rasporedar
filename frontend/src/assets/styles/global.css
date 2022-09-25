@@ -49,3 +49,11 @@ body {
 .rsprd-d--block {
   display: block;
 }
+
+.rsprd-error {
+  background-color: lightcoral;
+  border-radius: 5px;
+  color: var(--color-text);
+  margin-top: 1rem;
+  padding: 10px 30px;
+}
