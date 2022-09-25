@@ -21,8 +21,11 @@ Classroom.init(
     name: {
       type: DataTypes.CITEXT,
       allowNull: false,
-      unique: true,
-      validate: { notEmpty: { msg: 'Classroom name can not be empty' } },
+      unique: {
+        name: 'ClassroomNameUniqueValidation',
+        msg: 'Classroom already exists.',
+      },
+      validate: { notEmpty: { msg: 'Classroom name can not be empty.' } },
     },
     capacity: {
       type: DataTypes.INTEGER,
@@ -30,7 +33,7 @@ Classroom.init(
       validate: {
         min: {
           args: [1],
-          msg: 'Classroom capacity can not be 0 or lower',
+          msg: 'Classroom capacity can not be 0 or lower.',
         },
       },
     },
