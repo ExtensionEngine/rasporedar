@@ -45,6 +45,12 @@ const cancelEditing = () => {
   classroomEditingId.value = null;
 };
 const handleEdit = async classroom => {
+  const editResponse = await classroomService.editClassroom(classroom);
+
+  if ('error' in editResponse) {
+    return alert(editResponse.error);
+  }
+
   classroomEditingId.value = null;
   emit('reload');
 };
