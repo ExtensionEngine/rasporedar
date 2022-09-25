@@ -32,9 +32,11 @@ const addClassroom = async () => {
       <h2 class="rsprd-bar__title">Add Classroom</h2>
     </div>
     <div v-if="errors" class="rsprd-error">
-      <li v-for="(error, index) in errors" :key="index">
-        {{ error.message }}
-      </li>
+      <ul>
+        <li v-for="(error, index) in errors" :key="index">
+          {{ error.message }}
+        </li>
+      </ul>
     </div>
     <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
