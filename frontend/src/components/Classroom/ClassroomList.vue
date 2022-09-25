@@ -67,7 +67,12 @@ const handleDelete = async classroomId => {
         <tbody class="rsprd-table__body">
           <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
             <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">
-              {{ classroom[key] }}
+              <span v-if="classroomEditingId == classroom.id">
+                <input type="text" :value="classroom[key]" />
+              </span>
+              <span v-else>
+                {{ classroom[key] }}
+              </span>
             </td>
             <td class="rsprd-table__cell">
               <span v-if="classroomEditingId == classroom.id">
@@ -97,6 +102,7 @@ const handleDelete = async classroomId => {
   border-collapse: collapse;
   margin-top: 20px;
   padding: 10px;
+  table-layout: fixed;
   width: 100%;
 }
 
