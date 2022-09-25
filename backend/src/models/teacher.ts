@@ -19,13 +19,24 @@ Teacher.init(
       autoIncrement: true,
       primaryKey: true,
     },
+    teacherCode: {
+      type: DataTypes.CITEXT,
+      allowNull: false,
+      unique: {
+        name: 'TeacherCodeUniqueValidation',
+        msg: 'Teacher code already exists.',
+      },
+      validate: {
+        notEmpty: { msg: 'Teacher code can not be empty.' },
+      },
+    },
     firstName: {
       type: DataTypes.CITEXT,
       allowNull: false,
       validate: {
         len: {
           args: [1, 100],
-          msg: 'First name must be between 1 - 100 characters long',
+          msg: 'First name must be between 1 - 100 characters long.',
         },
       },
     },
@@ -35,16 +46,8 @@ Teacher.init(
       validate: {
         len: {
           args: [1, 100],
-          msg: 'Last name must be between 1 - 100 characters long',
+          msg: 'Last name must be between 1 - 100 characters long.',
         },
-      },
-    },
-    teacherCode: {
-      type: DataTypes.CITEXT,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: { msg: 'Teacher code can not be empty' },
       },
     },
     createdAt: {
