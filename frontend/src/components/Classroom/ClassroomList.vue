@@ -76,17 +76,17 @@ const handleDelete = async classroomId => {
             </td>
             <td class="rsprd-table__cell">
               <span v-if="classroomEditingId == classroom.id">
-                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--delete">
+                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="CancelIcon" />
                 </button>
-                <button @click="handleEdit(classroom)" class="rsprd-btn-main rsprd-btn--delete">
+                <button @click="handleEdit(classroom)" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="SaveIcon" />
                 </button>
               </span>
-              <button v-else @click="setEditing(classroom.id)" class="rsprd-btn-main rsprd-btn--delete">
+              <button v-else @click="setEditing(classroom.id)" class="rsprd-btn-main rsprd-btn--clear">
                 <img class="rsprd-icon" :src="EditIcon" />
               </button>
-              <button @click="handleDelete(classroom.id)" class="rsprd-btn-main rsprd-btn--delete">
+              <button @click="handleDelete(classroom.id)" class="rsprd-btn-main rsprd-btn--clear">
                 <img class="rsprd-icon" :src="DeleteIcon" />
               </button>
             </td>

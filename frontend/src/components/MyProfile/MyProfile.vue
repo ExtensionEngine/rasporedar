@@ -35,7 +35,7 @@ const deleteUser = async () => {
         <p class="rsprd-body__info">Email: {{ userStore.user.email }}</p>
         <p class="rsprd-body__info">Password: *******</p>
         <div class="rsprd-body__btn-wrapper">
-          <button @click="deleteUser" class="rsprd-btn-main rsprd-btn--delete">
+          <button @click="deleteUser" class="rsprd-btn-main rsprd-btn--delete rsprd-btn--clear">
             <img class="rsprd-icon rsprd-icon--bottom" :src="DeleteIcon" />
             Delete your account
           </button>

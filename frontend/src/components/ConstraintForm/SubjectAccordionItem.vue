@@ -65,7 +65,7 @@ const handleSubjectDelete = () => {
           class="rsprd-input rsprd-input--lighter"
           placeholder="e.g. Mathematics..."
         />
-        <button @click.stop="handleSubjectDelete" type="button" class="rsprd-btn rsprd-btn--delete">
+        <button @click.stop="handleSubjectDelete" type="button" class="rsprd-btn rsprd-btn--clear">
           <img class="rsprd-icon" src="@/assets/img/delete_icon.svg" />
         </button>
       </div>

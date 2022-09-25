@@ -45,7 +45,7 @@ export default {
           placeholder="e.g. 3a..."
           class="rsprd-input rsprd-input--s rsprd-input--lighter"
         />
-        <button @click.stop="handleClassDelete" type="button" class="rsprd-btn rsprd-btn--delete">
+        <button @click.stop="handleClassDelete" type="button" class="rsprd-btn rsprd-btn--clear">
           <img class="rsprd-icon" src="@/assets/img/delete_icon.svg" />
         </button>
       </div>

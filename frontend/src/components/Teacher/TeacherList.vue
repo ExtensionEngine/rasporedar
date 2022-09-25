@@ -67,20 +67,22 @@ const handleDelete = async teacherId => {
         </thead>
         <tbody class="rsprd-table__body">
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
-            <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
+            <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">
+              {{ teacher[key] }}
+            </td>
             <td class="rsprd-table__cell">
               <span v-if="teacherEditingId == teacher.id">
-                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--delete">
+                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="CancelIcon" />
                 </button>
-                <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--delete">
+                <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="SaveIcon" />
                 </button>
               </span>
-              <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--delete">
+              <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
                 <img class="rsprd-icon" :src="EditIcon" />
               </button>
-              <button @click="handleDelete(teacher.id)" class="rsprd-btn-main rsprd-btn--delete">
+              <button @click="handleDelete(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
                 <img class="rsprd-icon" :src="DeleteIcon" />
               </button>
             </td>
@@ -96,6 +98,7 @@ const handleDelete = async teacherId => {
   border-collapse: collapse;
   margin-top: 20px;
   padding: 10px;
+  table-layout: fixed;
   width: 100%;
 }
 
