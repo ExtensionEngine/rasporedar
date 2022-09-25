@@ -47,6 +47,7 @@ const handleDelete = async teacherId => {
     return alert('Internal Server Error. Can not delete teacher.');
   }
 
+  teacherEditingId.value = null;
   emit('reload');
 };
 </script>
