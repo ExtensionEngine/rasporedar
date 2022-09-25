@@ -13,11 +13,23 @@ const props = defineProps({
     default: () => [],
   },
 });
-const classroomFields = {
-  name: 'Name',
-  capacity: 'Capacity',
-  createdAt: 'Created At',
-};
+const classroomFields = [
+  {
+    displayName: 'Name',
+    property: 'name',
+    isEditable: true,
+  },
+  {
+    displayName: 'Capacity',
+    property: 'capacity',
+    isEditable: true,
+  },
+  {
+    displayName: 'Created At',
+    property: 'createdAt',
+    isEditable: false,
+  },
+];
 const classroomEditingId = ref(null);
 
 const emit = defineEmits(['reload']);
@@ -61,18 +73,20 @@ const handleDelete = async classroomId => {
       <table class="rsprd-table">
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
-            <th v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th v-for="field in classroomFields" :key="field.property" class="rsprd-table__cell">
+              {{ field.displayName }}
+            </th>
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
           <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
-            <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">
-              <span v-if="classroomEditingId == classroom.id">
-                <input type="text" :value="classroom[key]" class="rsprd-input--edit" />
+            <td v-for="field in classroomFields" :key="field.displayName" class="rsprd-table__cell">
+              <span v-if="classroomEditingId == classroom.id && field.isEditable">
+                <input v-model="classroom[field.property]" type="text" class="rsprd-input--edit" />
               </span>
               <span v-else>
-                {{ classroom[key] }}
+                {{ classroom[field.property] }}
               </span>
             </td>
             <td class="rsprd-table__cell">
