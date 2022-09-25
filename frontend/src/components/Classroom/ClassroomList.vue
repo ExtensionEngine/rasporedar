@@ -43,6 +43,7 @@ const setEditing = classroomId => {
 };
 const cancelEditing = () => {
   classroomEditingId.value = null;
+  emit('reload');
 };
 const handleEdit = async classroom => {
   const editResponse = await classroomService.editClassroom(classroom);
