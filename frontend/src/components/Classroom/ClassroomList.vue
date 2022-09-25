@@ -1,7 +1,10 @@
 <script setup>
 import { computed, ref } from 'vue';
+import CancelIcon from '@/assets/img/cancel_icon.svg';
 import classroomService from '@/api/classrooms';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
+import EditIcon from '@/assets/img/edit_icon.svg';
+import SaveIcon from '@/assets/img/save_icon.svg';
 
 const searchQuery = ref('');
 const props = defineProps({
@@ -15,6 +18,7 @@ const classroomFields = {
   capacity: 'Capacity',
   createdAt: 'Created At',
 };
+const classroomEditingId = ref(null);
 
 const emit = defineEmits(['reload']);
 const filteredClassrooms = computed(() => {
@@ -22,6 +26,16 @@ const filteredClassrooms = computed(() => {
   const filtered = props.classrooms.filter(classroom => classroom.name.toLowerCase().includes(searchQueryLowercased));
   return filtered;
 });
+const setEditing = id => {
+  classroomEditingId.value = id;
+};
+const cancelEditing = () => {
+  classroomEditingId.value = null;
+};
+const handleEdit = async classroom => {
+  classroomEditingId.value = null;
+  emit('reload');
+};
 const handleDelete = async classroomId => {
   const isDeleteConfirmed = confirm('Do you really want to delete classroom?');
   if (!isDeleteConfirmed) return;
@@ -52,8 +66,21 @@ const handleDelete = async classroomId => {
         </thead>
         <tbody class="rsprd-table__body">
           <tr v-for="classroom in filteredClassrooms" :key="classroom.id" class="rsprd-table__row">
-            <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">{{ classroom[key] }}</td>
+            <td v-for="(value, key) in classroomFields" :key="key" class="rsprd-table__cell">
+              {{ classroom[key] }}
+            </td>
             <td class="rsprd-table__cell">
+              <span v-if="classroomEditingId == classroom.id">
+                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--delete">
+                  <img class="rsprd-icon" :src="CancelIcon" />
+                </button>
+                <button @click="handleEdit(classroom)" class="rsprd-btn-main rsprd-btn--delete">
+                  <img class="rsprd-icon" :src="SaveIcon" />
+                </button>
+              </span>
+              <button v-else @click="setEditing(classroom.id)" class="rsprd-btn-main rsprd-btn--delete">
+                <img class="rsprd-icon" :src="EditIcon" />
+              </button>
               <button @click="handleDelete(classroom.id)" class="rsprd-btn-main rsprd-btn--delete">
                 <img class="rsprd-icon" :src="DeleteIcon" />
               </button>
