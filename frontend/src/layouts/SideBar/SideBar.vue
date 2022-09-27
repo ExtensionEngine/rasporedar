@@ -8,7 +8,6 @@ import ProfileIcon from '@/assets/img/sidebar/profile_icon.svg';
 import SideBarLink from './SideBarLink.vue';
 import TeacherIcon from '@/assets/img/sidebar/teacher_icon.svg';
 import TimetableAddIcon from '@/assets/img/sidebar/timetable_add_icon.svg';
-import TimetableIcon from '@/assets/img/sidebar/timetable_icon.svg';
 import { useRouter } from 'vue-router';
 import { useStorage } from '@vueuse/core';
 import { useUserStore } from '@/stores/user';
@@ -51,9 +50,6 @@ const handleLogOut = () => {
       </side-bar-link>
       <side-bar-link to="teachers" :icon="TeacherIcon" :is-collapsed="collapsed" title="Teachers page">
         Teachers
-      </side-bar-link>
-      <side-bar-link to="timetables" :icon="TimetableIcon" :is-collapsed="collapsed" title="Timetables page">
-        Timetables
       </side-bar-link>
       <side-bar-link to="home" :icon="TimetableAddIcon" :is-collapsed="collapsed" title="Timetable generator page">
         Timetable Generator
