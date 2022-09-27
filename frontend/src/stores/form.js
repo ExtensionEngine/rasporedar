@@ -1,3 +1,4 @@
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
@@ -45,5 +46,33 @@ export const useFormStore = defineStore('form', () => {
     form.value.classes[classIndex].subjects.splice(subjectIndex, 1);
   }
 
-  return { form, accordionState, addClass, addSubject, deleteClass, deleteSubject };
+  function collapseAllAccordions() {
+    Object.keys(accordionState.value).forEach(key => {
+      accordionState.value[key] = false;
+    });
+  }
+
+  function expandAllAccordions() {
+    Object.keys(accordionState.value).forEach(key => {
+      accordionState.value[key] = true;
+    });
+  }
+
+  const isCollapsed = computed(() => {
+    return Object.keys(accordionState.value).every(key => {
+      return !accordionState.value[key];
+    });
+  });
+
+  return {
+    form,
+    accordionState,
+    addClass,
+    addSubject,
+    deleteClass,
+    deleteSubject,
+    collapseAllAccordions,
+    expandAllAccordions,
+    isCollapsed,
+  };
 });
