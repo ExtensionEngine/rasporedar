@@ -32,7 +32,21 @@ export default {
     <form @submit.prevent="handleSubmit">
       <div class="rsprd-bar">
         <h2 class="rsprd-bar__title">Classes</h2>
-        <button @click="insertSeed" type="button" class="rsprd-btn rsprd-btn--muted">Insert Seed</button>
+        <div class="rsprd-btn-group">
+          <button
+            v-if="formStore.isCollapsed"
+            @click="formStore.expandAllAccordions()"
+            type="button"
+            class="rsprd-btn rsprd-btn--muted"
+          >
+            Expand all
+          </button>
+          <button v-else @click="formStore.collapseAllAccordions()" type="button" class="rsprd-btn rsprd-btn--muted">
+            Collapse all
+          </button>
+          <button @click="insertSeed" type="button" class="rsprd-btn rsprd-btn--muted">Insert Seed</button>
+          <button type="submit" class="rsprd-btn rsprd-btn--primary">Generate timetable</button>
+        </div>
       </div>
       <accordion-list
         @update:state="newState => (formStore.accordionState = newState)"
@@ -82,5 +96,9 @@ export default {
 
 .rsprd-btn--l {
   margin-top: 12px;
+}
+
+.rsprd-btn-group > *:not(:last-child) {
+  margin-right: 12px;
 }
 </style>

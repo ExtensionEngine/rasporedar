@@ -37,7 +37,7 @@ const loadClassrooms = () => {
 };
 
 const formatTeacherOptionContent = teacher => {
-  teacher.displayName = `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
+  teacher.name = `${teacher.teacherCode} - ${teacher.firstName} ${teacher.lastName}`;
   return teacher;
 };
 
@@ -79,7 +79,7 @@ const handleSubjectDelete = () => {
       <select v-model="subject.teacher.name" class="rsprd-select">
         <option value="">-</option>
         <option v-for="teacher in teachers" :key="teacher">
-          {{ teacher.displayName }}
+          {{ teacher.name }}
         </option>
       </select>
     </div>
