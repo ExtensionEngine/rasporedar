@@ -1,29 +1,19 @@
-<script>
+<script setup>
 import { AccordionList } from 'vue3-rich-accordion';
 import ClassAccordionItem from './ClassAccordionItem.vue';
 import timetableService from '@/api/timetable';
 import { useFormStore } from '@/stores/form';
 import { useRouter } from 'vue-router';
 
-export default {
-  setup() {
-    const formStore = useFormStore();
-    const router = useRouter();
+const formStore = useFormStore();
+const router = useRouter();
 
-    const handleSubmit = () => {
-      router.push({ name: 'timetables' });
-    };
+const handleSubmit = () => {
+  router.push({ name: 'timetables' });
+};
 
-    const insertSeed = () => {
-      timetableService.getSeed().then(json => (formStore.form = json));
-    };
-
-    return { formStore, handleSubmit, insertSeed };
-  },
-  components: {
-    AccordionList,
-    ClassAccordionItem,
-  },
+const insertSeed = () => {
+  timetableService.getSeed().then(json => (formStore.form = json));
 };
 </script>
 
