@@ -1,72 +1,71 @@
-<script>
+<script setup>
 import { reactive, ref } from 'vue';
 import authService from '@/api/auth';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
-export default {
-  name: 'auth-page',
-  setup() {
-    const router = useRouter();
-    const userStore = useUserStore();
+const router = useRouter();
+const userStore = useUserStore();
 
-    const loginForm = reactive({
-      email: '',
-      password: '',
-      error: null,
-    });
+const loginForm = reactive({
+  email: '',
+  password: '',
+  error: null,
+});
 
-    const login = async () => {
-      loginForm.error = null;
+const login = async () => {
+  loginForm.error = null;
 
-      const user = await authService.loginUser({
-        email: loginForm.email,
-        password: loginForm.password,
-      });
+  const user = await authService.loginUser({
+    email: loginForm.email,
+    password: loginForm.password,
+  });
 
-      if ('error' in user) {
-        loginForm.error = user.error;
-        return;
-      }
+  if ('errors' in user) {
+    loginForm.error = user.errors[0].message;
+    return;
+  } else if ('error' in user) {
+    loginForm.error = user.error;
+    return;
+  }
 
-      await userStore.loginUser(user.token);
-      router.push({ name: 'profile' });
-    };
-
-    const registerForm = reactive({
-      email: '',
-      password: '',
-      repeatedPassword: '',
-      error: null,
-    });
-
-    const register = async () => {
-      registerForm.error = null;
-
-      if (registerForm.password !== registerForm.repeatedPassword) {
-        registerForm.error = 'Password and repeated password are not matching';
-        return;
-      }
-
-      const user = await authService.registerUser({
-        email: registerForm.email,
-        password: registerForm.password,
-      });
-
-      if ('error' in user) {
-        registerForm.error = user.error;
-        return;
-      }
-
-      await userStore.loginUser(user.token);
-      router.push({ name: 'profile' });
-    };
-
-    const isToggled = ref(false);
-
-    return { store: userStore, login, loginForm, register, registerForm, isToggled };
-  },
+  await userStore.loginUser(user.token);
+  router.push({ name: 'profile' });
 };
+
+const registerForm = reactive({
+  email: '',
+  password: '',
+  repeatedPassword: '',
+  error: null,
+});
+
+const register = async () => {
+  registerForm.error = null;
+
+  if (registerForm.password !== registerForm.repeatedPassword) {
+    registerForm.error = 'Password and repeated password are not matching';
+    return;
+  }
+
+  const user = await authService.registerUser({
+    email: registerForm.email,
+    password: registerForm.password,
+  });
+
+  if ('errors' in user) {
+    registerForm.error = user.errors[0].message;
+    return;
+  } else if ('error' in user) {
+    registerForm.error = user.error;
+    return;
+  }
+
+  await userStore.loginUser(user.token);
+  router.push({ name: 'profile' });
+};
+
+const isToggled = ref(false);
 </script>
 
 <template>
