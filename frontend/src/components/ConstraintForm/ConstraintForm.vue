@@ -41,12 +41,7 @@ export default {
           >
             Expand all
           </button>
-          <button
-            v-if="!formStore.isCollapsed"
-            @click="formStore.collapseAllAccordions()"
-            type="button"
-            class="rsprd-btn rsprd-btn--muted"
-          >
+          <button v-else @click="formStore.collapseAllAccordions()" type="button" class="rsprd-btn rsprd-btn--muted">
             Collapse all
           </button>
           <button @click="insertSeed" type="button" class="rsprd-btn rsprd-btn--muted">Insert Seed</button>
