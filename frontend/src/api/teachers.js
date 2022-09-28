@@ -5,7 +5,7 @@ const baseUrl = '/api/teachers';
 const getAllTeachers = () => fetcher(`${baseUrl}/`);
 
 const addTeacher = ({ teacherCode, firstName, lastName }) => {
-  fetcher(`${baseUrl}`, {
+  return fetcher(`${baseUrl}`, {
     method: 'POST',
     body: {
       teacherCode,

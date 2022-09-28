@@ -5,7 +5,7 @@ const baseUrl = '/api/classrooms';
 const getAllClassrooms = () => fetcher(`${baseUrl}/`);
 
 const addClassroom = ({ name, capacity }) => {
-  fetcher(`${baseUrl}`, {
+  return fetcher(`${baseUrl}`, {
     method: 'POST',
     body: {
       name,
