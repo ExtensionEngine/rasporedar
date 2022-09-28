@@ -1,6 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue';
+import CancelIcon from '@/assets/img/cancel_icon.svg';
 import DeleteIcon from '@/assets/img/delete_icon.svg';
+import EditIcon from '@/assets/img/edit_icon.svg';
+import SaveIcon from '@/assets/img/save_icon.svg';
 import teacherService from '@/api/teachers';
 
 const searchQuery = ref('');
@@ -10,19 +13,57 @@ const props = defineProps({
     default: () => [],
   },
 });
-const teacherFields = {
-  teacherCode: 'Code',
-  firstName: 'First name',
-  lastName: 'Last name',
-  createdAt: 'Created At',
-};
+const teacherFields = [
+  {
+    displayName: 'Code',
+    property: 'teacherCode',
+    isEditable: true,
+  },
+  {
+    displayName: 'First name',
+    property: 'firstName',
+    isEditable: true,
+  },
+  {
+    displayName: 'Last name',
+    property: 'lastName',
+    isEditable: true,
+  },
+  {
+    displayName: 'Created At',
+    property: 'createdAt',
+    isEditable: false,
+  },
+];
+const teacherEditingId = ref(null);
 
 const emit = defineEmits(['reload']);
 const filteredTeachers = computed(() => {
   const searchQueryLowercased = searchQuery.value.toLowerCase();
   const filtered = props.teachers.filter(teacher => teacher.firstName.toLowerCase().includes(searchQueryLowercased));
+  filtered.sort((a, b) => a.id > b.id);
   return filtered;
 });
+const isBeingEdited = teacherId => {
+  return teacherEditingId.value === teacherId;
+};
+const setEditing = teacherId => {
+  teacherEditingId.value = teacherId;
+};
+const cancelEditing = () => {
+  teacherEditingId.value = null;
+  emit('reload');
+};
+const handleEdit = async teacher => {
+  const editResponse = await teacherService.editTeacher(teacher);
+
+  if ('error' in editResponse) {
+    return alert(editResponse.error);
+  }
+
+  teacherEditingId.value = null;
+  emit('reload');
+};
 const handleDelete = async teacherId => {
   const isDeleteConfirmed = confirm('Do you really want to delete the teacher?');
   if (!isDeleteConfirmed) return;
@@ -33,6 +74,7 @@ const handleDelete = async teacherId => {
     return alert('Internal Server Error. Can not delete teacher.');
   }
 
+  teacherEditingId.value = null;
   emit('reload');
 };
 </script>
@@ -47,17 +89,39 @@ const handleDelete = async teacherId => {
       <table class="rsprd-table">
         <thead>
           <tr class="rsprd-table__heading rsprd-table__row">
-            <th v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ value }}</th>
+            <th v-for="field in teacherFields" :key="field.property" class="rsprd-table__cell">
+              {{ field.displayName }}
+            </th>
             <th class="rsprd-table__cell">Action</th>
           </tr>
         </thead>
         <tbody class="rsprd-table__body">
           <tr v-for="teacher in filteredTeachers" :key="teacher.id" class="rsprd-table__row">
-            <td v-for="(value, key) in teacherFields" :key="key" class="rsprd-table__cell">{{ teacher[key] }}</td>
+            <td v-for="field in teacherFields" :key="field.property" class="rsprd-table__cell">
+              <span v-if="isBeingEdited(teacher.id) && field.isEditable">
+                <input v-model="teacher[field.property]" type="text" class="rsprd-input--edit" />
+              </span>
+              <span v-else>
+                {{ teacher[field.property] }}
+              </span>
+            </td>
             <td class="rsprd-table__cell">
-              <button @click="handleDelete(teacher.id)" class="rsprd-btn rsprd-btn--delete">
-                <img class="rsprd-icon" :src="DeleteIcon" />
-              </button>
+              <div class="rsprd-actions">
+                <div v-if="isBeingEdited(teacher.id)">
+                  <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
+                    <img class="rsprd-icon" :src="CancelIcon" />
+                  </button>
+                  <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--clear">
+                    <img class="rsprd-icon" :src="SaveIcon" />
+                  </button>
+                </div>
+                <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
+                  <img class="rsprd-icon" :src="EditIcon" />
+                </button>
+                <button @click="handleDelete(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
+                  <img class="rsprd-icon" :src="DeleteIcon" />
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -71,6 +135,7 @@ const handleDelete = async teacherId => {
   border-collapse: collapse;
   margin-top: 20px;
   padding: 10px;
+  table-layout: fixed;
   width: 100%;
 }
 

@@ -27,3 +27,7 @@
 .rsprd-form__label--bold {
   font-weight: bold;
 }
+
+.rsprd-actions {
+  display: inline-flex;
+}
