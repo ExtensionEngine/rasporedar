@@ -105,20 +105,22 @@ const handleDelete = async teacherId => {
               </span>
             </td>
             <td class="rsprd-table__cell">
-              <div v-if="isBeingEdited(teacher.id)">
-                <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
-                  <img class="rsprd-icon" :src="CancelIcon" />
+              <div class="rsprd-actions">
+                <div v-if="isBeingEdited(teacher.id)">
+                  <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
+                    <img class="rsprd-icon" :src="CancelIcon" />
+                  </button>
+                  <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--clear">
+                    <img class="rsprd-icon" :src="SaveIcon" />
+                  </button>
+                </div>
+                <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
+                  <img class="rsprd-icon" :src="EditIcon" />
                 </button>
-                <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--clear">
-                  <img class="rsprd-icon" :src="SaveIcon" />
+                <button @click="handleDelete(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
+                  <img class="rsprd-icon" :src="DeleteIcon" />
                 </button>
               </div>
-              <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
-                <img class="rsprd-icon" :src="EditIcon" />
-              </button>
-              <button @click="handleDelete(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
-                <img class="rsprd-icon" :src="DeleteIcon" />
-              </button>
             </td>
           </tr>
         </tbody>
