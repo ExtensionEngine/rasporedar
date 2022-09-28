@@ -105,14 +105,14 @@ const handleDelete = async teacherId => {
               </span>
             </td>
             <td class="rsprd-table__cell">
-              <span v-if="isBeingEdited(teacher.id)">
+              <div v-if="isBeingEdited(teacher.id)">
                 <button @click="cancelEditing" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="CancelIcon" />
                 </button>
                 <button @click="handleEdit(teacher)" class="rsprd-btn-main rsprd-btn--clear">
                   <img class="rsprd-icon" :src="SaveIcon" />
                 </button>
-              </span>
+              </div>
               <button v-else @click="setEditing(teacher.id)" class="rsprd-btn-main rsprd-btn--clear">
                 <img class="rsprd-icon" :src="EditIcon" />
               </button>
