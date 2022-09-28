@@ -41,6 +41,7 @@ const emit = defineEmits(['reload']);
 const filteredTeachers = computed(() => {
   const searchQueryLowercased = searchQuery.value.toLowerCase();
   const filtered = props.teachers.filter(teacher => teacher.firstName.toLowerCase().includes(searchQueryLowercased));
+  filtered.sort((a, b) => a.id > b.id);
   return filtered;
 });
 const isBeingEdited = teacherId => {
