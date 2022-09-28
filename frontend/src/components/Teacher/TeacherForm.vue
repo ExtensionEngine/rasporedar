@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import TeacherIllustration from '@/assets/img/illustrations/teacher_illustration.svg';
 import teacherService from '@/api/teachers';
 
@@ -9,10 +9,14 @@ const formInitState = {
   lastName: '',
 };
 const additionForm = reactive({ ...formInitState });
+const errors = ref(null);
 
 const emit = defineEmits(['reload']);
 const addTeacher = async () => {
   const addResponse = await teacherService.addTeacher(additionForm);
+  errors.value = addResponse.errors;
+
+  if (errors.value) return;
 
   if (!addResponse) {
     return alert('Internal Server Error. Can not get teachers.');
@@ -27,6 +31,13 @@ const addTeacher = async () => {
   <div class="rsprd-container__item">
     <div class="rsprd-bar">
       <h2 class="rsprd-bar__title">Add Teacher</h2>
+    </div>
+    <div v-if="errors" class="rsprd-error">
+      <ul>
+        <li v-for="(error, index) in errors" :key="index">
+          {{ error.message }}
+        </li>
+      </ul>
     </div>
     <div class="rsprd-body rsprd-d-flex">
       <div class="rsprd-body__form">
