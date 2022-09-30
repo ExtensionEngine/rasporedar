@@ -99,8 +99,8 @@ function handleDownloadAll() {
 
 <style scoped>
 .rsprd-toolbar {
-  margin: 100px auto 24px;
-  width: 70%;
+  margin: 72px auto 24px;
+  width: 85%;
 }
 
 .rsprd-toolbar__link {

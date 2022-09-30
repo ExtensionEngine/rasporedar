@@ -64,7 +64,11 @@ function buildRowCells(timetableData, hourIndex, getCardPrimaryText, getCardSeco
       }
 
       return {
-        stack: [{ text: getCardPrimaryText(subject), bold: true }, '\n', getCardSecondaryText(subject)],
+        stack: [
+          { text: getCardPrimaryText(subject), bold: true },
+          '\n',
+          getCardSecondaryText(subject).replace(/\d+ -/, ''),
+        ],
         fillColor: monochromeMode ? null : generateColor(getCardPrimaryText(subject)),
         fillOpacity: 0.6,
         margin: [3, 4],
